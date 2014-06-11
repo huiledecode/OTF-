@@ -1,6 +1,8 @@
 /**
  * Created by epa on 10/06/14.
  */
+
+    var logger = require('log4js').getLogger('css');
     var express = require('express');
     var router = express.Router();
     var passport = require('passport');
@@ -9,7 +11,7 @@
     var annuaire;
     annuaire = JSON.parse(require('fs').readFileSync(
             __dirname + '/otf_annuaire.json', 'utf8'));
-    console.log("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
+    logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
         annuaire);
     //--
     var getControler = function (req, cb) {
@@ -31,12 +33,12 @@
 
         // -- check Authentificate flag
         if (auth && !req.isAuthenticated()) {
-            console.log("\tOTF Page sécurisée,demande d'authentification. ");// redirect to loggin
+            logger.debug("\tOTF Page sécurisée,demande d'authentification. ");// redirect to loggin
             module = 'login';
             methode = 'titre';
             screen = 'login';
         } else {
-            console.log("\tOTF Account authentifier [ account %j], [session id : [%s] ]",req.session.account,req.sessionID);// redirect to loggin
+           logger.debug("\tOTF Account authentifier [ account %j], [session id : [%s] ]",req.session.account,req.sessionID);// redirect to loggin
             module = annuaire[type + path].module;
             methode = annuaire[type + path].methode;
             screen = annuaire[type + path].screen;
@@ -84,18 +86,18 @@
     var performAction = function(req, callback) {
 
         // --
-        console.log("\tOTF  [ URL [type : %s], [Path : %s] ", req.method,req.url);
+       logger.debug("\tOTF  [ URL [type : %s], [Path : %s] ", req.method,req.url);
         // --
         // -- build controler
         getControler(req, function cb(err) {
             if (err) {
                 // --
-                console.log("\tOTF getController ERROR [%j]", err);
+                logger.debug("\tOTF getController ERROR [%j]", err);
                 callback(err, null);
             } else {
                 // --
-                console.log("\tOTF controler     :  [%j]",controler);
-                console.log("\tOTF Session.otf   :  [%j]", req.session.otf);
+                logger.debug("\tOTF controler     :  [%j]",controler);
+                logger.debug("\tOTF Session.otf   :  [%j]", req.session.otf);
                 // --
                 callback(null, controler );
             }
@@ -103,14 +105,14 @@
     };
     // --
     var logHttpRequest = function (req, res, next) {
-        console.log("\napp Log Handler [ %s %s ]", req.method, req.url);
+        logger.debug("\napp Log Handler [ %s %s ]", req.method, req.url);
         next();
     };
     // --
     // -- Signup Accounts
     // --
     var signupAccount = function (req, res, next) {
-        console.log("\napp signup Account [ %s %s %j]", req.method, req.url,
+        logger.debug("\napp signup Account [ %s %s %j]", req.method, req.url,
             req.body);
         //-- Authetificate, becarefull is a function
         passport.authenticate(
@@ -119,25 +121,25 @@
 
                 // next();
                 if (err) {
-                    console.log("APP authenticate  signupAccount ERROR [%s]",
+                    logger.debug("APP authenticate  signupAccount ERROR [%s]",
                         err);
                     return next(err); // will generate a 500 error
                 }
                 ;
                 if (!account) {
-                    console.log("APP authenticate  signupAccount Fail ");
+                    logger.debug("APP authenticate  signupAccount Fail ");
                     return res.redirect('/login');
                 }
                 // if everything's OK
                 // create objects in session
                 req.logIn(account, function(err) {
                     if (err) {
-                        console.log("APP logIn ERROR   account : [%j]",
+                        logger.debug("APP logIn ERROR   account : [%j]",
                             account);
                         req.session.messages = "Error logIn";
                         return next(err);
                     }
-                    console.log("APP authenticate   account : [%j,  session id : [%s]]",
+                   logger.debug("APP authenticate   account : [%j,  session id : [%s]]",
                         account,req.sessionID);
                     // set the message
                     req.session.messages = {
@@ -163,7 +165,7 @@
     // --
     var otfAction = function (req, res, next) {// attention il ne
         // --
-        console.log('\napp.js OTF buildAction [ %s %s ]', req.method, req.url);
+        logger.debug('\napp.js OTF buildAction [ %s %s ]', req.method, req.url);
         // --
         performAction(req, function(err, controler) {
             if (err)
@@ -179,8 +181,7 @@
 // routeur dynamique de OTF
 // --
     function errorHandler(err, req, res, next) {
-        console
-            .log(
+        logger.debug(
             "APP OTF Handler status 500 Error cause by :  \n [\n %s \n] \n",
             err.stack);
         res.status(501);

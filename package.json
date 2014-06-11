@@ -17,6 +17,7 @@
     "passport":"*",
     "passport-local":"*",
     "bcrypt":"*",
-    "serve-favicon": "*"
+    "serve-favicon": "*",
+      "log4js": "*"
   }
 }

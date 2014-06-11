@@ -1,9 +1,18 @@
 #!/usr/bin/env node
+
+//--
+// Logger Configuration
+var  log4js = require('log4js');
+log4js.configure('./ressources/log4js.json', { reloadSecs: 300 });
+var logger = log4js.getLogger('ccs');
+//--
 var debug = require('debug')('OTF');
+//--
 var app = require('../app');
+app.set('port', process.env.NODE_PORT || 3000);
+app.set('host', process.env.NODE_HOST || "localhost");
 
-app.set('port', process.env.PORT || 3000);
-
-var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
+var server = app.listen(app.get('port'), app.get('host'), function() {
+  //debug('Express server listening on port ' + server.address().port);
+  logger.debug("Express server listening on http://%s:%d \n", app.get('host'), app.get('port'));
 });
