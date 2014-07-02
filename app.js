@@ -12,7 +12,7 @@
 require("./ressources/db");
 //--
 // Looger log4j
-var logger = require('log4js').getLogger('css');
+//var logger = require('log4js').getLogger('css');
 //logger.debug(' LOG4J APP.JS INIT');
 //--
 // Expres 4.2 midleware

@@ -1,10 +1,19 @@
 #!/usr/bin/env node
 
 //--
+require('../ressources/oplog')();
+//--
 // Logger Configuration
 var  log4js = require('log4js');
 log4js.configure('./ressources/log4js.json', { reloadSecs: 300 });
+mongoAppender = require('log4js-node-mongodb');
+log4js.addAppender(
+    mongoAppender.appender({connectionString: 'localhost:27017/logs'}),
+    'cheese'
+);
+
 var logger = log4js.getLogger('ccs');
+var loggerMongo = log4js.getLogger('cheese');
 //--
 var debug = require('debug')('OTF');
 //--
@@ -15,4 +24,6 @@ app.set('host', process.env.NODE_HOST || "localhost");
 var server = app.listen(app.get('port'), app.get('host'), function() {
   //debug('Express server listening on port ' + server.address().port);
   logger.debug("Express server listening on http://%s:%d \n", app.get('host'), app.get('port'));
+    loggerMongo.debug("Express server listening on http://%s:%d \n", app.get('host'), app.get('port'));
 });
+//--

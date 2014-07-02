@@ -67,6 +67,10 @@ module.exports = function(passport) {
             // asynchronous
             process.nextTick(function() {
                 // search an if exist load account with login req.param.login
+                //account = new Accounts({"login":"toto","password":"tita"});
+                //account.save();
+                //Accounts.update({"_id":"5398f5fe2900db2d71c0e86b"},{ $set: {"login":"fake"}});
+                //--
                 Accounts.findOne({
                     login : login
                 }, function(err, _account) {
