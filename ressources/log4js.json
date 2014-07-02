@@ -7,6 +7,11 @@
             "type":"file",
             "filename":"log/ccs.log",
             "category":"ccs"
+        },
+        {
+            "type": "file",
+            "filename": "log/otf_ccs.log",
+            "category": "otf"
         }
     ]
 }
