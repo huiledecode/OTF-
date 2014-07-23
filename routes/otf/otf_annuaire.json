@@ -11,22 +11,22 @@
       "screen": "userList",
       "auth": true
     	},
-        "GET/login": {
-            "module": "login",
-            "methode": "titre",
-            "screen": "login",
-            "auth": false
-          	},
-        "POST/user": {
-          "module": "users",
-          "methode": "list",
-          "screen": "userList",
-          "auth": true
-        	},
-            "POST/signup": {
-                "module": "users",
-                "methode": "list",
-                "screen": "userList",
-                "auth": false
-              	}
-	}
+    "GET/login": {
+        "module": "login",
+        "methode": "titre",
+        "screen": "login",
+        "auth": false
+        },
+    "POST/user": {
+      "module": "users",
+      "methode": "list",
+      "screen": "userList",
+      "auth": true
+        },
+    "POST/signup": {
+        "module": "users",
+        "methode": "list",
+        "screen": "userList",
+        "auth": false
+        }
+}
