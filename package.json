@@ -11,7 +11,7 @@
         "cookie-parser": "~1.0.1",
         "body-parser": "~1.0.0",
         "debug": "~0.7.4",
-        "jade": "~1.3.0",
+        "jade": "~1.5.0",
         "mongoose": "3.8.12",
         "express-session": "*",
         "passport": "*",

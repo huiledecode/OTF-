@@ -17,16 +17,16 @@
         "screen": "login",
         "auth": false
         },
-    "POST/user": {
+    "GET/users": {
       "module": "users",
       "methode": "list",
       "screen": "userList",
       "auth": true
         },
-    "POST/signup": {
-        "module": "users",
-        "methode": "list",
-        "screen": "userList",
-        "auth": false
+    "POST/index": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
         }
 }

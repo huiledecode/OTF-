@@ -2,9 +2,9 @@
  * New node file
  */
 exports.index = {
-	
-	titre : function (){
-		return { title: 'Express' };
+
+    titre: function (cb) {
+        return cb(nulll, { title: 'Express' });
 	}
 	
 };

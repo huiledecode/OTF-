@@ -1,5 +1,10 @@
 extends layout
 
+append head
+    script(src='/javascripts/user_socket.js')
+
 block content
-  h1= title
-  p Liste des Utilisateur  #{title}
+    p Liste des Utilisateurs :
+        select
+            each user, i in result
+                option(value="#{user._id}") #{user.login}-#{user.password}

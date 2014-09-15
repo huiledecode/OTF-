@@ -1,7 +1,7 @@
 exports.login = {
-	
-	titre : function (){
-		return { title: 'Express Passport Authentification' };
+
+    titre: function (cb) {
+        return cb(null, { title: 'Express Passport Authentification' });
 	}
 	
 };/**
