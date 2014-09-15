@@ -79,7 +79,7 @@
         req.session.otf = controler;
         // -- call the callback
         //-- la variable controller est visible dans la fonction appellente
-        return cb(null);
+        return cb(null, controler);
 
     };
     //--
@@ -89,7 +89,7 @@
        logger.debug("\tOTF  [ URL [type : %s], [Path : %s] ", req.method,req.url);
         // --
         // -- build controler
-        getControler(req, function cb(err) {
+        getControler(req, function cb(err, controler) {
             if (err) {
                 // --
                 logger.debug("\tOTF getController ERROR [%j]", err);
@@ -98,8 +98,9 @@
                 // --
                 logger.debug("\tOTF controler     :  [%j]",controler);
                 logger.debug("\tOTF Session.otf   :  [%j]", req.session.otf);
+                //logger.debug("\tOTF Session.socketid   :  [%j]", req.session.sessionid);
                 // --
-                callback(null, controler );
+                return callback(null, controler);
             }
         }); // ~ getController
     };
@@ -145,6 +146,7 @@
                     req.session.messages = {
                         'title' : 'Login successfully ' + account.login
                     };
+
                     //- je trouve que le redirect est meilleur car sinon avec le render l'ur affichée sur le browser est toujour /signup et pas /
                     //- ou autre path dans l'annuaire
                     //return res.redirect('/');
@@ -171,7 +173,10 @@
             if (err)
                 next(err);
             else {
-                res.render(controler.screen, controler.action());
+                controler.action(function (errBean, result) {
+                    logger.debug(" otf final %j", result);
+                    res.render(controler.screen, result);
+                });
             }
 
         });
@@ -197,7 +202,7 @@
 //-- Authentificate Process
 
     //--
-    router.post('/signup', signupAccount);
+router.post('/index', signupAccount);
 
     //-- Logout Process
     router.get('/logout', logOut);
@@ -207,5 +212,6 @@
 
     //-- Error Handler if otf throw error
     router.use(errorHandler);// -- Error Handler After Otf Treath
+
 
 module.exports = router;
