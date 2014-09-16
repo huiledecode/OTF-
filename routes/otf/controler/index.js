@@ -3,7 +3,7 @@
  */
 exports.index = {
 
-    titre: function (cb) {
+    titre: function (params, cb) {
         return cb(nulll, { title: 'Express' });
 	}
 	
