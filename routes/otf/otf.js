@@ -173,6 +173,9 @@
             if (err)
                 next(err);
             else {
+                /* Appel de la méthode du bean via une callback pour permettre
+                * au bean d'exécuter des action asynchrone et donc ne pas bloqué
+                * l'application aux autres utilisateurs */
                 controler.action(function (errBean, result) {
                     logger.debug(" otf final %j", result);
                     res.render(controler.screen, result);
