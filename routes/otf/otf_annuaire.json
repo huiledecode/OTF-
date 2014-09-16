@@ -23,6 +23,12 @@
       "screen": "userList",
       "auth": true
         },
+    "POST/user": {
+        "module": "users",
+        "methode": "one",
+        "screen": "userOne",
+        "auth": true
+    },
     "POST/index": {
         "module": "index",
         "methode": "titre",
