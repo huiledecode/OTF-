@@ -8,3 +8,4 @@ block content
         select
             each user, i in result
                 option(value="#{user._id}") #{user.login}-#{user.password}
+    a(href='javascript:history.go(-1)') Retour Acccueil
