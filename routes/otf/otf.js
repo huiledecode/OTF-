@@ -150,7 +150,7 @@
                     //- je trouve que le redirect est meilleur car sinon avec le render l'ur affichée sur le browser est toujour /signup et pas /
                     //- ou autre path dans l'annuaire
                     //return res.redirect('/');
-                    return res.render('index', {'title': "Bienvenue "+req.session.account.login+" votre votre n° de session  est "+req.sessionID});
+                    return res.render('index', {'title': "Bienvenue "+req.session.account.login+" votre n° de session  est : "+req.sessionID});
                 });
 
             })(req, res, next);
@@ -173,15 +173,15 @@
             if (err)
                 next(err);
             else {
+                var params = req.body.login; // valeur de l'input text pour recherche un user
                 /* Appel de la méthode du bean via une callback pour permettre
                 * au bean d'exécuter des action asynchrone et donc ne pas bloqué
                 * l'application aux autres utilisateurs */
-                controler.action(function (errBean, result) {
+                controler.action(params, function (errBean, result) {
                     logger.debug(" otf final %j", result);
                     res.render(controler.screen, result);
                 });
             }
-
         });
     };
     // --
