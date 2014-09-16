@@ -1,0 +1,9 @@
+extends layout
+append head
+    script(src='/javascripts/user_socket.js')
+block content
+  each user, i in result
+    p Utilisateur : #{user.login}
+    p Id : #{user._id}
+    p Mdp : #{user.password}
+  a(href='javascript:history.go(-1)') Retour Acccueil
