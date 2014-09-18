@@ -7,9 +7,10 @@
     	},
     "GET/user": {
       "module": "users",
-      "methode": "list",
-      "screen": "userList",
-      "auth": true
+      "methode": "one",
+      "screen": "userOne",
+      "auth": true,
+      "params_names": ["login"]
     	},
     "GET/login": {
         "module": "login",
@@ -27,7 +28,8 @@
         "module": "users",
         "methode": "one",
         "screen": "userOne",
-        "auth": true
+        "auth": true,
+        "params_names": ["login"]
     },
     "POST/index": {
         "module": "index",
