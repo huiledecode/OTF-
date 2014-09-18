@@ -1,5 +1,6 @@
 /**
  * Created by epa on 10/06/14.
+ * Modified by SMA on 16/09/2014
  */
 
     var logger = require('log4js').getLogger('css');
@@ -14,6 +15,8 @@
     logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
         annuaire);
     //--
+    var params_names = null;
+    var params_values = new Array();
     var getControler = function (req, cb) {
         // --
         path = url.parse(req.url).pathname;
@@ -23,9 +26,27 @@
         }
         // -- GET, POST,DELETE, etc ..
         type = req.method;
+        // -- get parameters names from otf_annuaire.json
+        params_names = annuaire[type+path].params_names;
         if (!type) {
             err = "{'error':' type parse error for path [%s]',path}";
             return cb(err);
+        // -- Type detection for HTTP parameters (GET --> req.query) / POST --> req.body)
+        } else {
+            if ((type === 'GET') && (typeof params_names != 'undefined')) {
+                for (var i=0;i<params_names.length;i++) {
+                    params_values[i] = req.query[params_names];
+                }
+            } else if ((type === 'POST') && (typeof params_names != 'undefined')) {
+                for (var j=0;j< params_names.length;j++) {
+                    params_values[j] = req.body[params_names];
+                }
+            }
+            // -- faut-il implémenter le delete ?
+            /* else if ((type === 'DELETE') && (typeof params_names != 'undefined')) {
+                for (var j = 0; j < params_names.length; j++) {
+                    params_values[j] = req.body[params_names];
+                }*/
         }
 
         // -- Authentificate flag
@@ -42,6 +63,7 @@
             module = annuaire[type + path].module;
             methode = annuaire[type + path].methode;
             screen = annuaire[type + path].screen;
+            params_names = annuaire[type+path].params_names;
         }
         // --
         // --
@@ -67,13 +89,14 @@
             action = instanceModule[module]['execute'];
         }
         // --
-        // -- controler data structure
+        // -- controler data structure with HTTP parameters
         controler = {
             'auth' : auth,
             'module' : module,
             'methode' : methode,
             'screen' : screen,
-            'action' : action
+            'action' : action,
+            'params' : {'params_names' : params_names, 'params_values' : params_values }
         };
         // -- set session otf controler
         req.session.otf = controler;
@@ -173,11 +196,10 @@
             if (err)
                 next(err);
             else {
-                var params = req.body.login; // valeur de l'input text pour recherche un user
                 /* Appel de la méthode du bean via une callback pour permettre
-                * au bean d'exécuter des action asynchrone et donc ne pas bloqué
+                * au bean d'exécuter des actions asynchrones et donc ne pas bloquer
                 * l'application aux autres utilisateurs */
-                controler.action(params, function (errBean, result) {
+                controler.action(controler.params, function (errBean, result) {
                     logger.debug(" otf final %j", result);
                     res.render(controler.screen, result);
                 });
