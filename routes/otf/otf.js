@@ -15,8 +15,8 @@
     logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
         annuaire);
     //--
-    var params_names = null;
-    var params_values = new Array();
+    var acceptableFields = null;
+    var filteredQuery = {}; // clause where de la requête MongoDB
     var getControler = function (req, cb) {
         // --
         path = url.parse(req.url).pathname;
@@ -27,19 +27,24 @@
         // -- GET, POST,DELETE, etc ..
         type = req.method;
         // -- get parameters names from otf_annuaire.json
-        params_names = annuaire[type+path].params_names;
+        acceptableFields = annuaire[type+path].params_names;
         if (!type) {
             err = "{'error':' type parse error for path [%s]',path}";
             return cb(err);
         // -- Type detection for HTTP parameters (GET --> req.query) / POST --> req.body)
         } else {
-            if ((type === 'GET') && (typeof params_names != 'undefined')) {
-                for (var i=0;i<params_names.length;i++) {
-                    params_values[i] = req.query[params_names];
+            if ((type === 'GET') && (typeof acceptableFields != 'undefined')) {
+                // -- On construit dynamiquement les params de la requête via les
+                for (var field in req.query) {
+                    if (req.query.hasOwnProperty(field)) {
+                        filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
+                    }
                 }
-            } else if ((type === 'POST') && (typeof params_names != 'undefined')) {
-                for (var j=0;j< params_names.length;j++) {
-                    params_values[j] = req.body[params_names];
+            } else if ((type === 'POST') && (typeof acceptableFields != 'undefined')) {
+                for (var field in req.body) {
+                    if (req.body.hasOwnProperty(field)) {
+                        filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
+                    }
                 }
             }
             // -- faut-il implémenter le delete ?
@@ -63,7 +68,6 @@
             module = annuaire[type + path].module;
             methode = annuaire[type + path].methode;
             screen = annuaire[type + path].screen;
-            params_names = annuaire[type+path].params_names;
         }
         // --
         // --
@@ -96,7 +100,7 @@
             'methode' : methode,
             'screen' : screen,
             'action' : action,
-            'params' : {'params_names' : params_names, 'params_values' : params_values }
+            'params' : filteredQuery
         };
         // -- set session otf controler
         req.session.otf = controler;
