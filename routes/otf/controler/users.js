@@ -10,9 +10,11 @@ var mongoose = require('mongoose');
  */
 
 exports.users = {
-    list: function (params, cb) {
+    list: function (params, model, cb) {
         logger.debug('params : ' , params);
-        Accounts.find({}, function (err, list_users) {
+        var modele = mongoose.model(model);
+
+        modele.find({}, function (err, list_users) {
             logger.debug('liste des utilisateurs :', list_users);
             return cb(null, {result: list_users});
         });
