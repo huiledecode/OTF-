@@ -6,7 +6,7 @@
       "auth": true
     	},
     "GET/user": {
-      "module": "users",
+      "module": "finder",
       "methode": "one",
       "screen": "userOne",
       "auth": true,
@@ -20,7 +20,7 @@
         "auth": false
     },
     "GET/users": {
-        "module": "users",
+        "module": "finder",
         "methode": "list",
         "screen": "userList",
         "auth": true,
@@ -28,7 +28,7 @@
         "data_model" : "Accounts"
     },
     "POST/user": {
-        "module": "users",
+        "module": "finder",
         "methode": "one",
         "screen": "userOne",
         "auth": true,
