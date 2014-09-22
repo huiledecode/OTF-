@@ -29,6 +29,7 @@
         type = req.method;
         // -- get parameters names from otf_annuaire.json
         acceptableFields = annuaire[type+path].params_names;
+        modele = annuaire[type+path].data_model;
         if (!type) {
             err = "{'error':' type parse error for path [%s]',path}";
             return cb(err);
@@ -38,17 +39,13 @@
                 // -- On construit dynamiquement les params de la requête
                 for (var field in req.query) {
                     if (req.query.hasOwnProperty(field)) {
-                        if (field === 'model') {
-                            modele = req.query[field];
-                        } else {
-                            filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
-                        }
+                          filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
                     }
                 }
             } else if ((type === 'POST') && (typeof acceptableFields != 'undefined')) {
                 for (var field in req.body) {
                     if (req.body.hasOwnProperty(field)) {
-                        filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
+                          filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
                     }
                 }
             }
@@ -105,7 +102,8 @@
             'methode' : methode,
             'screen' : screen,
             'action' : action,
-            'params' : filteredQuery
+            'params' : filteredQuery,
+            'data_model' : modele
         };
         // -- set session otf controler
         req.session.otf = controler;
@@ -208,7 +206,7 @@
                 /* Appel de la méthode du bean via une callback pour permettre
                 * au bean d'exécuter des actions asynchrones et donc ne pas bloquer
                 * l'application aux autres utilisateurs */
-                controler.action(controler.params, modele, function (errBean, result) {
+                controler.action(controler.params, controler.data_model, function (errBean, result) {
                     logger.debug(" otf final %j", result);
                     res.render(controler.screen, result);
                 });
