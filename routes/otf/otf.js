@@ -17,6 +17,7 @@
     //--
     var acceptableFields = null;
     var filteredQuery = {}; // clause where de la requête MongoDB
+    var modele = "";
     var getControler = function (req, cb) {
         // --
         path = url.parse(req.url).pathname;
@@ -34,10 +35,14 @@
         // -- Type detection for HTTP parameters (GET --> req.query) / POST --> req.body)
         } else {
             if ((type === 'GET') && (typeof acceptableFields != 'undefined')) {
-                // -- On construit dynamiquement les params de la requête via les
+                // -- On construit dynamiquement les params de la requête
                 for (var field in req.query) {
                     if (req.query.hasOwnProperty(field)) {
-                        filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
+                        if (field === 'model') {
+                            modele = req.query[field];
+                        } else {
+                            filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
+                        }
                     }
                 }
             } else if ((type === 'POST') && (typeof acceptableFields != 'undefined')) {
@@ -203,7 +208,7 @@
                 /* Appel de la méthode du bean via une callback pour permettre
                 * au bean d'exécuter des actions asynchrones et donc ne pas bloquer
                 * l'application aux autres utilisateurs */
-                controler.action(controler.params, function (errBean, result) {
+                controler.action(controler.params, modele, function (errBean, result) {
                     logger.debug(" otf final %j", result);
                     res.render(controler.screen, result);
                 });
