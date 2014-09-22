@@ -4,8 +4,6 @@
  */
 var logger = require('log4js').getLogger('css');
 var mongoose = require('mongoose');
-//-- Accounts Model
-var Accounts = mongoose.model('Accounts');
 
 /*
  * GET users listing.
@@ -20,9 +18,13 @@ exports.users = {
         });
     },
 
-    one: function (params, cb) {
+    one: function (params, model, cb) {
         logger.debug('params : ' , params);
-        Accounts.find(params, function (err, one_user) {
+        logger.debug('model : ' + model);
+        //-- Accounts Model
+        var modele = mongoose.model(model);
+
+        modele.find(params, function (err, one_user) {
             logger.debug('Utilisateur sélectionné : ', one_user);
             return cb(null, {result: one_user});
         });
