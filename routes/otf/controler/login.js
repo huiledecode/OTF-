@@ -1,6 +1,6 @@
 exports.login = {
 
-    titre: function (params, cb) {
+    titre: function (params, modele, cb) {
         return cb(null, { title: 'Express Passport Authentification' });
 	}
 	
