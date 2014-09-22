@@ -10,26 +10,30 @@
       "methode": "one",
       "screen": "userOne",
       "auth": true,
-      "params_names": ["login"]
+      "params_names": ["login"],
+      "data_model" : "Accounts"
     	},
     "GET/login": {
         "module": "login",
         "methode": "titre",
         "screen": "login",
         "auth": false
-        },
+    },
     "GET/users": {
-      "module": "users",
-      "methode": "list",
-      "screen": "userList",
-      "auth": true
-        },
+        "module": "users",
+        "methode": "list",
+        "screen": "userList",
+        "auth": true,
+        "params_names": ["login"],
+        "data_model" : "Accounts"
+    },
     "POST/user": {
         "module": "users",
         "methode": "one",
         "screen": "userOne",
         "auth": true,
-        "params_names": ["login"]
+        "params_names": ["login"],
+        "data_model" : "Accounts"
     },
     "POST/index": {
         "module": "index",
