@@ -1,18 +1,18 @@
 {
     "GET/": {
-      "module": "index",
-      "methode": "titre",
-      "screen": "index",
-      "auth": true
-    	},
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
     "GET/user": {
-      "module": "finder",
-      "methode": "one",
-      "screen": "userOne",
-      "auth": true,
-      "params_names": ["login"],
-      "data_model" : "Accounts"
-    	},
+        "module": "finder",
+        "methode": "one",
+        "screen": "userOne",
+        "auth": true,
+        "params_names": ["login"],
+        "data_model": "Accounts"
+    },
     "GET/login": {
         "module": "login",
         "methode": "titre",
@@ -24,8 +24,8 @@
         "methode": "list",
         "screen": "userList",
         "auth": true,
-        "params_names": ["login"],
-        "data_model" : "Accounts"
+        "params_names": [],
+        "data_model": "Accounts"
     },
     "POST/user": {
         "module": "finder",
@@ -33,12 +33,12 @@
         "screen": "userOne",
         "auth": true,
         "params_names": ["login"],
-        "data_model" : "Accounts"
+        "data_model": "Accounts"
     },
     "POST/index": {
         "module": "index",
         "methode": "titre",
         "screen": "index",
         "auth": true
-        }
+    }
 }

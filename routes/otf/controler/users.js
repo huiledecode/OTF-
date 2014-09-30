@@ -1,4 +1,3 @@
-
 /*
  * GET users listing.
  */
@@ -10,8 +9,8 @@ var mongoose = require('mongoose');
  */
 
 exports.users = {
-    list: function (params, model, cb) {
-        logger.debug('params : ' , params);
+    list: function (params, model, room, cb) {
+        logger.debug('params : ', params);
         var modele = mongoose.model(model);
 
         modele.find({}, function (err, list_users) {
@@ -20,8 +19,8 @@ exports.users = {
         });
     },
 
-    one: function (params, model, cb) {
-        logger.debug('params : ' , params);
+    one: function (params, model, room, cb) {
+        logger.debug('params : ', params);
         logger.debug('model : ' + model);
         //-- Accounts Model
         var modele = mongoose.model(model);
@@ -33,7 +32,7 @@ exports.users = {
     }
 
     /* Todo : Réfléchir à l'insertion dans MongoDB de façon aussi générique que le find.
-       Todo : voir du côté des schémas mongoose qui permette 'insérer directement un bodyContents ??
+     Todo : voir du côté des schémas mongoose qui permette 'insérer directement un bodyContents ??
      */
 };
 

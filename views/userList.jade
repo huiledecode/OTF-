@@ -3,9 +3,11 @@ extends layout
 append head
     script(src='/javascripts/user_socket.js')
 
-block content
-    p Liste des Utilisateurs :
+    block content
+        p Room is "#{room}"
+        p Liste des Utilisateurs :
         select
-            each user, i in result
+            each user in result
                 option(value="#{user._id}") #{user.login}-#{user.password}
     a(href='javascript:history.go(-1)') Retour Acccueil
+             

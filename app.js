@@ -26,9 +26,9 @@ var bodyParser = require('body-parser');
 //--
 // User Session Managment
 var session = require("express-session");
+// Cookies Managment
 var MemoryStore = session.MemoryStore;
 var sessionStore = new MemoryStore();
-//var memoryStore = session.MemoryStore;
 //--
 // Authentification Managment by Passport
 var passport = require('passport');
@@ -69,11 +69,116 @@ app.use(passport.session());
 //--
 // Routes Managment by Otf Framework
 router = require('./routes/otf/otf');
-// -- Mount Root Paht / for router
+// -- NameSpace Management Sample /css
+// -- Mount Root Path / for router
 app.use('/', router);
 //
 app.set('port', process.env.NODE_PORT || 3000);
 app.set('host', process.env.NODE_HOST || "localhost");
+
+//--
+sio = require('socket.io')();
+//
+sio.set('authorization', function (data, accept) {
+    log.debug(" Socket.io authorization event call !");
+    var _cookie = 'connect.sid';
+    var _sessionStore = sessionStore;
+    var _cookieParser = cookieParser('7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"');
+
+    if (data && data.headers && data.headers.cookie) {
+        _cookieParser(data, {}, function (err) {
+            if (err) {
+                return accept('COOKIE_PARSE_ERROR');
+            }
+            var sessionId = data.signedCookies[_cookie];
+            _sessionStore.get(sessionId, function (err, session) {
+                console.log('in auth: session: ', session);
+                console.log('in auth: sessionId: ', sessionId);
+                console.log('in auth: signedCookie: ', data.signedCookies);
+                if (err || !session || !session.passport || !session.passport.user || !session.passport.user) {
+                    console.log('not logged in', sessionId);
+                    accept('NOT_LOGGED_IN', false);
+                    //accept(null, true);
+                }
+                else {
+                    console.log('logged in');
+                    data.session = session;
+                    data.sessionid = sessionId;
+                    data.user = session.passport.user;
+                    accept(null, true);
+                }
+            });
+        });
+    }
+    else {
+        return accept('No cookie transmitted.', false);
+    }
+});
+
+//--
+//--
+sio.use(function (socket, next) {
+
+    if (socket.client.request.cookies) {
+        log.debug(" Socket.io : Cookie is present ");
+        log.debug(' Socket.io : sessionid :%s ', socket.client.request.sessionid);
+        log.debug(' Socket.io : user      :%j  ', socket.client.request.session.account);
+        //log.debug(' Socket.io : user     : ', socket.client.request.user);
+        return next();
+    } else {
+        log.debug(" Socket.io : Cookie is not present ");
+        return next('COOKIE_NOT_PRESENT', false);
+    }
+    //var _cookie =  'connect.sid';
+    //var _sessionStore = sessionStore;
+    //var _cookieParser = cookieParser('7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"');
+    //
+    //if (socket.handshake && socket.handshake.headers && socket.handshake.headers.cookie) {
+    //    _cookieParser(socket.handshake, {}, function(err){
+    //        if(err){
+    //            return next('COOKIE_PARSE_ERROR');
+    //        }
+    //        var sessionId = socket.handshake.signedCookies[_cookie];
+    //        console.log('Socket.io :: sessionId: ', sessionId);
+    //        _sessionStore.get(sessionId, function(err, session){
+    //            console.log('Socket.io :: session: ', session);
+    //            console.log('Socket.io :: signedCookie: ', socket.handshake.signedCookies);
+    //            if(err || !session || !session.passport || !session.passport.user || !session.passport.user) {
+    //               // accept('NOT_LOGGED_IN', false);
+    //                console.log('not logged in', sessionId);
+    //                //accept(null, true);
+    //            }
+    //            else{
+    //                console.log('logged in');
+    //                socket.session = session;
+    //                socket.sessionid = sessionId;
+    //                socket.user=session.passport.user;
+    //                //accept(null, true);
+    //            }
+    //        });
+    //    });
+    //}
+    //
+    //
+    //return next();
+    //next(new Error('Authentication error'));
+});
+//--
+sio.on('connection', function (socket) {
+    //socket.broadcast.to(id).emit('my message', msg);
+    console.log(" WS connection socket.id :" + socket.id);
+    console.log(" WS connection cookie    : " + socket.request.headers.cookie);
+    console.log(" WS connection sessionId : " + socket.client.request.sessionid);
+    console.log(" WS connection user : " + socket.client.request.session.passport.user);
+    //
+    socket.join(socket.client.request.sessionid);
+    //
+    var mess = {'sessionid': socket.client.request.sessionid, 'user': socket.client.request.session.passport.user};
+    sio.sockets.in(socket.client.request.sessionid).emit('ack', mess);
+    console.log("Room n° : " + socket.client.request.sessionid);
+
+});
+
 //
 //
 //
@@ -84,5 +189,6 @@ app.set('host', process.env.NODE_HOST || "localhost");
 //});
 
 //--
+//-- Make the instance object app global
 //  export app
 module.exports = app;
