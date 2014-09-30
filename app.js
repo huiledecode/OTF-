@@ -129,39 +129,6 @@ sio.use(function (socket, next) {
         log.debug(" Socket.io : Cookie is not present ");
         return next('COOKIE_NOT_PRESENT', false);
     }
-    //var _cookie =  'connect.sid';
-    //var _sessionStore = sessionStore;
-    //var _cookieParser = cookieParser('7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"');
-    //
-    //if (socket.handshake && socket.handshake.headers && socket.handshake.headers.cookie) {
-    //    _cookieParser(socket.handshake, {}, function(err){
-    //        if(err){
-    //            return next('COOKIE_PARSE_ERROR');
-    //        }
-    //        var sessionId = socket.handshake.signedCookies[_cookie];
-    //        console.log('Socket.io :: sessionId: ', sessionId);
-    //        _sessionStore.get(sessionId, function(err, session){
-    //            console.log('Socket.io :: session: ', session);
-    //            console.log('Socket.io :: signedCookie: ', socket.handshake.signedCookies);
-    //            if(err || !session || !session.passport || !session.passport.user || !session.passport.user) {
-    //               // accept('NOT_LOGGED_IN', false);
-    //                console.log('not logged in', sessionId);
-    //                //accept(null, true);
-    //            }
-    //            else{
-    //                console.log('logged in');
-    //                socket.session = session;
-    //                socket.sessionid = sessionId;
-    //                socket.user=session.passport.user;
-    //                //accept(null, true);
-    //            }
-    //        });
-    //    });
-    //}
-    //
-    //
-    //return next();
-    //next(new Error('Authentication error'));
 });
 //--
 sio.on('connection', function (socket) {
@@ -178,15 +145,6 @@ sio.on('connection', function (socket) {
     console.log("Room n° : " + socket.client.request.sessionid);
 
 });
-
-//
-//
-//
-//var server = app.listen(app.get('port'), app.get('host'), function() {
-//    //debug('Express server listening on port ' + server.address().port);
-//    log.debug("Express server listening on http://%s:%d \n", app.get('host'), app.get('port'));
-//    logMongo.debug("Express server listening on http://%s:%d \n", app.get('host'), app.get('port'));
-//});
 
 //--
 //-- Make the instance object app global
