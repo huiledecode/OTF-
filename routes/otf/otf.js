@@ -32,6 +32,7 @@ var getControler = function (req, cb) {
     var methode = "";
     var screen = "";
     var controler = {};
+    var redirect = false;
     //
     path = url.parse(req.url).pathname;
     if (!path) {
@@ -90,6 +91,8 @@ var getControler = function (req, cb) {
         module = 'login';
         methode = 'titre';
         screen = 'login';
+        redirect = true;
+        //return res.redirect("index.jade");
     } else {
         logger.debug("\tOTF Account authentifié [ account %j], [session id : [%s] ]", req.session.account, req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
@@ -130,7 +133,8 @@ var getControler = function (req, cb) {
         'action': action,
         'params': filteredQuery,
         'room': req.sessionID,
-        'data_model': modele
+        'data_model': modele,
+        'isRedirect': redirect
     };
     // -- set session otf controler
     req.session.otf = controler;
@@ -242,7 +246,10 @@ var otfAction = function (req, res, next) {// attention il ne
                     return next(errBean, req, res);
                 }
                 logger.debug(" otf final %j", result);
-                res.render(controler.screen, result);
+                if (controler.isRedirect)
+                    res.redirect('/' + controler.screen);
+                else
+                    res.render(controler.screen, result);
             });
         }
     });

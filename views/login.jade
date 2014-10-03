@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    h3= title
     form(method="POST", action="/signupAccount")
         p Name
         input(type="text", name="login")
