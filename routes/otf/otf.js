@@ -40,6 +40,12 @@ var getControler = function (req, cb) {
     }
     // -- GET, POST,DELETE, etc ..
     type = req.method;
+    //-- test existance dans l'annuaire
+    if (!annuaire[type + path]) {
+        logger.error(" Action not implemented for [%s/%s]", path, type);
+        err = "{'error':' Action not implemented for [%s/%s]',path,type}";
+        return cb(err);
+    }
     // -- get parameters names from otf_annuaire.json
     filter_acceptableFields = annuaire[type + path].params_names;
     //data_acceptableFields = annuaire[type + path].session_names;
@@ -200,8 +206,8 @@ var signupAccount = function (req, res, next) {
 
                 //- je trouve que le redirect est meilleur car sinon avec le render l'ur affichée sur le browser est toujour /signup et pas /
                 //- ou autre path dans l'annuaire
-                //return res.redirect('/');
-                return res.render('index', {'title': "Bienvenue " + req.session.account.login + " votre n° de session  est : " + req.sessionID});
+                return res.redirect('/index');
+                //return res.render('index', {'title': "Bienvenue " + req.session.account.login + " votre n° de session  est : " + req.sessionID});
             });
 
         })(req, res, next);

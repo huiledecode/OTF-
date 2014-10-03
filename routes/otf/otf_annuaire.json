@@ -35,10 +35,12 @@
         "params_names": ["login"],
         "data_model": "Accounts"
     },
-    "POST/index": {
+    "GET/index": {
         "module": "index",
         "methode": "titre",
         "screen": "index",
-        "auth": true
+        "auth": true,
+        "params_names": [],
+        "data_model": ""
     }
 }
