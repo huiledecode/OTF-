@@ -10,17 +10,29 @@ var passport = require('passport');
 var url = require("url");
 //-- load annuaire file in sync mode
 var annuaire;
-annuaire = JSON.parse(require('fs').readFileSync(
-        __dirname + '/otf_annuaire.json', 'utf8'));
+annuaire = JSON.parse(require('fs').readFileSync(__dirname + '/otf_annuaire.json', 'utf8'));
 logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
     annuaire);
 //--
-var acceptableFields = null;
-var filteredQuery = {}; // clause where de la requête MongoDB
-var sessionData = {}; // info à passer au bean contenu dans la session
-var modele = "";
+
+
+//--
+// Build the action Controller
+//--
 var getControler = function (req, cb) {
     // --
+    var acceptableFields = null;
+    var filteredQuery = {}; // clause where de la requête MongoDB
+    var sessionData = {}; // info à passer au bean contenu dans la session
+    var path = "";
+    var modele = "";
+    var type = "";
+    var auth = "";
+    var module = "";
+    var methode = "";
+    var screen = "";
+    var controler = {};
+    //
     path = url.parse(req.url).pathname;
     if (!path) {
         err = "{'error':' url parse error for path [%s]',path}";
@@ -97,7 +109,6 @@ var getControler = function (req, cb) {
         // ObjecModule
         // [module] pathName, niveau Module
         // [methode)
-        //@TODO TESTER LE RETOUR & PAGE DE ERREUR
         action = instanceModule[module][methode];
 
     } else {
@@ -218,6 +229,12 @@ var otfAction = function (req, res, next) {// attention il ne
              * l'application aux autres utilisateurs */
             // On ajoute la room
             controler.action(controler.params, controler.data_model, controler.room, function (errBean, result) {
+                // handling exception
+                //-- @TODO Faire une gestion des exceptions plus fine !!
+                if (errBean) {
+                    logger.error(" Controler.action ERROR :: %s", errBean);
+                    return next(errBean, req, res);
+                }
                 logger.debug(" otf final %j", result);
                 res.render(controler.screen, result);
             });
@@ -228,7 +245,7 @@ var otfAction = function (req, res, next) {// attention il ne
 // -- Gestion des erreurs Si erreur lors du traitement de la requête par le
 // routeur dynamique de OTF
 // --
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res) {
     logger.debug(
         "APP OTF Handler status 500 Error cause by :  \n [\n %s \n] \n",
         err.stack);
@@ -245,7 +262,7 @@ router.use(logHttpRequest);// -- LogHttpREquest
 //-- Authentificate Process
 
 //--
-router.post('/index', signupAccount);
+router.post('/signupAccount', signupAccount);
 
 //-- Logout Process
 router.get('/logout', logOut);
