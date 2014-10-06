@@ -39,7 +39,8 @@
         "module": "getview",
         "methode": "view",
         "screen": "formadduser",
-        "auth": true
+        "auth": true,
+        "data_model": "Ajouter un utilisateur"
     },
     "POST/adduser" : {
         "module": "inserter",
