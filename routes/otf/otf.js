@@ -10,17 +10,30 @@ var passport = require('passport');
 var url = require("url");
 //-- load annuaire file in sync mode
 var annuaire;
-annuaire = JSON.parse(require('fs').readFileSync(
-        __dirname + '/otf_annuaire.json', 'utf8'));
+annuaire = JSON.parse(require('fs').readFileSync(__dirname + '/otf_annuaire.json', 'utf8'));
 logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
     annuaire);
 //--
-var acceptableFields = null;
-var filteredQuery = {}; // clause where de la requête MongoDB
-var sessionData = {}; // info à passer au bean contenu dans la session
-var modele = "";
+
+
+//--
+// Build the action Controller
+//--
 var getControler = function (req, cb) {
     // --
+    var acceptableFields = null;
+    var filteredQuery = {}; // clause where de la requête MongoDB
+    var sessionData = {}; // info à passer au bean contenu dans la session
+    var path = "";
+    var modele = "";
+    var type = "";
+    var auth = "";
+    var module = "";
+    var methode = "";
+    var screen = "";
+    var controler = {};
+    var redirect = false;
+    //
     path = url.parse(req.url).pathname;
     if (!path) {
         err = "{'error':' url parse error for path [%s]',path}";
@@ -28,6 +41,12 @@ var getControler = function (req, cb) {
     }
     // -- GET, POST,DELETE, etc ..
     type = req.method;
+    //-- test existance dans l'annuaire
+    if (!annuaire[type + path]) {
+        logger.error(" Action not implemented for [%s/%s]", path, type);
+        err = "{'error':' Action not implemented for [%s/%s]',path,type}";
+        return cb(err);
+    }
     // -- get parameters names from otf_annuaire.json
     filter_acceptableFields = annuaire[type + path].params_names;
     //data_acceptableFields = annuaire[type + path].session_names;
@@ -72,6 +91,8 @@ var getControler = function (req, cb) {
         module = 'login';
         methode = 'titre';
         screen = 'login';
+        redirect = true;
+        //return res.redirect("index.jade");
     } else {
         logger.debug("\tOTF Account authentifié [ account %j], [session id : [%s] ]", req.session.account, req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
@@ -97,7 +118,6 @@ var getControler = function (req, cb) {
         // ObjecModule
         // [module] pathName, niveau Module
         // [methode)
-        //@TODO TESTER LE RETOUR & PAGE DE ERREUR
         action = instanceModule[module][methode];
 
     } else {
@@ -113,7 +133,8 @@ var getControler = function (req, cb) {
         'action': action,
         'params': filteredQuery,
         'room': req.sessionID,
-        'data_model': modele
+        'data_model': modele,
+        'isRedirect': redirect
     };
     // -- set session otf controler
     req.session.otf = controler;
@@ -189,8 +210,8 @@ var signupAccount = function (req, res, next) {
 
                 //- je trouve que le redirect est meilleur car sinon avec le render l'ur affichée sur le browser est toujour /signup et pas /
                 //- ou autre path dans l'annuaire
-                //return res.redirect('/');
-                return res.render('index', {'title': "Bienvenue " + req.session.account.login + " votre n° de session  est : " + req.sessionID});
+                return res.redirect('/index');
+                //return res.render('index', {'title': "Bienvenue " + req.session.account.login + " votre n° de session  est : " + req.sessionID});
             });
 
         })(req, res, next);
@@ -218,8 +239,17 @@ var otfAction = function (req, res, next) {// attention il ne
              * l'application aux autres utilisateurs */
             // On ajoute la room
             controler.action(controler.params, controler.data_model, controler.room, function (errBean, result) {
+                // handling exception
+                //-- @TODO Faire une gestion des exceptions plus fine !!
+                if (errBean) {
+                    logger.error(" Controler.action ERROR :: %s", errBean);
+                    return next(errBean, req, res);
+                }
                 logger.debug(" otf final %j", result);
-                res.render(controler.screen, result);
+                if (controler.isRedirect)
+                    res.redirect('/' + controler.screen);
+                else
+                    res.render(controler.screen, result);
             });
         }
     });
@@ -228,7 +258,7 @@ var otfAction = function (req, res, next) {// attention il ne
 // -- Gestion des erreurs Si erreur lors du traitement de la requête par le
 // routeur dynamique de OTF
 // --
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res) {
     logger.debug(
         "APP OTF Handler status 500 Error cause by :  \n [\n %s \n] \n",
         err.stack);
@@ -245,7 +275,7 @@ router.use(logHttpRequest);// -- LogHttpREquest
 //-- Authentificate Process
 
 //--
-router.post('/index', signupAccount);
+router.post('/signupAccount', signupAccount);
 
 //-- Logout Process
 router.get('/logout', logOut);

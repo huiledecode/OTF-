@@ -95,7 +95,7 @@ sio.set('authorization', function (data, accept) {
                 console.log('in auth: session: ', session);
                 console.log('in auth: sessionId: ', sessionId);
                 console.log('in auth: signedCookie: ', data.signedCookies);
-                if (err || !session || !session.passport || !session.passport.user || !session.passport.user) {
+                if (err || !session || !session.passport || !session.passport.user) {
                     console.log('not logged in', sessionId);
                     accept('NOT_LOGGED_IN', false);
                     //accept(null, true);
@@ -133,10 +133,11 @@ sio.use(function (socket, next) {
 //--
 sio.on('connection', function (socket) {
     //socket.broadcast.to(id).emit('my message', msg);
-    console.log(" WS connection socket.id :" + socket.id);
-    console.log(" WS connection cookie    : " + socket.request.headers.cookie);
-    console.log(" WS connection sessionId : " + socket.client.request.sessionid);
-    console.log(" WS connection user : " + socket.client.request.session.passport.user);
+    log.debug(" WS connection socket.id :" + socket.id);
+    log.debug(" WS connection cookie    : " + socket.request.headers.cookie);
+    log.debug(" WS connection sessionId : " + socket.client.request.sessionid);
+    //log.debug(" WS connection user : " + socket.client.request.session.passport.user);
+    log.debug(" WS connection user : " + socket.client.request.user);
     //
     socket.join(socket.client.request.sessionid);
     //
