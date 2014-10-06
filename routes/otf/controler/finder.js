@@ -3,8 +3,6 @@
  * Il s'agit ici d'un Bean générique qui en fonction des données dans
  * l'annuaire otf json est capable de faire un find et de retourner
  * un objet json contenant le resultat de la requête.
- * Pour le moement il s'agit de requête simple en fonction d'un objet
- * passé en paramètre du find.
  */
 var logger = require('log4js').getLogger('css');
 var mongoose = require('mongoose');
