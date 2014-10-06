@@ -35,6 +35,20 @@
         "params_names": ["login"],
         "data_model": "Accounts"
     },
+    "GET/formadduser" : {
+        "module": "getview",
+        "methode": "view",
+        "screen": "formadduser",
+        "auth": true
+    },
+    "POST/adduser" : {
+        "module": "inserter",
+        "methode": "one",
+        "screen": "index",
+        "auth": true,
+        "params_names": ["login", "password"],
+        "data_model": "Accounts"
+    },
     "POST/index": {
         "module": "index",
         "methode": "titre",
