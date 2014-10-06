@@ -49,7 +49,7 @@
         "params_names": ["login", "password"],
         "data_model": "Accounts"
     },
-    "POST/index": {
+    "GET/index": {
         "module": "index",
         "methode": "titre",
         "screen": "index",
