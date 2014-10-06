@@ -6,6 +6,7 @@ append head
 append content
     h3= title
     a(href='/users') Liste des utilisateurs
+    a(href='/formadduser') Ajouter un utilisateur
     form(method="POST", action="/user")
         p Entrez le login pour afficher un utilisateur :
         input(type="text", name="login")
