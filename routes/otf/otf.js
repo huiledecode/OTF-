@@ -14,12 +14,9 @@ annuaire = JSON.parse(require('fs').readFileSync(__dirname + '/otf_annuaire.json
 logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
     annuaire);
 //--
-
-
-//--
 // Build the action Controller
 //--
-var getControler = function (req, cb) {
+function getControler(req, cb) {
     // --
     var acceptableFields = null;
     var filteredQuery = {}; // clause where de la requête MongoDB
@@ -144,36 +141,36 @@ var getControler = function (req, cb) {
 
 };
 //--
-var performAction = function (req, callback) {
-
-    // --
-    logger.debug("\tOTF  [ URL [type : %s], [Path : %s] ", req.method, req.url);
-    // --
-    // -- build controler
-    getControler(req, function cb(err, controler) {
-        if (err) {
-            // --
-            logger.debug("\tOTF getController ERROR [%j]", err);
-            callback(err, null);
-        } else {
-            // --
-            logger.debug("\tOTF controler     :  [%j]", controler);
-            logger.debug("\tOTF Session.otf   :  [%j]", req.session.otf);
-            //logger.debug("\tOTF Session.socketid   :  [%j]", req.session.sessionid);
-            // --
-            return callback(null, controler);
-        }
-    }); // ~ getController
-};
+//function performAction (req, callback) {
+//
+//    // --
+//    logger.debug("\tOTF  [ URL [type : %s], [Path : %s] ", req.method, req.url);
+//    // --
+//    // -- build controler
+//    getControler(req, function cb(err, controler) {
+//        if (err) {
+//            // --
+//            logger.debug("\tOTF getController ERROR [%j]", err);
+//            callback(err, null);
+//        } else {
+//            // --
+//            logger.debug("\tOTF controler     :  [%j]", controler);
+//            logger.debug("\tOTF Session.otf   :  [%j]", req.session.otf);
+//            //logger.debug("\tOTF Session.socketid   :  [%j]", req.session.sessionid);
+//            // --
+//            return callback(null, controler);
+//        }
+//    }); // ~ getController
+//};
 // --
-var logHttpRequest = function (req, res, next) {
+function logHttpRequest(req, res, next) {
     logger.debug("\napp Log Handler [ %s %s ]", req.method, req.url);
     next();
 };
 // --
 // -- Signup Accounts
 // --
-var signupAccount = function (req, res, next) {
+function signupAccount(req, res, next) {
     logger.debug("\napp signup Account [ %s %s %j]", req.method, req.url,
         req.body);
     //-- Authetificate, becarefull is a function
@@ -218,7 +215,7 @@ var signupAccount = function (req, res, next) {
 
 };
 //--
-var logOut = function (req, res) {
+function logOut(req, res) {
     // delete the account session
     req.logout();
     res.redirect('/login');
@@ -226,11 +223,11 @@ var logOut = function (req, res) {
 // --
 // -- Traite la requête par le routeur dynamique de OTF
 // --
-var otfAction = function (req, res, next) {// attention il ne
+function otfAction(req, res, next) {// attention il ne
     // --
-    logger.debug('\napp.js OTF buildAction [ %s %s ]', req.method, req.url);
+    logger.debug('OTF buildAction [ URL [type : %s], [Path : %s] [REMOTE IP : %s]', req.method, req.url, req.connection.remoteAddress);
     // --
-    performAction(req, function (err, controler) {
+    getControler(req, function (err, controler) {
         if (err)
             next(err);
         else {
@@ -246,6 +243,7 @@ var otfAction = function (req, res, next) {// attention il ne
                     return next(errBean, req, res);
                 }
                 logger.debug(" otf final %j", result);
+                // On gére le redirect pour l'authentification
                 if (controler.isRedirect)
                     res.redirect('/' + controler.screen);
                 else
