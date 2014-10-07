@@ -15,6 +15,7 @@ require("./ressources/db");
 var log = require('log4js').getLogger('css');
 log.debug(' LOG4J APP.JS INIT');
 var logMongo = require('log4js').getLogger('mongo');
+log.debug(' LOG4J MONGO APP.JS INIT');
 //--
 // Expres 4.2 midleware
 var express = require('express');
@@ -36,6 +37,8 @@ require('./ressources/passport')(passport);
 //--
 // Express Configuration
 var app = express();
+// GLOBAL for CApplication context app.settings
+//app = express();
 //
 //var sessionStore = new memoryStore();
 //--
@@ -68,16 +71,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 //--
 // Routes Managment by Otf Framework
-router = require('./routes/otf/otf');
+var router = require('./routes/otf/otf');
+//router.init(app);
 // -- NameSpace Management Sample /css
 // -- Mount Root Path / for router
 app.use('/', router);
 //
-app.set('port', process.env.NODE_PORT || 3000);
-app.set('host', process.env.NODE_HOST || "localhost");
+//app.set('port', process.env.NODE_PORT || 3000);
+//app.set('host', process.env.NODE_HOST || "localhost");
 
-//--
-sio = require('socket.io')();
+//-- GLOBAL
+GLOBAL.sio = require('socket.io')();
 //
 sio.set('authorization', function (data, accept) {
     log.debug(" Socket.io authorization event call !");
@@ -92,17 +96,18 @@ sio.set('authorization', function (data, accept) {
             }
             var sessionId = data.signedCookies[_cookie];
             _sessionStore.get(sessionId, function (err, session) {
-                console.log('in auth: session: ', session);
-                console.log('in auth: sessionId: ', sessionId);
-                console.log('in auth: signedCookie: ', data.signedCookies);
+                //console.log('in auth: session: ', session);
+                log.debug('Socket.io authorization : sessionId    : ', sessionId);
+                log.debug('Socket.io authorization : signedCookie : ', data.signedCookies);
                 if (err || !session || !session.passport || !session.passport.user) {
-                    console.log('not logged in', sessionId);
+                    log.debug('Socket.io authorization not logged in : sessionId :', sessionId);
                     accept('NOT_LOGGED_IN', false);
                     //accept(null, true);
                 }
                 else {
-                    console.log('logged in');
-                    data.session = session;
+                    log.debug('Socket.io authorization logged in : sessionId :', sessionId);
+                    //data.session = session;
+                    //@TODO généré un UUID par fle module flake-idgen pour la room et ajouter à la session et au data
                     data.sessionid = sessionId;
                     data.user = session.passport.user;
                     accept(null, true);
@@ -120,13 +125,13 @@ sio.set('authorization', function (data, accept) {
 sio.use(function (socket, next) {
 
     if (socket.client.request.cookies) {
-        log.debug(" Socket.io : Cookie is present ");
-        log.debug(' Socket.io : sessionid :%s ', socket.client.request.sessionid);
-        log.debug(' Socket.io : user      :%j  ', socket.client.request.session.account);
-        //log.debug(' Socket.io : user     : ', socket.client.request.user);
+        log.debug(" Socket.io Trace : Cookie is present ");
+        log.debug(' Socket.io Trace : sessionid :%s ', socket.client.request.sessionid);
+        //log.debug(' Socket.io : user      :%j  ', socket.client.request.session.account);
+        log.debug(' Socket.io Trace : user     : ', socket.client.request.user);
         return next();
     } else {
-        log.debug(" Socket.io : Cookie is not present ");
+        log.debug(" Socket.io Trace : Cookie is not present ");
         return next('COOKIE_NOT_PRESENT', false);
     }
 });
@@ -134,16 +139,16 @@ sio.use(function (socket, next) {
 sio.on('connection', function (socket) {
     //socket.broadcast.to(id).emit('my message', msg);
     log.debug(" WS connection socket.id :" + socket.id);
-    log.debug(" WS connection cookie    : " + socket.request.headers.cookie);
+    //log.debug(" WS connection cookie    : " + socket.request.headers.cookie);
     log.debug(" WS connection sessionId : " + socket.client.request.sessionid);
     //log.debug(" WS connection user : " + socket.client.request.session.passport.user);
     log.debug(" WS connection user : " + socket.client.request.user);
     //
     socket.join(socket.client.request.sessionid);
     //
-    var mess = {'sessionid': socket.client.request.sessionid, 'user': socket.client.request.session.passport.user};
+    var mess = {'sessionid': socket.client.request.sessionid, 'user': socket.client.request.user};
     sio.sockets.in(socket.client.request.sessionid).emit('ack', mess);
-    console.log("Room n° : " + socket.client.request.sessionid);
+    log.debug(" WS connection Room n° : " + socket.client.request.sessionid);
 
 });
 
