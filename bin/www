@@ -18,14 +18,15 @@ var logger = log4js.getLogger('ccs');
 var loggerMongo = log4js.getLogger('mongo');
 //--
 var debug = require('debug')('OTF');
+
 //--
 var app = require('../app');
 app.set('port', process.env.NODE_PORT || 3000);
 app.set('host', process.env.NODE_HOST || "localhost");
 //
 var server = app.listen(app.get('port'), app.get('host'), function () {
-    logger.debug("Express server listening on http://%s:%d \n", app.get('host'), app.get('port'));
-    loggerMongo.debug("Express server listening on http://%s:%d \n", app.get('host'), app.get('port'));
+    logger.debug("Express server listening on http://%s:%d", app.get('host'), app.get('port'));
+    loggerMongo.debug("Express server listening on http://%s:%d", app.get('host'), app.get('port'));
 });
 //--
 // SERVER SOCKET

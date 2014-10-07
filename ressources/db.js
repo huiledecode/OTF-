@@ -8,11 +8,11 @@ var logger = require('log4js').getLogger('ccs');
 //-- Db Connection
 mongoose.connect(dbUrl, function (err) {
     if (err) {
-        logger.debug('App ERROR Mongodb connecting to: [%j]', dbUrl + '. '
+        logger.debug('Data Base not connected to Mongodb URL: [%j]', dbUrl + ' ERROR :  '
             + err);
         throw err;
     } else {
-        logger.debug('APP Succeeded connected to Mongodb : [%j] ', dbUrl);
+        logger.debug('Data Base connected to MongoDb URL [%j] ', dbUrl);
         // connection = res;
     }
 });
