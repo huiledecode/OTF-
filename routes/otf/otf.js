@@ -57,14 +57,15 @@ function getControler(req, cb) {
             // -- On construit dynamiquement les params de la requête
             for (var field in req.query) {
                 if (req.query.hasOwnProperty(field)) {
-                    filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
+                    //filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
+                    filteredQuery[field] = req.query[field];
                 }
             }
         } else if ((type === 'POST') && (typeof filter_acceptableFields != 'undefined')) {
             for (var field in req.body) {
                 if (req.body.hasOwnProperty(field)) {
-                    filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
-                    //filteredQuery[field] = req.body[field];
+                    //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
+                    filteredQuery[field] = req.body[field];
                 }
             }
         }
