@@ -6,6 +6,7 @@
 var logger = require('log4js').getLogger('css');
 var express = require('express');
 var router = express.Router();
+var appContext;
 var passport = require('passport');
 var url = require("url");
 //-- load annuaire file in sync mode
@@ -13,6 +14,33 @@ var annuaire;
 annuaire = JSON.parse(require('fs').readFileSync(__dirname + '/otf_annuaire.json', 'utf8'));
 logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
     annuaire);
+
+//---
+// Fonction exportées pour paramétrer OTF
+// Attention à l'odre des router.use et router.get et router.post
+function otf(app) {
+    //-- Context applicatif
+    appContext = app;
+//-- Trace
+    router.use(logHttpRequest);// -- LogHttpREquest
+
+    //-- Authentificate Process
+    router.post('/signupAccount', signupAccount);
+
+//-- Logout Process
+    router.get('/logout', logOut);
+
+
+    // -- Perform OTF Automate action
+    router.use(otfAction);
+
+//-- Error Handler if otf throw error
+    router.use(errorHandler);
+
+
+    appContext.use('/', router);
+}
+
 //--
 // Build the action Controller
 //--
@@ -32,60 +60,55 @@ function getControler(req, cb) {
     var redirect = false;
     //
     path = url.parse(req.url).pathname;
-    if (!path) {
-        err = "{'error':' url parse error for path [%s]',path}";
-        return cb(err);
-    }
     // -- GET, POST,DELETE, etc ..
     type = req.method;
     //-- test existance dans l'annuaire
-    if (!annuaire[type + path]) {
-        logger.error(" Action not implemented for [%s/%s]", path, type);
-        err = "{'error':' Action not implemented for [%s/%s]',path,type}";
+    if (typeof annuaire[type + path] == 'undefined') {
+        var messError = "Action not implemented for [" + type + path + "]";
+        logger.error('[OTF:getController]' + messError);
+        err = {status: 501, title: 'OTF Http Status 501: Action not implemented', message: messError};
         return cb(err);
     }
-    // -- get parameters names from otf_annuaire.json
+
     filter_acceptableFields = annuaire[type + path].params_names;
-    //data_acceptableFields = annuaire[type + path].session_names;
-    modele = annuaire[type + path].data_model;
-    if (!type) {
-        err = "{'error':' type parse error for path [%s]',path}";
-        return cb(err);
-        // -- Type detection for HTTP parameters (GET --> req.query) / POST --> req.body)
-    } else {
-        if ((type === 'GET') && (typeof filter_acceptableFields != 'undefined')) {
-            // -- On construit dynamiquement les params de la requête
-            for (var field in req.query) {
-                if (req.query.hasOwnProperty(field)) {
-                    //filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
-                    filteredQuery[field] = req.query[field];
-                }
-            }
-        } else if ((type === 'POST') && (typeof filter_acceptableFields != 'undefined')) {
-            for (var field in req.body) {
-                if (req.body.hasOwnProperty(field)) {
-                    //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
-                    filteredQuery[field] = req.body[field];
-                }
+    if ((type === 'GET') && (typeof filter_acceptableFields != 'undefined')) {
+        // -- On construit dynamiquement les params de la requête
+        for (var field in req.query) {
+            if (req.query.hasOwnProperty(field)) {
+                //filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
+                filteredQuery[field] = req.query[field];
             }
         }
-        // -- faut-il implémenter le delete ?
-        /* else if ((type === 'DELETE') && (typeof params_names != 'undefined')) {
-         for (var j = 0; j < params_names.length; j++) {
-         params_values[j] = req.body[params_names];
-         }*/
-        //-- passage du sesionId (Room) pour l'utilisation des Websocket dans le bean
-        // sessionData['room'] = req.sessionID;
-        //filteredQuery = JSON.stringify( filteredQuery);
+    } else if ((type === 'POST') && (typeof filter_acceptableFields != 'undefined')) {
+        for (var field in req.body) {
+            if (req.body.hasOwnProperty(field)) {
+                //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
+                filteredQuery[field] = req.body[field];
+            }
+        }
     }
+    //@TODO implémenter la gestion des erreurs
+    // -- faut-il implémenter le delete ?
+    /* else if ((type === 'DELETE') && (typeof params_names != 'undefined')) {
+     for (var j = 0; j < params_names.length; j++) {
+     params_values[j] = req.body[params_names];
+     }*/
+    //-- passage du sesionId (Room) pour l'utilisation des Websocket dans le bean
+    // sessionData['room'] = req.sessionID;
+    //filteredQuery = JSON.stringify( filteredQuery);
 
     // -- Authentificate flag
     auth = annuaire[type + path].auth;
-
+    if (typeof auth == 'undefined') {
+        var messError = "Authentification Flag not implemented in Annuaire for [" + type + path + "]";
+        logger.error('[OTF:getController]' + messError);
+        err = {status: 501, title: 'OTF Http Status 501: Authentification Flag not implemented', message: messError};
+        return cb(err);
+    }
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
     if (auth && !req.isAuthenticated()) {
-        logger.debug("\tOTF Page sécurisée,demande d'authentification. ");// redirect to loggin
+        logger.debug("\tOTF Page sécurisée, demande d'authentification. ");// redirect to loggin
         module = 'login';
         methode = 'titre';
         screen = 'login';
@@ -103,12 +126,23 @@ function getControler(req, cb) {
         // -- Load module in otf_module
         //@TODO TRY / CATCH pour la gestion de l'erreur
         instanceModule = require('./controler/' + module);
-        if (!instanceModule) {
-            err = "{'error':' module laod error for path [%s]',path}";
+        if (typeof instanceModule == 'undefined') {
+            var messError = " Loading Module Error for path [" + type + path + "] and Module [" + module + "]";
+            logger.error('[OTF:getController]' + messError);
+            err = {status: 501, title: 'OTF Http Status 501:Loading Module Error', message: messError};
             return cb(err);
+
         }
     }
-
+    //data_acceptableFields = annuaire[type + path].session_names;
+    modele = annuaire[type + path].data_model;
+    //@TODO Le modele est il obligatoire ???
+    //if (!modele)  {
+    //    var messError ="Modele Property not implemented in Annuaire for ["+type+path+"]";
+    //    logger.error('[OTF:getController]'+messError);
+    //    err = {status:501,title:'OTF Http Status 501: Modele Property not implemented',message:messError};
+    //    return cb(err);
+    //}
     //
     if (methode !== 'undefined') {
         // Merci Stéphane
@@ -227,6 +261,8 @@ function logOut(req, res) {
 function otfAction(req, res, next) {// attention il ne
     // --
     logger.debug('OTF buildAction [ URL [type : %s], [Path : %s] [REMOTE IP : %s]', req.method, req.url, req.connection.remoteAddress);
+    logger.debug(" Test Context Applicatif  by app.set %s", appContext.get('test'));
+    logger.debug(" Test Context Applicatif  by app.locals %s", appContext.locals.test);
     // --
     getControler(req, function (err, controler) {
         if (err)
@@ -240,8 +276,10 @@ function otfAction(req, res, next) {// attention il ne
                 // handling exception
                 //-- @TODO Faire une gestion des exceptions plus fine !!
                 if (errBean) {
-                    logger.error(" Controler.action ERROR :: %s", errBean);
-                    return next(errBean, req, res);
+                    var messError = "Controller Execution Failed for [" + type + path + "] Error Message [" + errBean + "]";
+                    logger.error('[OTF:otfAction]' + messError);
+                    err = {status: 501, title: 'OTF Http Status 501: Controller Execution Failed', message: messError};
+                    //return next(errBean, req, res);
                 }
                 logger.debug(" otf final %j", result);
                 // On gére le redirect pour l'authentification
@@ -256,34 +294,33 @@ function otfAction(req, res, next) {// attention il ne
 // --
 // -- Gestion des erreurs Si erreur lors du traitement de la requête par le
 // routeur dynamique de OTF
+// Attention de ne pas oublier l'argument next sinon le milddleware express de la traite pas comme un gestionneire d'erreur
 // --
-function errorHandler(err, req, res) {
-    logger.debug(
-        "APP OTF Handler status 500 Error cause by :  \n [\n %s \n] \n",
-        err.stack);
+function errorHandler(err, req, res, next) {
+    logger.error(
+            "OTF Error Handler Http Status Code" + err.status + " Error cause by : [%s]",
+        err.message);
     res.status(501);
-    res.render('501', {
-        title: 'Http Status 501: Action not implemented',
-        error: err,
-        url: req.method + req.url
-    });
+    res.render('501', err);
     return; // end of treath
 };
 // --logger
-router.use(logHttpRequest);// -- LogHttpREquest
-//-- Authentificate Process
+//router.use(logHttpRequest);// -- LogHttpREquest
+////-- Authentificate Process
+//
+////--
+//router.post('/signupAccount', signupAccount);
+//
+////-- Logout Process
+//router.get('/logout', logOut);
+//
+//// -- Perform OTF Automate action
+//router.use(otfAction);
+//
+////-- Error Handler if otf throw error
+//router.use(errorHandler);// -- Error Handler After Otf Treath
+//
+//
+//module.exports = router;
 
-//--
-router.post('/signupAccount', signupAccount);
-
-//-- Logout Process
-router.get('/logout', logOut);
-
-// -- Perform OTF Automate action
-router.use(otfAction);
-
-//-- Error Handler if otf throw error
-router.use(errorHandler);// -- Error Handler After Otf Treath
-
-
-module.exports = router;
+module.exports = otf;

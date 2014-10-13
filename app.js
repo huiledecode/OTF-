@@ -69,16 +69,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //
 app.use(passport.initialize());
 app.use(passport.session());
+
 //--
 // Routes Managment by Otf Framework
-var router = require('./routes/otf/otf');
-//router.init(app);
-// -- NameSpace Management Sample /css
-// -- Mount Root Path / for router
-app.use('/', router);
-//
-//app.set('port', process.env.NODE_PORT || 3000);
-//app.set('host', process.env.NODE_HOST || "localhost");
+//var router = require('./routes/otf/otf');
+require('./routes/otf/otf')(app);
 
 //-- GLOBAL
 GLOBAL.sio = require('socket.io')();
@@ -152,7 +147,10 @@ sio.on('connection', function (socket) {
 
 });
 
-//--
+//-- TEST PASSAGE CONTEXT APPLICATIF
+app.locals.test = 'localsValue';
+app.set('test', 'setValue');
+
 //-- Make the instance object app global
 //  export app
 module.exports = app;
