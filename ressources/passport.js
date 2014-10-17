@@ -9,7 +9,7 @@ var LocalStrategy = require('passport-local').Strategy;
 //-- Schema account
 require('./models/accounts');
 //-- Accounts Model
-var Accounts = mongoose.model('Accounts');
+var Accounts = mongoose.model('Accounts_User');
 //var account;
 // var Accounts = new accountModel();
 // load up the user model
@@ -76,10 +76,10 @@ module.exports = function(passport) {
                 }, function(err, _account) {
                     // --
                     if (err) {
-                        console.log("\tPassport account read db error : [%s]", err.message);
+                        console.log("\tPassport account read db errmr : [%s]", err.message);
                         return done(null, false);
                     }
-
+                    console.log('_account : ' ,  _account);
                     if (!_account) {
                         console.log("\tPassport account not found in db for login : [%j]",
                             search);
