@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/css_em1';
 var logger = require('log4js').getLogger('ccs');
 //-- Db Connection
-mongoose.connect(dbUrl, function (err) {
+global.db = mongoose.connect(dbUrl, function (err) {
     if (err) {
         logger.debug('Data Base not connected to Mongodb URL: [%j]', dbUrl + ' ERROR :  '
             + err);
@@ -16,4 +16,4 @@ mongoose.connect(dbUrl, function (err) {
         // connection = res;
     }
 });
-module.exports = mongoose;
+//module.exports = mongoose;
