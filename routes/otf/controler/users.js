@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
  */
 
 exports.users = {
-    list: function (params, model, room, cb) {
+    list: function (params, path, model, schema, room, cb) {
         logger.debug('params : ', params);
         var modele = mongoose.model(model);
 
@@ -19,7 +19,7 @@ exports.users = {
         });
     },
 
-    one: function (params, model, room, cb) {
+    one: function (params, path, model, schema, room, cb) {
         logger.debug('params : ', params);
         logger.debug('model : ' + model);
         //-- Accounts Model
