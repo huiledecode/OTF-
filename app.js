@@ -8,7 +8,7 @@
  ******************************************************************************/
 
 //--
-// Bootstrap MongoDB
+// Bootstrap MongoDB wih global db
 require("./ressources/db");
 //--
 // Looger log4j
