@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
  */
 
 exports.inserter = {
-    one: function (params, model, room, cb) {
+    one: function (params, path, model, schema, room, cb) {
         // ici params est un objet simple à insérer
         logger.debug('params inserter : ' , params);
         var modele = mongoose.model(model);
