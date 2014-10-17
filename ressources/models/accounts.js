@@ -26,5 +26,5 @@ accountSchema.methods.validPassword = function(password) {
 
 // create the model for accounts and expose it to our app
 //--h ttps://www.youtube.com/watch?v=5e1NEdfs4is
-module.exports = mongoose.model('Accounts', accountSchema,'Accounts');
+module.exports = mongoose.model('Accounts_User', accountSchema,'accounts');
 //mongoose.model('Accounts', accountSchema,'Accounts');
