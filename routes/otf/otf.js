@@ -11,10 +11,14 @@ var passport = require('passport');
 var url = require("url");
 //-- load annuaire file in sync mode
 var annuaire;
+var annuaire_schema;
 annuaire = JSON.parse(require('fs').readFileSync(__dirname + '/otf_annuaire.json', 'utf8'));
 logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
     annuaire);
-
+// -- load annuaire_schema json file
+annuaire_schema = JSON.parse(require('fs').readFileSync(__dirname + '/annuaire_schemas.json', 'utf8'));
+logger.debug("\tOTF Otf.prototype.performAction Annuaire schéma  : \n[\n%j\n]\n",
+  annuaire_schema);
 //---
 // Fonction exportées pour paramétrer OTF
 // Attention à l'odre des router.use et router.get et router.post
@@ -51,6 +55,7 @@ function getControler(req, cb) {
     var sessionData = {}; // info à passer au bean contenu dans la session
     var path = "";
     var modele = "";
+    var schema = "";
     var type = "";
     var auth = "";
     var module = "";
@@ -136,6 +141,7 @@ function getControler(req, cb) {
     }
     //data_acceptableFields = annuaire[type + path].session_names;
     modele = annuaire[type + path].data_model;
+    schema = annuaire_schema[path].schema;
     //@TODO Le modele est il obligatoire ???
     //if (!modele)  {
     //    var messError ="Modele Property not implemented in Annuaire for ["+type+path+"]";
@@ -159,6 +165,7 @@ function getControler(req, cb) {
     // -- controler data structure with HTTP parameters
     controler = {
         'auth': auth,
+        'path' : path,
         'module': module,
         'methode': methode,
         'screen': screen,
@@ -166,6 +173,7 @@ function getControler(req, cb) {
         'params': filteredQuery,
         'room': req.sessionID,
         'data_model': modele,
+        'schema' : schema,
         'isRedirect': redirect
     };
     // -- set session otf controler
@@ -272,7 +280,7 @@ function otfAction(req, res, next) {// attention il ne
              * au bean d'exécuter des actions asynchrones et donc ne pas bloquer
              * l'application aux autres utilisateurs */
             // On ajoute la room
-            controler.action(controler.params, controler.data_model, controler.room, function (errBean, result) {
+            controler.action(controler.params,  controler.path, controler.data_model, controler.schema, controler.room, function (errBean, result) {
                 // handling exception
                 //-- @TODO Faire une gestion des exceptions plus fine !!
                 if (errBean) {
@@ -298,7 +306,7 @@ function otfAction(req, res, next) {// attention il ne
 // --
 function errorHandler(err, req, res, next) {
     logger.error(
-            "OTF Error Handler Http Status Code" + err.status + " Error cause by : [%s]",
+            "OTF Error Handler Http Status Code " + err.status + " Error cause by : [%s]",
         err.message);
     res.status(501);
     res.render('501', err);
