@@ -1,5 +1,6 @@
 socket.on('user', function (message) {
-    alert(' WS user event \n Room is :' + message.room + '\n' + message.comment);
+    //alert(' WS user event \n Room is :' + message.room + '\n' + message.comment);
+    console.log(' WS user event \n Room is :' + message.room + '\n' + message.comment);
 });
 
 /**
