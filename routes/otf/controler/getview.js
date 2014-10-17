@@ -1,6 +1,6 @@
 exports.getview = {
 
-    view: function (params, modele, room, cb) {
+    view: function (params, path, modele, schema, room, cb) {
         return cb(null, { title: '' + modele });
     }
 
