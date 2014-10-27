@@ -64,7 +64,7 @@ exports.finder = {
     } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
       modele = global.db.model(path);
       // requete ici si model existe dejà dans mongoose
-      modele.find(params, function (err, one_user) {
+      modele.findOne(params, function (err, one_user) {  //on utilise findOne sinon on a un Array en retour
         logger.debug('Utilisateur sélectionné : ', one_user);
         return cb(null, {result: one_user, room: room});
       });
