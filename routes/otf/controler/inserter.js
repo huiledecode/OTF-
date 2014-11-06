@@ -13,7 +13,7 @@ var genericModel = require(__dirname +'/../../../ressources/models/mongooseGener
  */
 
 exports.inserter = {
-  one: function (params, path, model, schema, room, session, cb) {
+  one: function (params, path, model, schema, room, cb) {
     //@TODO not safety
     logger.debug('room   : ', room);
     logger.debug('model  : ' + model);
@@ -27,20 +27,20 @@ exports.inserter = {
       document = new genericModel.mongooseGeneric(path, schema, model);
       document.createDocument(params, function (err, nb_inserted) {
         logger.debug('nombre documents insérés :', nb_inserted);
-        return cb(null, {data: nb_inserted, result: {account: session.account}, room: room});
+        return cb(null, {data: nb_inserted, room: room});
       });
     } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
       modele = global.db.model(path);
       // requete ici si model existe dejà dans mongoose
       modele.create(params, function (err, nb_inserted) {
         logger.debug('nombre documents insérés : ', nb_inserted);
-        return cb(null, {data: nb_inserted, result: {account: session.account}, room: room});
+        return cb(null, {data: nb_inserted, room: room});
       });
     }
 
   },
 
-  list: function(params, path, model, schema, room, session, cb) {
+  list: function(params, path, model, schema, room, cb) {
     // ici params est un tableau d'objet à insérer
     /* TODO écrire l'insertion générique d'une liste d'objets avec mongoDB, via mongoose. */
 
