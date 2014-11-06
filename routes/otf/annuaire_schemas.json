@@ -37,6 +37,15 @@
     "login"        : "String",
     "password"     : "String"
     }
+  },
+  "/formadduser" : {
+    "schema": {}
+  },
+  "/adduser" : {
+    "schema" : {
+      "login" : "String",
+      "password" : "String"
+    }
   }
 
 }
