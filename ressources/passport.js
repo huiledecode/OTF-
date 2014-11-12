@@ -21,7 +21,7 @@ var Accounts = mongoose.model('Accounts_User');
 // };
 // expose this function to our app using module.exports
 module.exports = function(passport) {
-
+    //http://toon.io/understanding-passportjs-authentication-flow/
     // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
@@ -29,18 +29,24 @@ module.exports = function(passport) {
     // passport needs ability to serialize and unserialize users out of session
 
     // used to serialize the user for the session
-    passport.serializeUser(function(account, done) {
-        done(null, account.login);
+    //This method can access the user object we passed back to the middleware. It's its job to determine
+    // what data from the user object should be stored in the session.
+    // The result of the serializeUser method is attached to the session as req.session.passport.user =
+    passport.serializeUser(function (account, done) {
+        //C'est Ici que le profil du user doit être loader
+        console.log("Passport SerializeUser  account : %j", account);
+        done(null, account);
     });
 
-    // used to deserialize the user
-    passport.deserializeUser(function(login, done) {
-        // done(null, account);
-        Accounts.findOne({
-            login : login
-        }, function(err, account) {
-            done(err, account);
-        });
+    // used to deserialize the userpassport.deserializeUser is invoked on every request by passport.session.
+    // It enables us to load additional user information on every request.
+    // This user object is attached to the request as req.user making it accessible in our request handling.
+    //
+    passport.deserializeUser(function (account, done) {
+
+        console.log("Passport DeserializeUser  account: %j", account);
+        done(null, account);
+
     });
 
     // =========================================================================
@@ -76,15 +82,16 @@ module.exports = function(passport) {
                 }, function(err, _account) {
                     // --
                     if (err) {
-                        console.log("\tPassport account read db errmr : [%s]", err.message);
-                        return done(null, false);
+                        console.log("\tPassport account read db err message : [%s]", err.message);
+                        return done(err);
                     }
-                    console.log('_account : ' ,  _account);
+                    console.log('PASSEPORT _account : ', _account);
                     if (!_account) {
                         console.log("\tPassport account not found in db for login : [%j]",
-                            search);
+                            login);
                         return done(null, false);
                     } else {
+                        //Verification the user Identification
                         console.log("\tPassport account find : [%j], session id [%s]",
                             _account, req.sessionID);
                         if (login === _account.login
@@ -92,10 +99,11 @@ module.exports = function(passport) {
                             // On doit aussi load l'annuaire des authorisations pour
                             // le
                             // mettre dans la session le compte
-                            req.session.account = _account;
+                            //req.session.account = _account;
                             // -- req.session.annuaire =
                             return done(null, _account);
                         } else {
+                            //Bab Password
                             return done(null, false);
                         }
                         ;

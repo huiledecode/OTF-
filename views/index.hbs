@@ -1,0 +1,30 @@
+{{> menu}}
+<div class="container">
+    <h3>{{title}}</h3>
+
+    <p></p>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <a href="/users">Liste des utilisateurs</a>
+
+            <p></p>
+            <a href="/formadduser">Ajouter un utilisateur</a>
+
+            <p></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <form method="POST" action="/user">
+                <p>Entrez le login pour afficher un utilisateur :<input type="text" name="login"></p>
+
+                <p></p>
+                <input type="submit" value="Chercher">
+
+                <p></p>
+            </form>
+            <a href="/logout">Déconnexion</a>
+        </div>
+    </div>
+</div>

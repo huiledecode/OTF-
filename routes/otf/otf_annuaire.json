@@ -35,14 +35,14 @@
         "params_names": ["login"],
         "data_model": "accounts"
     },
-    "GET/formadduser" : {
+    "GET/formadduser": {
         "module": "getview",
         "methode": "view",
         "screen": "formadduser",
         "auth": true,
-        "data_model": "Ajouter un utilisateur"
+        "data_model": "accounts"
     },
-    "POST/adduser" : {
+    "POST/adduser": {
         "module": "inserter",
         "methode": "one",
         "screen": "index",

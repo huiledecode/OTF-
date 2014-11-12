@@ -3,17 +3,41 @@
  */
 //-- Db Setup
 var mongoose = require('mongoose');
-var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/css_em1';
+//var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/css_em1';
 var logger = require('log4js').getLogger('ccs');
-//-- Db Connection
-global.db = mongoose.connect(dbUrl, function (err) {
-    if (err) {
-        logger.debug('Data Base not connected to Mongodb URL: [%j]', dbUrl + ' ERROR :  '
-            + err);
-        throw err;
-    } else {
-        logger.debug('Data Base connected to MongoDb URL [%j] ', dbUrl);
-        // connection = res;
-    }
-});
-//module.exports = mongoose;
+//var options = {server: { poolSize: 5 }};
+function getPoolConnection(dbUrl, options) {
+    //
+    con = mongoose.connect(dbUrl, options);
+    // Global DB
+    global.db = con;
+    // CONNECTION EVENTS
+    // When successfully connected
+    mongoose.connection.on('connected', function () {
+        logger.debug('Data Base connected to MongoDb URL [%j] State :[%j] ', dbUrl, mongoose.connection.readyState);
+    });
+
+    // If the connection throws an error
+    mongoose.connection.on('error', function (err) {
+        logger.debug('Data Base not connected to Mongodb URL: [%j]', dbUrl + ' ERROR :  ' + err);
+        // Stop Node.js Express application
+        process.exit(0);
+    });
+
+    // When the connection is disconnected
+    mongoose.connection.on('disconnected', function () {
+        logger.debug('Data Base Disconnected to MongoDb URL [%j] State :[%j] ', dbUrl, mongoose.connection.readyState);
+    });
+
+    // If the Node process ends, close the Mongoose connection
+    process.on('SIGINT', function () {
+        mongoose.connection.close(function () {
+            logger.debug('Data Base Disconnected to MongoDb URL [%j]', dbUrl);
+            process.exit(0);
+        });
+    });
+    //con.connection.readyState
+
+}
+
+exports.initDb = getPoolConnection;

@@ -113,14 +113,14 @@ function getControler(req, cb) {
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
     if (auth && !req.isAuthenticated()) {
-        logger.debug("\tOTF Page sécurisée, demande d'authentification. ");// redirect to loggin
+        logger.debug("\tOTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
         module = 'login';
         methode = 'titre';
         screen = 'login';
         redirect = true;
         //return res.redirect("index.jade");
     } else {
-        logger.debug("\tOTF Account authentifié [ account %j], [session id : [%s] ]", req.session.account, req.sessionID);// redirect to loggin
+        logger.debug("\tOTF Account authentifié [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
@@ -183,28 +183,7 @@ function getControler(req, cb) {
     return cb(null, controler);
 
 };
-//--
-//function performAction (req, callback) {
-//
-//    // --
-//    logger.debug("\tOTF  [ URL [type : %s], [Path : %s] ", req.method, req.url);
-//    // --
-//    // -- build controler
-//    getControler(req, function cb(err, controler) {
-//        if (err) {
-//            // --
-//            logger.debug("\tOTF getController ERROR [%j]", err);
-//            callback(err, null);
-//        } else {
-//            // --
-//            logger.debug("\tOTF controler     :  [%j]", controler);
-//            logger.debug("\tOTF Session.otf   :  [%j]", req.session.otf);
-//            //logger.debug("\tOTF Session.socketid   :  [%j]", req.session.sessionid);
-//            // --
-//            return callback(null, controler);
-//        }
-//    }); // ~ getController
-//};
+
 // --
 function logHttpRequest(req, res, next) {
     logger.debug("\napp Log Handler [ %s %s ]", req.method, req.url);
@@ -214,34 +193,33 @@ function logHttpRequest(req, res, next) {
 // -- Signup Accounts
 // --
 function signupAccount(req, res, next) {
-    logger.debug("\napp signup Account [ %s %s %j]", req.method, req.url,
+    logger.debug("\nOTF signup Account [ %s %s %j]", req.method, req.url,
         req.body);
     //-- Authetificate, becarefull is a function
     passport.authenticate(
         'local',
         function (err, account) {
 
-            // next();
             if (err) {
-                logger.debug("APP authenticate  signupAccount ERROR [%s]",
+                logger.debug("passport.authenticate  signupAccount ERROR [%s]",
                     err);
                 return next(err); // will generate a 500 error
             }
             ;
             if (!account) {
-                logger.debug("APP authenticate  signupAccount Fail ");
+                logger.debug("passport.authenticate  signupAccount Fail ");
                 return res.redirect('/login');
             }
             // if everything's OK
             // create objects in session
             req.logIn(account, function (err) {
                 if (err) {
-                    logger.debug("APP logIn ERROR   account : [%j]",
+                    logger.debug("passport.authenticate req.LogIn ERROR   account : [%j]",
                         account);
                     req.session.messages = "Error logIn";
                     return next(err);
                 }
-                logger.debug("APP authenticate   account : [%j,  session id : [%s]]",
+                logger.debug("passport.authenticate req.LogIn OK   account : [%j,  session id : [%s]]",
                     account, req.sessionID);
                 // set the message
                 req.session.messages = {

@@ -1,0 +1,23 @@
+{{> menu}}
+<div class="container">
+    <h3>{{title}}</h3>
+
+    <p></p>
+
+    <div class="col-xs-6 col-sm-4">
+        <p>Id : {{result._id}}</p>
+
+        <p>Login : {{result.login}}</p>
+
+        <p>Password : {{result.password}}</p>
+
+        <p>Version : {{result.__v}}</p>
+    </div>
+
+    <div class="col-xs-6 col-sm-4">
+        <p> Room : {{room}} </p>
+
+        <p><a href='/index'>Retour Acccueil </a></p>
+        <a href="/logout">Déconnexion</a>
+    </div>
+</div>

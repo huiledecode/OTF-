@@ -9,7 +9,10 @@
 
 //--
 // Bootstrap MongoDB wih global db
-require("./ressources/db");
+// @TODO Json config à mettre en place avec relod si modification !
+var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/css_em1';
+var options = {server: { poolSize: 5 }};
+require("./ressources/db").initDb(dbUrl, options);
 //--
 // Looger log4j
 var log = require('log4js').getLogger('css');
@@ -19,6 +22,7 @@ log.debug(' LOG4J MONGO APP.JS INIT');
 //--
 // Expres 4.2 midleware
 var express = require('express');
+var exphbs = require('express-handlebars');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -37,14 +41,19 @@ require('./ressources/passport')(passport);
 //--
 // Express Configuration
 var app = express();
-// GLOBAL for CApplication context app.settings
-//app = express();
-//
-//var sessionStore = new memoryStore();
 //--
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var hbs = exphbs.create({
+    extname: '.hbs',
+    defaultLayout: 'main',
+    partialsDir: [
+        'views/partials/'
+    ]
+});
+app.engine('.hbs', hbs.engine);
+app.set('view engine', '.hbs');
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
 //--
 // favicon
 app.use(favicon(__dirname + '/public/favicon/favicon.ico'));

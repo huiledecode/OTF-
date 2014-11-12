@@ -1,0 +1,17 @@
+{{> menu}}
+<div class="container">
+    <h3>List Users</h3><p></p>
+    {{#each result}}
+         <div class="col-xs-6 col-sm-4">
+            <p>Id       : {{_id}}</p>
+            <p>Login    : {{login}}</p>
+            <p>Password : {{password}}</p>
+            <p>Version : {{__v}}</p>
+         </div>
+    {{/each}}
+     <div class="col-xs-6 col-sm-4">
+            <p> Room : {{room}} </p>
+            <p> <a href='/index'>Retour Acccueil </a></p>
+            <a href="/logout">Déconnexion</a>
+     </div>
+</div>
