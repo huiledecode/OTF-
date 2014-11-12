@@ -79,14 +79,14 @@ function getControler(req, cb) {
     if ((type === 'GET') && (typeof filter_acceptableFields != 'undefined')) {
         // -- On construit dynamiquement les params de la requête
         for (var field in req.query) {
-            if (req.query.hasOwnProperty(field)) {
+            if ((req.query.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
                 //filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
                 filteredQuery[field] = req.query[field];
             }
         }
     } else if ((type === 'POST') && (typeof filter_acceptableFields != 'undefined')) {
         for (var field in req.body) {
-            if (req.body.hasOwnProperty(field)) {
+            if ((req.body.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
                 //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
                 filteredQuery[field] = req.body[field];
             }
