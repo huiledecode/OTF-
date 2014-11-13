@@ -669,3 +669,14 @@
 [2014-11-12 11:52:48.905] [DEBUG] ccs - Express server listening on http://localhost:3000
 [2014-11-12 11:52:48.930] [DEBUG] ccs - Data Base connected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[1] 
 [2014-11-12 11:54:51.476] [DEBUG] ccs - Data Base Disconnected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[0] 
+[2014-11-12 18:32:18.259] [DEBUG] ccs - Express server listening on http://localhost:3000
+[2014-11-12 18:32:18.285] [DEBUG] ccs - Data Base connected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[1] 
+[2014-11-12 18:35:17.702] [DEBUG] ccs - Data Base Disconnected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[0] 
+[2014-11-12 18:35:19.439] [DEBUG] ccs - Express server listening on http://localhost:3000
+[2014-11-12 18:35:19.467] [DEBUG] ccs - Data Base connected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[1] 
+[2014-11-12 18:45:02.268] [DEBUG] ccs - Data Base Disconnected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[0] 
+[2014-11-12 18:45:04.082] [DEBUG] ccs - Express server listening on http://localhost:3000
+[2014-11-12 18:45:04.111] [DEBUG] ccs - Data Base connected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[1] 
+[2014-11-12 22:34:15.875] [DEBUG] ccs - Data Base Disconnected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[0] 
+[2014-11-13 14:01:22.291] [DEBUG] ccs - Express server listening on http://localhost:3000
+[2014-11-13 14:01:22.356] [DEBUG] ccs - Data Base connected to MongoDb URL ["mongodb://@127.0.0.1:27017/css_em1"] State :[1] 

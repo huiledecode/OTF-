@@ -1,0 +1,30 @@
+{{> menu}}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <h3>List Users</h3>
+        </div>
+    </div>
+    {{#each result}}
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
+                <p>Id : {{_id}}</p>
+
+                <p>Login : {{login}}</p>
+
+                <p>Password : {{password}}</p>
+
+                <p>Version : {{__v}}</p>
+            </div>
+        </div>
+    {{/each}}
+    //
+    <div class="row-fluid">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <p> Room : {{room}} </p>
+
+            <p><a href='/index'>Retour Acccueil </a></p>
+            <a href="/logout">Déconnexion</a>
+        </div>
+    </div>
+</div>
