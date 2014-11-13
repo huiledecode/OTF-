@@ -69,7 +69,7 @@ function getControler(req, cb) {
     type = req.method;
     //-- test existance dans l'annuaire
     if (typeof annuaire[type + path] == 'undefined') {
-        var messError = "Action not implemented for [" + type + path + "]";
+        var messError = "Action not implemented for URL [" + type + path + "]";
         logger.error('[OTF:getController]' + messError);
         err = {status: 501, title: 'OTF Http Status 501: Action not implemented', message: messError};
         return cb(err);
@@ -105,7 +105,7 @@ function getControler(req, cb) {
     // -- Authentificate flag
     auth = annuaire[type + path].auth;
     if (typeof auth == 'undefined') {
-        var messError = "Authentification Flag not implemented in Annuaire for [" + type + path + "]";
+        var messError = "Authentification Flag not implemented in Annuaire for URL [" + type + path + "]";
         logger.error('[OTF:getController]' + messError);
         err = {status: 501, title: 'OTF Http Status 501: Authentification Flag not implemented', message: messError};
         return cb(err);
@@ -132,9 +132,9 @@ function getControler(req, cb) {
         //@TODO TRY / CATCH pour la gestion de l'erreur
         instanceModule = require('./controler/' + module);
         if (typeof instanceModule == 'undefined') {
-            var messError = " Loading Module Error for path [" + type + path + "] and Module [" + module + "]";
+            var messError = "Loading Module Error for URL [" + type + path + "] and Module [" + module + "]";
             logger.error('[OTF:getController]' + messError);
-            err = {status: 501, title: 'OTF Http Status 501:Loading Module Error', message: messError};
+            err = {status: 501, title: 'OTF Http Status 501 : Loading Module Error', message: messError};
             return cb(err);
 
         }
