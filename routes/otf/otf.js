@@ -2,7 +2,8 @@
  * Created by epa on 10/06/14.
  * Modified by SMA on 16/09/2014
  */
-
+var multiparty = require('multiparty');
+var util = require('util');
 var logger = require('log4js').getLogger('css');
 var express = require('express');
 var router = express.Router();
@@ -11,12 +12,11 @@ var passport = require('passport');
 var url = require("url");
 //-- load annuaire file in sync mode
 var annuaire;
-var annuaire_schema;
 annuaire = JSON.parse(require('fs').readFileSync(__dirname + '/otf_annuaire.json', 'utf8'));
 logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
     annuaire);
 // -- load annuaire_schema json file
-annuaire_schema = JSON.parse(require('fs').readFileSync(__dirname + '/annuaire_schemas.json', 'utf8'));
+GLOBAL.annuaire_schema = JSON.parse(require('fs').readFileSync(__dirname + '/annuaire_schemas.json', 'utf8'));
 logger.debug("\tOTF Otf.prototype.performAction Annuaire schéma  : \n[\n%j\n]\n",
   annuaire_schema);
 //---
@@ -63,81 +63,54 @@ function getControler(req, cb) {
     var screen = "";
     var controler = {};
     var redirect = false;
+    var content_type = req.headers['content-type'];
     //
     path = url.parse(req.url).pathname;
     // -- GET, POST,DELETE, etc ..
     type = req.method;
     //-- test existance dans l'annuaire
     if (typeof annuaire[type + path] == 'undefined') {
-        var messError = "Action not implemented for [" + type + path + "]";
+        var messError = "Action not implemented for URL [" + type + path + "]";
         logger.error('[OTF:getController]' + messError);
         err = {status: 501, title: 'OTF Http Status 501: Action not implemented', message: messError};
         return cb(err);
     }
-
-    filter_acceptableFields = annuaire[type + path].params_names;
-    if ((type === 'GET') && (typeof filter_acceptableFields != 'undefined')) {
-        // -- On construit dynamiquement les params de la requête
-        for (var field in req.query) {
-            if ((req.query.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
-                //filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
-                filteredQuery[field] = req.query[field];
-            }
-        }
-    } else if ((type === 'POST') && (typeof filter_acceptableFields != 'undefined')) {
-        for (var field in req.body) {
-            if ((req.body.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
-                //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
-                filteredQuery[field] = req.body[field];
-            }
-        }
-    }
-    //@TODO implémenter la gestion des erreurs
-    // -- faut-il implémenter le delete ?
-    /* else if ((type === 'DELETE') && (typeof params_names != 'undefined')) {
-     for (var j = 0; j < params_names.length; j++) {
-     params_values[j] = req.body[params_names];
-     }*/
-    //-- passage du sesionId (Room) pour l'utilisation des Websocket dans le bean
-    // sessionData['room'] = req.sessionID;
-    //filteredQuery = JSON.stringify( filteredQuery);
-
     // -- Authentificate flag
     auth = annuaire[type + path].auth;
     if (typeof auth == 'undefined') {
-        var messError = "Authentification Flag not implemented in Annuaire for [" + type + path + "]";
-        logger.error('[OTF:getController]' + messError);
-        err = {status: 501, title: 'OTF Http Status 501: Authentification Flag not implemented', message: messError};
-        return cb(err);
+      var messError = "Authentification Flag not implemented in Annuaire for URL [" + type + path + "]";
+      logger.error('[OTF:getController]' + messError);
+      err = {status: 501, title: 'OTF Http Status 501: Authentification Flag not implemented', message: messError};
+      return cb(err);
     }
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
     if (auth && !req.isAuthenticated()) {
-        logger.debug("\tOTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
-        module = 'login';
-        methode = 'titre';
-        screen = 'login';
-        redirect = true;
-        //return res.redirect("index.jade");
+      logger.debug("\tOTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
+      module = 'login';
+      methode = 'titre';
+      screen = 'login';
+      redirect = true;
+      //return res.redirect("index.jade");
     } else {
-        logger.debug("\tOTF Account authentifié [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
-        module = annuaire[type + path].module;
-        methode = annuaire[type + path].methode;
-        screen = annuaire[type + path].screen;
+      logger.debug("\tOTF Account authentifié [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
+      module = annuaire[type + path].module;
+      methode = annuaire[type + path].methode;
+      screen = annuaire[type + path].screen;
     }
     // --
     // --
     if (module && methode && screen) {
-        // -- Load module in otf_module
-        //@TODO TRY / CATCH pour la gestion de l'erreur
-        instanceModule = require('./controler/' + module);
-        if (typeof instanceModule == 'undefined') {
-            var messError = " Loading Module Error for path [" + type + path + "] and Module [" + module + "]";
-            logger.error('[OTF:getController]' + messError);
-            err = {status: 501, title: 'OTF Http Status 501:Loading Module Error', message: messError};
-            return cb(err);
+      // -- Load module in otf_module
+      //@TODO TRY / CATCH pour la gestion de l'erreur
+      instanceModule = require('./controler/' + module);
+      if (typeof instanceModule == 'undefined') {
+        var messError = "Loading Module Error for URL [" + type + path + "] and Module [" + module + "]";
+        logger.error('[OTF:getController]' + messError);
+        err = {status: 501, title: 'OTF Http Status 501 : Loading Module Error', message: messError};
+        return cb(err);
 
-        }
+      }
     }
     //data_acceptableFields = annuaire[type + path].session_names;
     modele = annuaire[type + path].data_model;
@@ -151,36 +124,100 @@ function getControler(req, cb) {
     //}
     //
     if (methode !== 'undefined') {
-        // Merci Stéphane
-        // _module contient une instance d' objet Json, niveau
-        // ObjecModule
-        // [module] pathName, niveau Module
-        // [methode)
-        action = instanceModule[module][methode];
+      // Merci Stéphane
+      // _module contient une instance d' objet Json, niveau
+      // ObjecModule
+      // [module] pathName, niveau Module
+      // [methode)
+      action = instanceModule[module][methode];
 
     } else {
-        action = instanceModule[module]['execute'];
+      action = instanceModule[module]['execute'];
     }
     // --
     // -- controler data structure with HTTP parameters
     controler = {
-        'auth': auth,
-        'path' : path,
-        'module': module,
-        'methode': methode,
-        'screen': screen,
-        'action': action,
-        'params': filteredQuery,
-        'room': req.sessionID,
-        'data_model': modele,
-        'schema' : schema,
-        'isRedirect': redirect
+      'auth': auth,
+      'path' : path,
+      'module': module,
+      'methode': methode,
+      'screen': screen,
+      'action': action,
+      'params': filteredQuery,
+      'room': req.sessionID,
+      'data_model': modele,
+      'schema' : schema,
+      'isRedirect': redirect
     };
-    // -- set session otf controler
-    req.session.otf = controler;
-    // -- call the callback
-    //-- la variable controller est visible dans la fonction appellente
-    return cb(null, controler);
+
+    /****** Traitement des paramètres pour les requête mongoDB *********/
+    filter_acceptableFields = annuaire[type + path].params_names;
+    if ((type === 'GET') && (typeof filter_acceptableFields != 'undefined')) {
+      // -- On construit dynamiquement les params de la requête
+      for (var field in req.query) {
+        if ((req.query.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
+          //filteredQuery[field] = new RegExp('^' + req.query[field] + '$', 'i');
+          filteredQuery[field] = req.query[field];
+        }
+      }
+      // -- set session otf controler
+      req.session.otf = controler;
+      // -- call the callback
+      //-- la variable controler est visible dans la fonction appelante
+      return cb(null, controler);
+
+    } else if ((type === 'POST') && (typeof filter_acceptableFields != 'undefined')) {
+      if (content_type.indexOf('multipart/form-data;')<0) {
+        for (var field in req.body) {
+          if ((req.body.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
+            //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
+            filteredQuery[field] = req.body[field];
+          }
+        }
+        // -- set session otf controler
+        req.session.otf = controler;
+        // -- call the callback
+        //-- la variable controler est visible dans la fonction appelante
+        return cb(null, controler);
+
+        // on a un formulaire avec un content-type : multipart/form-data, un upload
+      } else {
+        var form = new multiparty.Form({uploadDir : './public/uploads'});
+        form.parse(req,  function (err, fields, files) {
+          console.log('----> fields : ', fields);
+          console.log('----> files : ', files);
+          for (var field in fields) {
+            if ((fields.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
+              filteredQuery[field] = fields[field][0];
+            }
+          }
+          / * TODO ici on traite le fichier transféré en ajoutant */
+          if (files.thumbnail[0].size > 0) {
+            // on a un fichier à récupérer on ajoute aux params un sous objet 'file'
+            // contenant les informations sur le fichier pour le copie et le renomer.
+            filteredQuery['file'] = {};
+            filteredQuery['file'].name = files.thumbnail[0].originalFilename;
+            filteredQuery['file'].size = files.thumbnail[0].size;
+            filteredQuery['file'].path = files.thumbnail[0].path;
+            //logger.debug('filteredQuery : ' , filteredQuery);
+          } else {
+            // ici fichier non modifié
+            filteredQuery['file_name'] = 'none';
+          }
+          // -- set session otf controler
+          req.session.otf = controler;
+          // -- call the callback
+          //-- la variable controler est visible dans la fonction appelante
+          return cb(null, controler);
+        });
+      }
+    } else {
+      // -- set session otf controler
+      req.session.otf = controler;
+      // -- call the callback
+      //-- la variable controler est visible dans la fonction appelante
+      return cb(null, controler);
+    }
 
 };
 

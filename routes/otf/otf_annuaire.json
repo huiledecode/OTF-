@@ -22,7 +22,7 @@
     "GET/users": {
         "module": "finder",
         "methode": "list",
-        "screen": "userList",
+        "screen": "user_list",
         "auth": true,
         "params_names": [],
         "data_model": "accounts"
