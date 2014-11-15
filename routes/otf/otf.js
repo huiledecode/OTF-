@@ -175,50 +175,75 @@ function getControler(req, cb) {
         return cb(null, controler);
 
     } else if ((type === 'POST') && (typeof filter_acceptableFields != 'undefined')) {
-        if (content_type.indexOf('multipart/form-data;') < 0) {
-            for (var field in req.body) {
-                if ((req.body.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
-                    //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
-                    filteredQuery[field] = req.body[field];
-                }
-            }
-            // -- set session otf controler
-            req.session.otf = controler;
-            // -- call the callback
-            //-- la variable controler est visible dans la fonction appelante
-            return cb(null, controler);
-
-            // on a un formulaire avec un content-type : multipart/form-data, un upload
-        } else {
-            var form = new multiparty.Form({uploadDir: './public/uploads'});
-            form.parse(req, function (err, fields, files) {
-                console.log('----> fields : ', fields);
-                console.log('----> files : ', files);
-                for (var field in fields) {
-                    if ((fields.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
-                        filteredQuery[field] = fields[field][0];
-                    }
-                }
-                / * TODO ici on traite le fichier transféré en ajoutant */
-                if (files.thumbnail[0].size > 0) {
-                    // on a un fichier à récupérer on ajoute aux params un sous objet 'file'
-                    // contenant les informations sur le fichier pour le copie et le renomer.
-                    filteredQuery['file'] = {};
-                    filteredQuery['file'].name = files.thumbnail[0].originalFilename;
-                    filteredQuery['file'].size = files.thumbnail[0].size;
-                    filteredQuery['file'].path = files.thumbnail[0].path;
-                    //logger.debug('filteredQuery : ' , filteredQuery);
-                } else {
-                    // ici fichier non modifié
-                    filteredQuery['file_name'] = 'none';
-                }
-                // -- set session otf controler
-                req.session.otf = controler;
-                // -- call the callback
-                //-- la variable controler est visible dans la fonction appelante
-                return cb(null, controler);
-            });
+      if (content_type.indexOf('multipart/form-data;') < 0) {
+        for (var field in req.body) {
+          if ((req.body.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
+            //filteredQuery[field] = new RegExp('^' + req.body[field] + '$', 'i');
+            filteredQuery[field] = req.body[field];
+          }
         }
+        // -- set session otf controler
+        req.session.otf = controler;
+        // -- call the callback
+        //-- la variable controler est visible dans la fonction appelante
+        return cb(null, controler);
+
+        // on a un formulaire avec un content-type : multipart/form-data, un upload
+      } else {
+        var form = new multiparty.Form({uploadDir: './public/uploads'});
+        form.parse(req, function (err, fields, files) {
+          console.log('----> fields : ', fields);
+          console.log('----> files : ', files);
+          for (var field in fields) {
+            if ((fields.hasOwnProperty(field)) && (filter_acceptableFields.indexOf(field) >= 0)) {
+              filteredQuery[field] = fields[field][0];
+            }
+          }
+          / * TODO ici on traite le fichier transféré en ajoutant */
+          if (files.thumbnail[0].size > 0) {
+            // on a un fichier à récupérer on ajoute aux params un sous objet 'file'
+            // contenant les informations sur le fichier pour le copie et le renomer.
+            filteredQuery['file'] = {};
+            filteredQuery['file'].name = files.thumbnail[0].originalFilename;
+            filteredQuery['file'].size = files.thumbnail[0].size;
+            filteredQuery['file'].path = files.thumbnail[0].path;
+            logger.debug('----->filteredQuery : ', filteredQuery);
+          } else {
+            // ici fichier non modifié
+            filteredQuery['file_name'] = 'none';
+          }
+          // -- set session otf controler
+          req.session.otf = controler;
+          // -- call the callback
+          //-- la variable controler est visible dans la fonction appelante
+          return cb(null, controler);
+        });
+      }
+      /** TODO trouver un moyen de ne pas avoir le code dupliqué à cause du fait que l'on ai ou pas des params dans la requête */
+    } else if ((type === 'POST') && (typeof filter_acceptableFields == 'undefined')) {
+      var form = new multiparty.Form({uploadDir: './public/uploads'});
+      form.parse(req, function (err, fields, files) {
+        console.log('----> fields : ', fields);
+        console.log('----> files : ', files);
+        / * TODO ici on traite le fichier transféré en ajoutant */
+        if (files.thumbnail[0].size > 0) {
+          // on a un fichier à récupérer on ajoute aux params un sous objet 'file'
+          // contenant les informations sur le fichier pour le copie et le renomer.
+          filteredQuery['file'] = {};
+          filteredQuery['file'].name = files.thumbnail[0].originalFilename;
+          filteredQuery['file'].size = files.thumbnail[0].size;
+          filteredQuery['file'].path = files.thumbnail[0].path;
+          logger.debug('----->filteredQuery : ' , filteredQuery);
+        } else {
+          // ici fichier non modifié
+          filteredQuery['file_name'] = 'none';
+        }
+        // -- set session otf controler
+        req.session.otf = controler;
+        // -- call the callback
+        //-- la variable controler est visible dans la fonction appelante
+        return cb(null, controler);
+      });
     } else {
         // -- set session otf controler
         req.session.otf = controler;
