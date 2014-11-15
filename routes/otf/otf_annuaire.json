@@ -8,7 +8,13 @@
     "GET/multipart": {
         "module": "index",
         "methode": "titre",
-        "screen": "multipart_form",
+        "screen": "multipart_oneFile",
+        "auth": true
+    },
+    "POST/uploadImage" : {
+        "module": "uploader",
+        "methode": "oneFile",
+        "screen": "index",
         "auth": true
     },
     "GET/user": {
