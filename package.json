@@ -23,6 +23,8 @@
     "log4js-node-mongodb": "*",
     "mongo-oplog": "*",
     "multiparty": "~4.0.0",
-    "util": "~0.10.3"
+    "util": "~0.10.3",
+    "gm": "~1.17.0",
+    "fs": "0.0.2"
   }
 }
