@@ -36,8 +36,8 @@ exports.uploader = {
           fs.unlink(tmp_path, function (err) {
             if (err) throw err;
             //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
-            logger.debug('fichier copié dans : ' + target_path);
-            return cb(null, {data: target_path, room: room});
+            logger.debug('--->fichier copié dans : ' + target_path);
+            return cb(null, {data: {file : {name: file.name, path: file.path, size: file.size}}, room: room});
           });
         });
       }); //-- Fin redimensionnement image
