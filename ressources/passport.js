@@ -5,11 +5,13 @@
 // load all the things we need
 // var passport = require('passport');
 var mongoose = require('mongoose');
+var genericModel = require(__dirname + '../../ressources/models/mongooseGeneric');
 var LocalStrategy = require('passport-local').Strategy;
 //-- Schema account
 require('./models/accounts');
 //-- Accounts Model
 var Accounts = mongoose.model('Accounts_User');
+
 //var account;
 // var Accounts = new accountModel();
 // load up the user model

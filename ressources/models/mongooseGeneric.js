@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-
+//- var schema = new mongoose.Schema({ name: 'string', size: 'string' });
+//- var Tank = mongoose.model('Tank', schema);
 function mongooseGeneric(_schemaName, _schema, collection) {
   this.documentSchema = mongoose.Schema(_schema);
   this.document = db.model(_schemaName, this.documentSchema, collection); // db global
@@ -10,7 +11,7 @@ function mongooseGeneric(_schemaName, _schema, collection) {
 
 mongooseGeneric.prototype.initDocument = function(_schema, _schemaName, _callback) {
   this.documentSchema = mongoose.Schema(_schema);
-  this.document = db.model(_schemaName, documentSchema);
+    this.document = db.model(_schemaName, this.documentSchema);
   _callback();
 };
 

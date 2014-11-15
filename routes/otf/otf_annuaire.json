@@ -5,6 +5,12 @@
         "screen": "index",
         "auth": true
     },
+    "GET/multipart": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "multipart_form",
+        "auth": true
+    },
     "GET/user": {
         "module": "finder",
         "methode": "one",

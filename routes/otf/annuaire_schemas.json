@@ -4,6 +4,9 @@
       "login": "String"
     }
   },
+    "/multipart": {
+        "schema": {}
+    },
   "/index" : {
     "schema" : {
       "login" : "String"
