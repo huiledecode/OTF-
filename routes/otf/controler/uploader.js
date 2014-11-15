@@ -33,9 +33,8 @@ exports.uploader = {
       gm(readStream).resize(109).stream(function (err, stdout, stderr) {
         stdout.pipe(fs.createWriteStream(target_path));
         stdout.on('end', function () {
-          fs.unlink(tmp_path, function (err) {
+          fs.unlink(tmp_path, function (err) { // suppression du fichier temporaire (ex. : ZWnIYKUmNPjagjXlZGr0V9sx.jpg )
             if (err) throw err;
-            //res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
             logger.debug('--->fichier copié dans : ' + target_path);
             return cb(null, {data: {file : {name: file.name, path: file.path, size: file.size}}, room: room});
           });
