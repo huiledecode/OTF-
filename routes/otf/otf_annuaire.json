@@ -5,6 +5,14 @@
         "screen": "index",
         "auth": true
     },
+    "POST/signupAccount": {
+        "module": "signupAccount",
+        "methode": "signup",
+        "screen": "index",
+        "params_names": ["login", "password"],
+        "auth": false
+    },
+
     "GET/multipart": {
         "module": "index",
         "methode": "titre",

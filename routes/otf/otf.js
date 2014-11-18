@@ -30,7 +30,7 @@ function otf(app) {
     router.use(logHttpRequest);// -- LogHttpREquest
 
     //-- Authentificate Process
-    router.post('/signupAccount', signupAccount);
+    //router.post('/signupAccount', signupAccount);
 
 //-- Logout Process
     router.get('/logout', logOut);
@@ -81,13 +81,18 @@ function getControler(req, cb) {
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
     if (auth && !req.isAuthenticated()) {
-        logger.debug("\tOTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
+        logger.debug("OTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
         module = 'login';
         methode = 'titre';
         screen = 'login';
         redirect = true;
-    } else {
-        logger.debug("\tOTF Account authentifié [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
+    } else if (!auth) {
+        logger.debug("OTF Page non sécurisée  [session id : [%s] ]", req.sessionID);// redirect to loggin
+        module = annuaire[type + path].module;
+        methode = annuaire[type + path].methode;
+        screen = annuaire[type + path].screen;
+    } else if (req.user !== 'undefined') {
+        logger.debug("OTF Page sécurisé et  authentifié [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
@@ -242,8 +247,8 @@ function logOut(req, res) {
 function otfAction(req, res, next) {// attention il ne
     // --
     logger.debug('OTF buildAction [ URL [type : %s], [Path : %s] [REMOTE IP : %s]', req.method, req.url, req.connection.remoteAddress);
-    logger.debug(" Test Context Applicatif  by app.set %s", appContext.get('test'));
-    logger.debug(" Test Context Applicatif  by app.locals %s", appContext.locals.test);
+    //logger.debug(" Test Context Applicatif  by app.set %s", appContext.get('test'));
+    //logger.debug(" Test Context Applicatif  by app.locals %s", appContext.locals.test);
     // --
     getControler(req, function (err, controler) {
         if (err)
