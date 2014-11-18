@@ -12,7 +12,9 @@ var gm = require('gm');
  */
 
 exports.uploader = {
-  oneFile : function (values, path, model, schema, room, cb) {
+    oneFile: function (req, cb) {
+        var _controler = req.session.controler;
+        var values = _controler.params;
     // ici params est un objet simple à insérer
     var file = values.file;
     logger.debug('params updater with file : ', values);
@@ -33,14 +35,16 @@ exports.uploader = {
           fs.unlink(tmp_path, function (err) { // suppression du fichier temporaire (ex. : ZWnIYKUmNPjagjXlZGr0V9sx.jpg )
             if (err) throw err;
             logger.debug('--->fichier copié dans : ' + target_path);
-            return cb(null, {data: {file : file}, room: room});
+              return cb(null, {data: {file: file}, room: _controler.room});
           });
         });
       }); //-- Fin redimensionnement image
     }
   },
 
-  oneFileAndUpdateFields : function (values, path, model, schema, room, cb) {
+    oneFileAndUpdateFields: function (req, cb) {
+        var _controler = req.session.controler;
+        var values = _controler.params;
     // ici params est un objet simple à insérer
     var theId = values._id;
     var file = values.file;
@@ -66,18 +70,18 @@ exports.uploader = {
             logger.debug('--->fichier copié dans : ' + target_path);
             /** le fichier est copié et le temporaire est supprimé, ci-dessous on MAJ les champs de la base de données */
             try {
-              document = new genericModel.mongooseGeneric(path, schema, model);
+                document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
               document.updateDocument({_id: theId}, values, function (err, numberAffected) {
                 if (err) {
                   logger.info('----> error : ' + err);
                 } else {
                   logger.debug('nb enreg modifiés : ', numberAffected);
-                  return cb(null, {data: numberAffected, room: room});
+                    return cb(null, {data: numberAffected, room: _controler.room});
                 }
               });
             } catch (errc) { // si existe pas alors exception et on l'intègre via mongooseGeneric
               logger.debug('----> error catch : ' + errc);
-              modele = global.db.model(path);
+                modele = global.db.model(_controler.path);
               // requete ici si model existe dejà dans mongoose
               modele.update({_id: theId}, values, function (err, numberAffected) {
                 if (err) {
@@ -85,7 +89,7 @@ exports.uploader = {
                 } else {
                   {
                     logger.debug('Utilisateur sélectionné : ', numberAffected);
-                    return cb(null, {data: numberAffected, room: room});
+                      return cb(null, {data: numberAffected, room: _controler.room});
                   }
                 }
               });

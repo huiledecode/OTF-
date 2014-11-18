@@ -13,36 +13,38 @@ var genericModel = require(__dirname + '/../../../ressources/models/mongooseGene
  */
 
 exports.inserter = {
-    one: function (params, path, model, schema, room, cb) {
+    one: function (req, cb) {
+        var _controler = req.session.controler;
         //@TODO not safety
-        logger.debug('path    : ', path);
-        logger.debug('room    : ', room);
-        logger.debug('model   : ', model);
-        logger.debug('params  : ', params);
-        logger.debug('schema  : ', schema);
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('model   : ', _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+        logger.debug('schema  : ', _controler.schema);
         //-- Accounts Model
         //var modele = mongoose.model(model);
         // Test Emit WebSocket Event
         logger.debug(" One User emmit call");
-        sio.sockets.in(room).emit('user', {room: room, comment: ' One User\n\t Your Filter is :'});
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
-            document = new genericModel.mongooseGeneric(path, schema, model);
-            document.createDocument(params, function (err, nb_inserted) {
+            document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
+            document.createDocument(_controler.params, function (err, nb_inserted) {
                 logger.debug('nombre documents insérés :', nb_inserted);
-                return cb(null, {data: nb_inserted, room: room});
+                return cb(null, {data: nb_inserted, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
-            modele = global.db.model(path);
+            modele = global.db.model(_controler.path);
             // requete ici si model existe dejà dans mongoose
-            modele.create(params, function (err, nb_inserted) {
+            modele.create(_controler.params, function (err, nb_inserted) {
                 logger.debug('nombre documents insérés : ', nb_inserted);
-                return cb(null, {data: nb_inserted, room: room});
+                return cb(null, {data: nb_inserted, room: _controler.room});
             });
         }
 
     },
 
-    list: function (params, path, model, schema, room, cb) {
+    list: function (req, cb) {
+        var _controler = req.session.controler;
         // ici params est un tableau d'objet à insérer
         /* TODO écrire l'insertion générique d'une liste d'objets avec mongoDB, via mongoose. */
 

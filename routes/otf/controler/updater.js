@@ -14,37 +14,40 @@ var genericModel = require(__dirname +'/../../../ressources/models/mongooseGener
  */
 
 exports.updater = {
-  one: function (values, path, model, schema, room, cb) {
+    one: function (req, cb) {
+        var _controler = req.session.controler;
+        var values = _controler.params;
     // ici params est un objet simple à insérer
     var theId = values._id;
     delete values._id;
     logger.debug('params updater : ' , values);
     try {
-      document = new genericModel.mongooseGeneric(path, schema, model);
+        document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
       document.updateDocument({_id : theId}, values, function (err, numberAffected) {
         if (err) {
           logger.info('----> error : ' + err);
         } else {
           logger.debug('modification utilisateur : ', numberAffected);
-          return cb(null, {data: numberAffected, room: room});
+            return cb(null, {data: numberAffected, room: _controler.room});
         }
       });
     } catch (errc) { // si existe pas alors exception et on l'intègre via mongooseGeneric
       logger.debug('----> error catch : ' + errc);
-      modele = global.db.model(path);
+        modele = global.db.model(_controler.path);
       // requete ici si model existe dejà dans mongoose
       modele.update({_id : theId}, values, function (err, numberAffected) {
         if (err) {
           logger.info('---> error : ' + err) ;
         } else {
           logger.debug('Utilisateur sélectionné : ', numberAffected);
-          return cb(null, {data: numberAffected, room: room});
+            return cb(null, {data: numberAffected, room: _controler.room});
         }
       });
     }
   },
 
-  list: function(params, path, model, schema, room, cb) {
+    list: function (req, cb) {
+        var _controler = req.session.controler;
     // ici params est un tableau d'objet à mettre à jour
     /* TODO écrire l'insertion générique d'une liste d'objets avec mongoDB, via mongoose. */
 

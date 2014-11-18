@@ -22,7 +22,7 @@ var Accounts = mongoose.model('Accounts_User');
 // 'password' : 'abcd1234'
 // };
 // expose this function to our app using module.exports
-module.exports = function(passport) {
+module.exports = function (passport) {
     //http://toon.io/understanding-passportjs-authentication-flow/
     // =========================================================================
     // passport session setup ==================================================
@@ -61,27 +61,27 @@ module.exports = function(passport) {
     passport.use('local', new LocalStrategy({
             // by default, local strategy uses username and password, we will
             // override with email
-            usernameField : 'login',
-            passwordField : 'password',
-            passReqToCallback : true
+            usernameField: 'login',
+            passwordField: 'password',
+            passReqToCallback: true
             // allows us to pass back the entire request to the
             // callback
         },
         // -- Check auth account i DB
-        function(req, login, password, done) {
+        function (req, login, password, done) {
             console.log('\tPassport  login [%s], password: [%s], body [%s]',
                 login, password, req.body);
 
             // asynchronous
-            process.nextTick(function() {
+            process.nextTick(function () {
                 // search an if exist load account with login req.param.login
                 //account = new Accounts({"login":"toto","password":"tita"});
                 //account.save();
                 //Accounts.update({"_id":"5398f5fe2900db2d71c0e86b"},{ $set: {"login":"fake"}});
                 //--
                 Accounts.findOne({
-                    login : login
-                }, function(err, _account) {
+                    login: login
+                }, function (err, _account) {
                     // --
                     if (err) {
                         console.log("\tPassport account read db err message : [%s]", err.message);
@@ -91,7 +91,7 @@ module.exports = function(passport) {
                     if (!_account) {
                         console.log("\tPassport account not found in db for login : [%j]",
                             login);
-                        return done(null, false);
+                        return done(null, false, {message: 'Passport account not found in db for login : ' + login  });
                     } else {
                         //Verification the user Identification
                         console.log("\tPassport account find : [%j], session id [%s]",
@@ -106,7 +106,7 @@ module.exports = function(passport) {
                             return done(null, _account);
                         } else {
                             //Bab Password
-                            return done(null, false);
+                            return done(null, false, {message: 'Bad Password for login : ' + login });
                         }
                         ;
                     }

@@ -9,25 +9,28 @@ var mongoose = require('mongoose');
  */
 
 exports.users = {
-    list: function (params, path, model, schema, room, cb) {
-        logger.debug('params : ', params);
-        var modele = mongoose.model(model);
-
+    list: function (req, cb) {
+        var _controler = req.session.controler;
+        logger.debug('params : ', _controler.params);
+        //
+        var modele = mongoose.model(_controler.data_model);
+        //
         modele.find({}, function (err, list_users) {
             logger.debug('liste des utilisateurs :', list_users);
-            return cb(null, {result: list_users});
+            return cb(null, {result: list_users, room: _controler.room});
         });
     },
 
-    one: function (params, path, model, schema, room, cb) {
-        logger.debug('params : ', params);
-        logger.debug('model : ' + model);
+    one: function (req, cb) {
+        var _controler = req.session.controler;
+        logger.debug('params : ', _controler.params);
+        logger.debug('model : ' + _controler.data_model);
         //-- Accounts Model
-        var modele = mongoose.model(model);
+        var modele = mongoose.model(_controler.data_model);
 
-        modele.find(params, function (err, one_user) {
+        modele.find(_controler.params, function (err, one_user) {
             logger.debug('Utilisateur sélectionné : ', one_user);
-            return cb(null, {result: one_user});
+            return cb(null, {result: one_user, room: _controler.room});
         });
     }
 
@@ -36,10 +39,3 @@ exports.users = {
      */
 };
 
-//xports.users = {
-//   list: function (){
-//
-//           return {title: ' test liste users'};
-//       }
-//   };
-//

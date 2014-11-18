@@ -193,7 +193,7 @@ function signupAccount(req, res, next) {
     //-- Authetificate, becarefull is a function
     passport.authenticate(
         'local',
-        function (err, account) {
+        function (err, account, info) {
 
             if (err) {
                 logger.debug("passport.authenticate  signupAccount ERROR [%s]",
@@ -202,7 +202,7 @@ function signupAccount(req, res, next) {
             }
             ;
             if (!account) {
-                logger.debug("passport.authenticate  signupAccount Fail ");
+                logger.debug("passport.authenticate  signupAccount Fail message %j", info);
                 return res.redirect('/login');
             }
             // if everything's OK
@@ -253,26 +253,22 @@ function otfAction(req, res, next) {// attention il ne
              * au bean d'exécuter des actions asynchrones et donc ne pas bloquer
              * l'application aux autres utilisateurs */
             // On ajoute la room
-            controler.action(controler.params, controler.path, controler.data_model, controler.schema, controler.room, function (errBean, result) {
+            req.session.controler = controler;
+            //controler.params, controler.path, controler.data_model, controler.schema, controler.room
+            controler.action(req, function (errBean, result) {
                 // handling exception
                 //-- @TODO Faire une gestion des exceptions plus fine !!
-                if (errBean) {
-                    var messError = "Controller Execution Failed for [" + type + path + "] Error Message [" + errBean + "]";
-                    logger.error('[OTF:otfAction]' + messError);
-                    var error = new Error('OTF Error Controler Action failed');
-                    error.title = 'OTF Error Controler Action failed';
-                    error.status = '501';
-                    error.message = messError
-                    //err = {status: 501, title: 'OTF Http Status 501: Controller Execution Failed', message: messError};
-                    return next(error);
-                }
+                if (errBean)
+                    return next(handleError('OTF ERROR Controler Action failed', '501', "Controller Execution Failed for [" + req.session.controler.type + req.session.controler.path + "] Error Message [" + errBean + "]"));
+                //
                 logger.debug(" otf final %j", result);
-                req.session.otf = controler;
+                //
                 // On gére le redirect pour l'authentification
+                //@TODO try catch sur le renderer
                 if (controler.isRedirect)
-                    res.redirect('/' + controler.screen);
+                    res.redirect('/' + req.session.controler.screen);
                 else
-                    res.render(controler.screen, result);
+                    res.render(req.session.controler.screen, result);
             });
         }
     });

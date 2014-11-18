@@ -1,7 +1,8 @@
 exports.getview = {
 
-    view: function (params, path, modele, schema, room, cb) {
-        return cb(null, { title: '' + modele });
+    view: function (req, cb) {
+        var _controler = req.session.controler;
+        return cb(null, { title: 'AddUser' });
     }
 
 };
