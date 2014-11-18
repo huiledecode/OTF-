@@ -12,6 +12,13 @@
         "params_names": ["login", "password"],
         "auth": false
     },
+    "GET/logout": {
+        "module": "signupAccount",
+        "methode": "logout",
+        "screen": "login",
+        "params_names": [],
+        "auth": false
+    },
 
     "GET/multipart": {
         "module": "index",

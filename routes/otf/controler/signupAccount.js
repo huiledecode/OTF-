@@ -32,7 +32,7 @@ exports.signupAccount = {
                 if (!account) {
                     logger.debug("passport.authenticate  signupAccount Fail message %j", info);
                     req.session.controler.screen = 'login';
-                    return cb(null, {title: 'OTF EXPRESS AUTHENTIFICATION ', state: 'false', message: info.message});
+                    return cb(null, {title: 'OTF EXPRESS AUTHENTIFICATION ', state: 'not_connected', message: info.message});
                 }
                 // if everything's OK
                 // create objects in session
@@ -45,15 +45,15 @@ exports.signupAccount = {
                     }
                     logger.debug("passport.authenticate req.LogIn OK   account : [%j,  session id : [%s]]",
                         account, req.sessionID);
-                    // set the message
-
-
-                    //- je trouve que le redirect est meilleur car sinon avec le render l'ur affichée sur le browser est toujour /signup et pas /
-                    //- ou autre path dans l'annuaire
-                    return cb(null, {title: 'OTF EXPRESS ', state: 'true', user: account.login, message: " votre n° de session  est : " + req.sessionID});
-                    //return res.render('index', {'title': "Bienvenue " + req.session.account.login + " votre n° de session  est : " + req.sessionID});
+                    //--
+                    return cb(null, {title: 'OTF EXPRESS ', state: 'connected', user: account.login, message: " votre n° de session  est : " + req.sessionID});
                 });
 
             })(req);
+    },
+    logout: function (req, cb) {
+        req.logout();
+        return cb(null, {title: 'OTF EXPRESS ', state: 'de_connected', user: req.user, message: " Vous êtes maintenant Déconecté"});
+
     }
 };

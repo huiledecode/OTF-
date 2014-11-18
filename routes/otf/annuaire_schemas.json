@@ -7,6 +7,10 @@
     "/multipart": {
         "schema": {}
     },
+
+    "/logout": {
+        "schema": {}
+    },
     "/signupAccount": {
         "schema": {}
     },

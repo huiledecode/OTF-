@@ -24,25 +24,15 @@ logger.debug("\tOTF Otf.prototype.performAction Annuaire schéma  : \n[\n%j\n]\n
 // Fonction exportées pour paramétrer OTF
 // Attention à l'odre des router.use et router.get et router.post
 function otf(app) {
-    //-- Context applicatif
+//-- Context applicatif
     appContext = app;
 //-- Trace
     router.use(logHttpRequest);// -- LogHttpREquest
-
-    //-- Authentificate Process
-    //router.post('/signupAccount', signupAccount);
-
-//-- Logout Process
-    router.get('/logout', logOut);
-
-
-    // -- Perform OTF Automate action
+// -- Perform OTF Automate action
     router.use(otfAction);
-
 //-- Error Handler if otf throw error
     router.use(errorHandler);
-
-
+    //
     appContext.use('/', router);
 }
 
@@ -189,58 +179,7 @@ function logHttpRequest(req, res, next) {
     logger.debug("\napp Log Handler [ %s %s ]", req.method, req.url);
     next();
 }
-// --
-// -- Signup Accounts
-// --
-function signupAccount(req, res, next) {
-    logger.debug("\nOTF signup Account [ %s %s %j]", req.method, req.url,
-        req.body);
-    //-- Authetificate, becarefull is a function
-    passport.authenticate(
-        'local',
-        function (err, account, info) {
 
-            if (err) {
-                logger.debug("passport.authenticate  signupAccount ERROR [%s]",
-                    err);
-                return next(err); // will generate a 500 error
-            }
-            ;
-            if (!account) {
-                logger.debug("passport.authenticate  signupAccount Fail message %j", info);
-                return res.redirect('/login');
-            }
-            // if everything's OK
-            // create objects in session
-            req.logIn(account, function (err) {
-                if (err) {
-                    logger.debug("passport.authenticate req.LogIn ERROR   account : [%j]",
-                        account);
-                    req.session.messages = "Error logIn";
-                    return next(err);
-                }
-                logger.debug("passport.authenticate req.LogIn OK   account : [%j,  session id : [%s]]",
-                    account, req.sessionID);
-                // set the message
-                req.session.messages = {
-                    'title': 'Login successfully ' + account.login
-                };
-
-                //- je trouve que le redirect est meilleur car sinon avec le render l'ur affichée sur le browser est toujour /signup et pas /
-                //- ou autre path dans l'annuaire
-                return res.redirect('/index');
-                //return res.render('index', {'title': "Bienvenue " + req.session.account.login + " votre n° de session  est : " + req.sessionID});
-            });
-
-        })(req, res, next);
-
-}
-//--
-function logOut(req, res) {
-    // delete the account session
-    req.logout();
-    res.redirect('/login');
-}
 // --
 // -- Traite la requête par le routeur dynamique de OTF
 // --
