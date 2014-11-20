@@ -41,17 +41,17 @@ function otf(app) {
 //--
 function getControler(req, cb) {
     // --
-    var acceptableFields = null;
+    //var acceptableFields = null;
     var filteredQuery = {}; // clause where de la requête MongoDB
-    var sessionData = {}; // info à passer au bean contenu dans la session
-    var path = "";
-    var modele = "";
-    var schema = "";
-    var type = "";
-    var auth = "";
-    var module = "";
-    var methode = "";
-    var screen = "";
+    //var sessionData = {}; // info à passer au bean contenu dans la session
+    var path;
+    var modele;
+    var schema;
+    var type;
+    var auth;
+    var module;
+    var methode;
+    var screen;
     var controler = {};
     var redirect = false;
     var content_type = req.headers['content-type'];
@@ -106,13 +106,7 @@ function getControler(req, cb) {
     //@TODO Le modele est il obligatoire ???
     //
     if (methode !== 'undefined') {
-        // Merci Stéphane
-        // _module contient une instance d' objet Json, niveau
-        // ObjecModule
-        // [module] pathName, niveau Module
-        // [methode)
         action = instanceModule[module][methode];
-
     } else {
         action = instanceModule[module]['execute'];
     }
@@ -265,6 +259,7 @@ function uploadFile(req, filteredQuery, cb) {
         form.parse(req, function (err, fields, files) {
             console.log('----> fields : ', fields);
             console.log('----> files : ', files);
+            // Tempôraire avant renomage dans le bean
             / * TODO ici on traite le fichier transféré en ajoutant */
             if (files.thumbnail[0].size > 0) {
                 // on a un fichier à récupérer on ajoute aux params un sous objet 'file'
