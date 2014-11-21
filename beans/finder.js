@@ -6,7 +6,7 @@
  */
 var logger = require('log4js').getLogger('css');
 var mongoose = require('mongoose');
-var genericModel = require(__dirname + '/../../../ressources/models/mongooseGeneric');
+var genericModel = require('../ressources/models/mongooseGeneric');
 
 /*
  * GET users listing.
@@ -15,9 +15,6 @@ var genericModel = require(__dirname + '/../../../ressources/models/mongooseGene
 exports.finder = {
     list: function (req, cb) {
         var _controler = req.session.controler;
-        var document;
-        logger.debug('params : ', _controler.params);
-        logger.debug('schema : ', _controler.schema);
         //var modele = mongoose.model(model);
         //logger.debug('global.annuaire_schema avant : ', global.annuaire_schema);
         // On passe à mongooseGeneric le path unique pour l'action,
@@ -27,18 +24,13 @@ exports.finder = {
         logger.debug(" Finder.list call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
         try {
-            document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
-            document.getDocuments({}, function (err, list_users) {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.getDocuments({}, function (err, list_users) {
                 logger.debug('liste des utilisateurs :', list_users);
                 return cb(null, {result: list_users, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
-            modele = global.db.model(_controler.path);
-            // requete ici si model existe dejà dans mongoose
-            modele.find(_controler.params, function (err, list_users) {
-                logger.debug('Utilisateur sélectionné : ', list_users);
-                return cb(null, {result: list_users, room: _controler.room});
-            });
+            logger.error(err);
         }
     },
 
@@ -51,28 +43,39 @@ exports.finder = {
         logger.debug('Finders.one room    : ', _controler.room);
         logger.debug('Finders.one model   : ' + _controler.data_model);
         logger.debug('Finders.one schema  : ' + _controler.schema);
-        //-- Accounts Model
+        // Test emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.getDocument(_controler.params, function (err, one_user) {
+                logger.debug('liste des utilisateurs :', one_user);
+                return cb(null, {result: one_user, room: _controler.room});
+            });
+
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+    populate: function (req, cb) {
+        var _controler = req.session.controler;
         //var modele = mongoose.model(model);
         //logger.debug('global.annuaire_schema avant : ', global.annuaire_schema);
         // On passe à mongooseGeneric le path unique pour l'action,
         // comme identifiant de modèle si il n'est pas déjà compilé
         // dans mongoose
         // Test emit WebSocket Event
-        logger.debug(" One User emmit call");
+        logger.debug(" Finder.list call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
         try {
-            document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
-            document.getDocuments(_controler.params, function (err, one_user) {
-                logger.debug('liste des utilisateurs :', one_user);
-                return cb(null, {result: one_user, room: _controler.room});
+            var model = GLOBAL.schemas[_controler.data_model];
+            var _params = { query: _controler.params, ref: _controler.data_ref};
+            model.popDocuments(_params, function (err, list) {
+                logger.debug('Populate Result  :', list);
+                return cb(null, {result: list, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
-            modele = global.db.model(_controler.path);
-            // requete ici si model existe dejà dans mongoose
-            modele.findOne(_controler.params, function (err, one_user) {  //on utilise findOne sinon on a un Array en retour
-                logger.debug('Utilisateur sélectionné : ', one_user);
-                return cb(null, {result: one_user, room: _controler.room});
-            });
+            logger.error(err);
         }
     }
 

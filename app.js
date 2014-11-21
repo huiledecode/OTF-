@@ -35,9 +35,7 @@ var session = require("express-session");
 var MemoryStore = session.MemoryStore;
 var sessionStore = new MemoryStore();
 //--
-// Authentification Managment by Passport
-var passport = require('passport');
-require('./ressources/passport')(passport);
+
 //--
 // Express Configuration
 var app = express();
@@ -122,14 +120,20 @@ app.use(session({
 //
 app.use(express.static(path.join(__dirname, 'public')));
 //--
-//
+// Authentification Managment by Passport
+var passport = require('passport');
+require('./ressources/passport')(passport);
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./routes/otf/otf')(app);
+
 
 //--
 // Routes Managment by Otf Framework
 //var router = require('./routes/otf/otf');
-require('./routes/otf/otf')(app);
+//require('./routes/otf/otf')(app);
 
 //-- GLOBAL
 GLOBAL.sio = require('socket.io')();

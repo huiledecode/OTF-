@@ -38,7 +38,6 @@ mongooseGeneric.prototype.getDocuments = function (_condition, _callback) {
             _callback(null, result);
         }
     });
-
 };
 
 mongooseGeneric.prototype.deleteDocument = function (_condition, _callback) {
@@ -91,5 +90,30 @@ mongooseGeneric.prototype.updateDocument = function (_conditions, _values, _call
         }
     });
 };
+
+mongooseGeneric.prototype.popDocument = function (_condition, _callback) {
+
+    this.document.findOne(_condition.query).populate(_condition.ref).exec(function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+            _callback(null, result);
+        }
+    });
+};
+
+mongooseGeneric.prototype.popDocuments = function (_condition, _callback) {
+
+    this.document.find(_condition.query).populate(_condition.ref).exec(function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+            _callback(null, result);
+        }
+    });
+};
+
 
 exports.mongooseGeneric = mongooseGeneric;

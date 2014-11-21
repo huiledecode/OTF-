@@ -10,7 +10,8 @@
         "methode": "signup",
         "screen": "index",
         "params_names": ["login", "password"],
-        "auth": false
+        "auth": false,
+        "data_model": "Account"
     },
     "GET/logout": {
         "module": "signupAccount",
@@ -26,7 +27,7 @@
         "screen": "multipart_oneFile",
         "auth": true
     },
-    "POST/uploadImage" : {
+    "POST/uploadImage": {
         "module": "uploader",
         "methode": "oneFile",
         "screen": "index",
@@ -52,7 +53,16 @@
         "screen": "user_list",
         "auth": true,
         "params_names": [],
-        "data_model": "accounts"
+        "data_model": "Account"
+    },
+    "GET/logs": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "log_list",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Logs",
+        "data_ref": "user_id"
     },
     "POST/user": {
         "module": "finder",
@@ -60,14 +70,14 @@
         "screen": "userOne",
         "auth": true,
         "params_names": ["login"],
-        "data_model": "accounts"
+        "data_model": "Account"
     },
     "GET/formadduser": {
         "module": "getview",
         "methode": "view",
         "screen": "formadduser",
         "auth": true,
-        "data_model": "accounts"
+        "data_model": "Account"
     },
     "POST/adduser": {
         "module": "inserter",
@@ -75,7 +85,7 @@
         "screen": "index",
         "auth": true,
         "params_names": ["login", "password"],
-        "data_model": "accounts"
+        "data_model": "Account"
     },
     "GET/index": {
         "module": "index",

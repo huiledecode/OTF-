@@ -1,5 +1,5 @@
 /*
- * GET / POST inserter
+ * GET / POST deleter
  * Il s'agit ici d'un Bean générique qui en fonction des données dans
  * l'annuaire otf json est capable de faire un insert et d'insérer un
  * ou des objets json dans le model passé dans l'annuaire.
@@ -12,15 +12,15 @@ var genericModel = require(__dirname + '/../../../ressources/models/mongooseGene
  * SET users datas into MongoDB.
  */
 
-exports.inserter = {
-    one: function (req, cb) {
+exports.deleter = {
+    //beans.params, beans.path, beans.data_model, beans.schema, beans.room
+    oneById: function (req, cb) {
+        // CONTROLER
         var _controler = req.session.controler;
         //@TODO not safety
-        logger.debug('path    : ', _controler.path);
-        logger.debug('room    : ', _controler.room);
-        logger.debug('model   : ', _controler.data_model);
+        logger.debug('room   : ', _controler.room);
+        logger.debug('model  : ' + _controler.data_model);
         logger.debug('params  : ', _controler.params);
-        logger.debug('schema  : ', _controler.schema);
         //-- Accounts Model
         //var modele = mongoose.model(model);
         // Test Emit WebSocket Event
@@ -28,23 +28,21 @@ exports.inserter = {
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
             document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
-            document.createDocument(_controler.params, function (err, nb_inserted) {
-                logger.debug('nombre documents insérés :', nb_inserted);
-                return cb(null, {data: nb_inserted, room: _controler.room});
+            document.deleteDocument({_id: _controler.params._id}, function (err, nb_deleted) {
+                logger.debug('suppression utilisateur :', nb_deleted);
+                return cb(null, {data: nb_deleted, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             modele = global.db.model(_controler.path);
             // requete ici si model existe dejà dans mongoose
-            modele.create(_controler.params, function (err, nb_inserted) {
-                logger.debug('nombre documents insérés : ', nb_inserted);
-                return cb(null, {data: nb_inserted, room: _controler.room});
+            modele.remove({_id: _controler.params._id}, function (err, nb_deleted) {
+                logger.debug('Utilisateur sélectionné : ', nb_deleted);
+                return cb(null, {data: nb_deleted, room: _controler.room});
             });
         }
-
     },
 
     list: function (req, cb) {
-        var _controler = req.session.controler;
         // ici params est un tableau d'objet à insérer
         /* TODO écrire l'insertion générique d'une liste d'objets avec mongoDB, via mongoose. */
 

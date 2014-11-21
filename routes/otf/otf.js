@@ -17,13 +17,18 @@ annuaire = JSON.parse(fs.readFileSync(__dirname + '/otf_annuaire.json', 'utf8'))
 logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
     annuaire);
 // -- load annuaire_schema json file
-GLOBAL.annuaire_schema = JSON.parse(fs.readFileSync(__dirname + '/annuaire_schemas.json', 'utf8'));
-logger.debug("\tOTF Otf.prototype.performAction Annuaire schéma  : \n[\n%j\n]\n",
-    annuaire_schema);
+//GLOBAL.annuaire_schema = JSON.parse(fs.readFileSync(__dirname + '/annuaire_schemas.json', 'utf8'));
+//logger.debug("\tOTF Otf.prototype.performAction Annuaire schéma  : \n[\n%j\n]\n",
+//    annuaire_schema);
+
 //---
 // Fonction exportées pour paramétrer OTF
 // Attention à l'odre des router.use et router.get et router.post
 function otf(app) {
+    //
+    var conf = { schema: "/home/epa/WebstormProjects/OTF_NEW/otf/routes/directory_schema.json"};
+    var schema_loader = require('./otf_modules/schema_loader');
+    schema_loader.loader.load(conf);
 //-- Context applicatif
     appContext = app;
 //-- Trace
@@ -54,6 +59,7 @@ function getControler(req, cb) {
     var screen;
     var controler = {};
     var redirect = false;
+    var ref;
     var content_type = req.headers['content-type'];
     //
     path = url.parse(req.url).pathname;
@@ -92,7 +98,8 @@ function getControler(req, cb) {
     if (module && methode && screen) {
         // -- Load module in otf_module
         try {
-            instanceModule = require('./controler/' + module);
+
+            instanceModule = require('../../beans/' + module);
         } catch (err) {
             return cb(handleError('OTF ERROR Loading Module Error', '501', "Loading Module Error for URL [" + type + path + "] and Module [" + module + "], message [" + err.toString() + "]"));
         }
@@ -102,7 +109,8 @@ function getControler(req, cb) {
     }
     //data_acceptableFields = annuaire[type + path].session_names;
     modele = annuaire[type + path].data_model;
-    schema = annuaire_schema[path].schema;
+    ref = annuaire[type + path].data_ref;
+    //schema = annuaire_schema[path].schema;
     //@TODO Le modele est il obligatoire ???
     //
     if (methode !== 'undefined') {
@@ -111,7 +119,7 @@ function getControler(req, cb) {
         action = instanceModule[module]['execute'];
     }
     // --
-    // -- controler data structure with HTTP parameters
+    // -- beans data structure with HTTP parameters
     controler = {
         'auth': auth,
         'path': path,
@@ -122,7 +130,8 @@ function getControler(req, cb) {
         'params': filteredQuery,
         'room': req.sessionID,
         'data_model': modele,
-        'schema': schema,
+        'data_ref': ref,
+        //'schema': schema,
         'isRedirect': redirect
     };
     /****** Traitement des paramètres pour les requête mongoDB *********/
@@ -164,7 +173,7 @@ function getControler(req, cb) {
         return cb(null, controler);
 
     // -- call the callback
-    //-- la variable controler est visible dans la fonction appelante
+    //-- la variable beans est visible dans la fonction appelante
 
 } // fin function getControler(...)
 
@@ -192,7 +201,7 @@ function otfAction(req, res, next) {// attention il ne
              * l'application aux autres utilisateurs */
             // On ajoute la room
             req.session.controler = controler;
-            //controler.params, controler.path, controler.data_model, controler.schema, controler.room
+            //beans.params, beans.path, beans.data_model, beans.schema, beans.room
             controler.action(req, function (errBean, result) {
                 // handling exception
                 //-- @TODO Faire une gestion des exceptions plus fine !!
@@ -243,11 +252,11 @@ function checkAndCreateDirectory(directoryName, cb) {
                     //} // something else went wrong
                 } //else cb(null); // successfully created folder
                 logger.debug("OTF Create Directory : " + directoryName);
-                //return cb(null);
+                return cb(null);
             });
 
-        }
-        return cb(null);
+        } else
+            return cb(null);
 
     });
 }
@@ -273,7 +282,7 @@ function uploadFile(req, filteredQuery, cb) {
                 // ici fichier non modifié
                 filteredQuery['file_name'] = 'none';
             }
-            // -- set session otf controler
+            // -- set session otf beans
             return cb(null);
         });
 

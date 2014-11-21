@@ -7,20 +7,6 @@
 var mongoose = require('mongoose');
 var genericModel = require(__dirname + '../../ressources/models/mongooseGeneric');
 var LocalStrategy = require('passport-local').Strategy;
-//-- Schema account
-require('./models/accounts');
-//-- Accounts Model
-var Accounts = mongoose.model('Accounts_User');
-
-//var account;
-// var Accounts = new accountModel();
-// load up the user model
-// console.log(__dirname);
-// var Account = require('./account');
-// var account = {
-// 'login' : 'test',
-// 'password' : 'abcd1234'
-// };
 // expose this function to our app using module.exports
 module.exports = function (passport) {
     //http://toon.io/understanding-passportjs-authentication-flow/
@@ -71,15 +57,11 @@ module.exports = function (passport) {
         function (req, login, password, done) {
             console.log('\tPassport  login [%s], password: [%s], body [%s]',
                 login, password, req.body);
-
+            var Accounts = GLOBAL.schemas['Account'];
             // asynchronous
             process.nextTick(function () {
-                // search an if exist load account with login req.param.login
-                //account = new Accounts({"login":"toto","password":"tita"});
-                //account.save();
-                //Accounts.update({"_id":"5398f5fe2900db2d71c0e86b"},{ $set: {"login":"fake"}});
                 //--
-                Accounts.findOne({
+                Accounts.getDocument({
                     login: login
                 }, function (err, _account) {
                     // --
@@ -96,8 +78,8 @@ module.exports = function (passport) {
                         //Verification the user Identification
                         console.log("\tPassport account find : [%j], session id [%s]",
                             _account, req.sessionID);
-                        if (login === _account.login
-                            && password === _account.password) {
+                        if (login === _account._doc.login
+                            && password === _account._doc.password) {
                             // On doit aussi load l'annuaire des authorisations pour
                             // le
                             // mettre dans la session le compte

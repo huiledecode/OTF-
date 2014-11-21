@@ -70,8 +70,9 @@ exports.uploader = {
             logger.debug('--->fichier copié dans : ' + target_path);
             /** le fichier est copié et le temporaire est supprimé, ci-dessous on MAJ les champs de la base de données */
             try {
-                document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
-              document.updateDocument({_id: theId}, values, function (err, numberAffected) {
+                var model = GLOBAL.schemas[_controler.data_model];
+                //document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
+                model.updateDocument({_id: theId}, values, function (err, numberAffected) {
                 if (err) {
                   logger.info('----> error : ' + err);
                 } else {
@@ -83,16 +84,7 @@ exports.uploader = {
               logger.debug('----> error catch : ' + errc);
                 modele = global.db.model(_controler.path);
               // requete ici si model existe dejà dans mongoose
-              modele.update({_id: theId}, values, function (err, numberAffected) {
-                if (err) {
-                  logger.info('---> error : ' + err);
-                } else {
-                  {
-                    logger.debug('Utilisateur sélectionné : ', numberAffected);
-                      return cb(null, {data: numberAffected, room: _controler.room});
-                  }
-                }
-              });
+                return cb(errc);
             }
           });
         });
