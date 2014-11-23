@@ -1,10 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var paginate = require("mongoose-pages");
 
 //- var schema = new mongoose.Schema({ name: 'string', size: 'string' });
 //- var Tank = mongoose.model('Tank', schema);
 function mongooseGeneric(_schemaName, _schema, collection) {
     this.documentSchema = mongoose.Schema(_schema);
+    paginate.anchor(this.documentSchema);
+    //paginate.skip(this.documentSchema);
+    //logger.debug(" schema_loader : Schema after Paginate",_schema);
     this.document = db.model(_schemaName, this.documentSchema, collection); // db global
 
 };
@@ -113,6 +117,18 @@ mongooseGeneric.prototype.popDocuments = function (_condition, _callback) {
             _callback(null, result);
         }
     });
+};
+
+mongooseGeneric.prototype.getPaginateDocuments = function (_condition, _callback) {
+
+    this.document.findPaginated(_condition.query, function (err, result) {
+        if (err) {
+            _callback(err, null);
+        }
+        else {
+            _callback(null, result);
+        }
+    }, condition.docsPerPage, pageNumber);
 };
 
 

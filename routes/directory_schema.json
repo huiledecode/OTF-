@@ -8,7 +8,7 @@
         }
     },
     "Logs": {
-        "collection": "logs",
+        "collection": "log",
         "schema": {
             "date": "String",
             "event": "String",

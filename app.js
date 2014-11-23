@@ -28,12 +28,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var secret = '7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"';
 //--
 // User Session Managment
 var session = require("express-session");
 // Cookies Managment
 var MemoryStore = session.MemoryStore;
 var sessionStore = new MemoryStore();
+var cookie_name = 'connect.sid';
 //--
 
 //--
@@ -107,14 +109,16 @@ app.use(favicon(__dirname + '/public/favicon/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(cookieParser(secret));
 //--
 // Salt
 app.use(session({
-    'secret': '7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"', 'saveUninitialized': true,
+    'name': cookie_name,
+    'secret': secret,
     'store': sessionStore,
     'proxy': false,
-    'resave': true
+    'resave': false,
+    'saveUninitialized': false
 }));
 //--
 //
@@ -138,72 +142,68 @@ require('./routes/otf/otf')(app);
 //-- GLOBAL
 GLOBAL.sio = require('socket.io')();
 //
-sio.set('authorization', function (data, accept) {
-    log.debug(" Socket.io authorization event call !");
-    var _cookie = 'connect.sid';
-    var _sessionStore = sessionStore;
-    var _cookieParser = cookieParser('7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"');
+//sio.configure(function () {
 
+sio.use(function authorization(socket, next) {
+    //
+    var data = socket.handshake;
+    //-- Déja identifier
+    //if (data.sessionid){
+    //     log.debug("Websocket Authorization quick Verify sessionID  [%j]", data.sessionid);
+    //    next();
+    //}
+    //--
+    var _sessionStore = sessionStore;
+    var _cookieParser = cookieParser(secret);
+    //--
     if (data && data.headers && data.headers.cookie) {
+        //--
         _cookieParser(data, {}, function (err) {
             if (err) {
-                return accept('COOKIE_PARSE_ERROR');
+                return next(new Error("Websocket not authorized Cookie parser error " + err.message));
             }
-            var sessionId = data.signedCookies[_cookie];
+            var sessionId = data.signedCookies[cookie_name];
+            //var sessionId = data.cookies[cookie_name];
+            log.debug("Websocket Authorization Verify sessionID  [%j]", sessionId);
             _sessionStore.get(sessionId, function (err, session) {
-                //console.log('in auth: session: ', session);
-                log.debug('Socket.io authorization : sessionId    : ', sessionId);
-                log.debug('Socket.io authorization : signedCookie : ', data.signedCookies);
+                // log.debug('Websocket Authorization  cookie [%j] ', data.signedCcookies);
                 if (err || !session || !session.passport || !session.passport.user) {
-                    log.debug('Socket.io authorization not logged in : sessionId :', sessionId);
-                    accept('NOT_LOGGED_IN', false);
+                    log.debug('Websocket Authorization Failed not in sessionStore sessionId :', sessionId);
+                    next(new Error("Websocket not authorized Passport Failed"));
                     //accept(null, true);
                 }
                 else {
-                    log.debug('Socket.io authorization logged in : sessionId :', sessionId);
+                    log.debug('Websocket Authorization  for sessionId :', sessionId);
                     //data.session = session;
                     //@TODO généré un UUID par fle module flake-idgen pour la room et ajouter à la session et au data
                     data.sessionid = sessionId;
-                    data.user = session.passport.user;
-                    accept(null, true);
+                    data.user = session.passport.user.login;
+                    next();
                 }
             });
         });
     }
     else {
-        return accept('No cookie transmitted.', false);
+        return next(new Error('Websocket Authorization No cookie transmitted.'));
     }
 });
 
-//--
-//--
-sio.use(function (socket, next) {
+//});
 
-    if (socket.client.request.cookies) {
-        log.debug(" Socket.io Trace : Cookie is present ");
-        log.debug(' Socket.io Trace : sessionid :%s ', socket.client.request.sessionid);
-        //log.debug(' Socket.io : user      :%j  ', socket.client.request.session.account);
-        log.debug(' Socket.io Trace : user     : ', socket.client.request.user);
-        return next();
-    } else {
-        log.debug(" Socket.io Trace : Cookie is not present ");
-        return next('COOKIE_NOT_PRESENT', false);
-    }
-});
 //--
 sio.on('connection', function (socket) {
     //socket.broadcast.to(id).emit('my message', msg);
     log.debug(" WS connection socket.id :" + socket.id);
     //log.debug(" WS connection cookie    : " + socket.request.headers.cookie);
-    log.debug(" WS connection sessionId : " + socket.client.request.sessionid);
+    log.debug(" WS connection sessionId : " + socket.handshake.sessionid);
     //log.debug(" WS connection user : " + socket.client.request.session.passport.user);
-    log.debug(" WS connection user : " + socket.client.request.user);
+    log.debug(" WS connection user : " + socket.handshake.user);
     //
-    socket.join(socket.client.request.sessionid);
+    socket.join(socket.handshake.sessionid);
     //
-    var mess = {'sessionid': socket.client.request.sessionid, 'user': socket.client.request.user};
-    sio.sockets.in(socket.client.request.sessionid).emit('ack', mess);
-    log.debug(" WS connection Room n° : " + socket.client.request.sessionid);
+    var mess = {'sessionid': socket.handshake.sessionid, 'user': socket.handshake.user};
+    sio.sockets.in(socket.handshake.sessionid).emit('ack', mess);
+    log.debug(" WS connection Room n° : " + socket.handshake.sessionid);
 
 });
 

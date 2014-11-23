@@ -52,7 +52,9 @@ exports.signupAccount = {
                         }
                         logger.debug("passport.authenticate req.LogIn OK   account : [%j,  session id : [%s]]",
                             account, req.sessionID);
+                        //-- load du profile et affectation à la session
                         //--
+                        req.session.profile = account.profile[0].name;
                         logs.createDocument({ date: new Date().toString(), event: "login", message: "", ip: req.connection.remoteAddress, session: req.sessionID, user_id: account._id }, function (err, result) {
                             if (err) {
                                 logger.error(" signup create Logs failed " + err.message);

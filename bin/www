@@ -3,14 +3,14 @@
 //--
 require('../ressources/oplog')();
 //
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 //--
 // Logger Configuration
 var log4js = require('log4js');
 log4js.configure('./ressources/log4js.json', { reloadSecs: 300 });
 mongoAppender = require('log4js-node-mongodb');
 log4js.addAppender(
-    mongoAppender.appender({connectionString: 'localhost:27017/logs'}),
+    mongoAppender.appender({connectionString: 'localhost:27017/log'}),
     'cheese'
 );
 
@@ -22,7 +22,8 @@ var debug = require('debug')('OTF');
 //--
 var app = require('../app');
 app.set('port', process.env.NODE_PORT || 3000);
-app.set('host', process.env.NODE_HOST || "0.0.0.0");
+//app.set('host', process.env.NODE_HOST || "0.0.0.0");
+app.set('host', process.env.NODE_HOST || "localhost");
 //
 var server = app.listen(app.get('port'), app.get('host'), function () {
     logger.debug("Express server listening on http://%s:%d", app.get('host'), app.get('port'));
@@ -33,6 +34,7 @@ var server = app.listen(app.get('port'), app.get('host'), function () {
 //-- create a new Server
 //sio = require('socket.io')(server, {log: false});
 sio.listen(server, {log: false});
+logger.debug("WebSocket Started");
 //-- Middleware function
 
 

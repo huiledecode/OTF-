@@ -13,22 +13,18 @@ var passport = require('passport');
 var url = require("url");
 //-- load annuaire file in sync mode
 var annuaire;
-annuaire = JSON.parse(fs.readFileSync(__dirname + '/otf_annuaire.json', 'utf8'));
-logger.debug("\tOTF Otf.prototype.performAction Annuaire  : \n[\n%j\n]\n",
-    annuaire);
-// -- load annuaire_schema json file
-//GLOBAL.annuaire_schema = JSON.parse(fs.readFileSync(__dirname + '/annuaire_schemas.json', 'utf8'));
-//logger.debug("\tOTF Otf.prototype.performAction Annuaire schéma  : \n[\n%j\n]\n",
-//    annuaire_schema);
+
 
 //---
 // Fonction exportées pour paramétrer OTF
 // Attention à l'odre des router.use et router.get et router.post
 function otf(app) {
     //
-    var conf = { schema: "/home/epa/WebstormProjects/OTF_NEW/otf/routes/directory_schema.json"};
+    var conf = { schema: "/home/epa/WebstormProjects/OTF_NEW/otf/routes/directory_schema.json", profile: "/home/epa/WebstormProjects/OTF_NEW/otf/routes/otf/profiles/"};
     var schema_loader = require('./otf_modules/schema_loader');
     schema_loader.loader.load(conf);
+    schema_loader.loader.loadProfiles(conf);
+
 //-- Context applicatif
     appContext = app;
 //-- Trace
@@ -45,6 +41,10 @@ function otf(app) {
 // Build the action Controller
 //--
 function getControler(req, cb) {
+    //-- profile du user connecté
+    var annuaire
+
+
     // --
     //var acceptableFields = null;
     var filteredQuery = {}; // clause where de la requête MongoDB
@@ -61,6 +61,18 @@ function getControler(req, cb) {
     var redirect = false;
     var ref;
     var content_type = req.headers['content-type'];
+    //--
+    //-- USER PROFILE
+    if (req.session.profile) {
+        logger.debug(" User Profile is %s", req.session.profile)
+        annuaire = GLOBAL.profiles[req.session.profile];
+    } else {
+        logger.debug(" User Profile is default");
+        annuaire = GLOBAL.profiles["default"];
+    }
+
+    //--
+    //-- ACTION NAME
     //
     path = url.parse(req.url).pathname;
     // -- GET, POST,DELETE, etc ..
