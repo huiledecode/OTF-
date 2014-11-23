@@ -26,6 +26,7 @@
         "module": "index",
         "methode": "titre",
         "screen": "multipart_oneFile",
+        "params_names": [],
         "auth": true
     },
     "POST/uploadImage": {

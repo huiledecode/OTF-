@@ -43,8 +43,6 @@ function otf(app) {
 function getControler(req, cb) {
     //-- profile du user connecté
     var annuaire;
-
-
     // --
     //var acceptableFields = null;
     var filteredQuery = {}; // clause where de la requête MongoDB
