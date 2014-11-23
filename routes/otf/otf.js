@@ -20,7 +20,7 @@ var url = require("url");
 // Attention à l'odre des router.use et router.get et router.post
 function otf(app) {
     //
-    var conf = { schema: "/home/epa/WebstormProjects/OTF_NEW/otf/routes/directory_schema.json", profile: "/home/epa/WebstormProjects/OTF_NEW/otf/routes/otf/profiles/"};
+    var conf = { schema: __dirname + "/../directory_schema.json", profile: __dirname+ "/profiles/"};
     var schema_loader = require('./otf_modules/schema_loader');
     schema_loader.loader.load(conf);
     schema_loader.loader.loadProfiles(conf);
