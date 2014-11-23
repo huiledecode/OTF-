@@ -12,7 +12,7 @@ var appContext;
 var passport = require('passport');
 var url = require("url");
 //-- load annuaire file in sync mode
-var annuaire;
+//
 
 
 //---
@@ -42,7 +42,7 @@ function otf(app) {
 //--
 function getControler(req, cb) {
     //-- profile du user connecté
-    var annuaire
+    var annuaire;
 
 
     // --
