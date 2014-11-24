@@ -56,7 +56,7 @@ function getControler(req, cb) {
     var methode;
     var screen;
     var controler = {};
-    var redirect = false;
+    var redirect;
     var ref;
     var content_type = req.headers['content-type'];
     //--
@@ -83,6 +83,11 @@ function getControler(req, cb) {
     auth = annuaire[type + path].auth;
     if (typeof auth == 'undefined')
         return cb(handleError('OTF ERROR Authentification Flag not implemented', '501', "Authentification Flag not implemented in Annuaire for URL [" + type + path + "]"));
+
+    // -- RedirectFlag flag
+    redirect = annuaire[type + path].redirect;
+    if (typeof redirect == 'undefined')
+        redirect = false;
 
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE

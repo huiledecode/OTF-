@@ -19,7 +19,8 @@
         "methode": "logout",
         "screen": "login",
         "params_names": [],
-        "auth": false
+        "auth": false,
+        "redirect": true
     },
 
     "GET/multipart": {

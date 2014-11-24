@@ -74,7 +74,7 @@ exports.signupAccount = {
     logout: function (req, cb) {
         var _user = req.user;
 
-        logs.createDocument({ date: new Date().toString(), event: "logout", message: "", ip: req.connection.remoteAddress, session: req.sessionID, user_id: _user._id }, function (err, result) {
+        logs.createDocument({ date: new Date().toString(), event: "logout", message: "", ip: req.connection.remoteAddress, session: req.sessionID }, function (err, result) {
             if (err) {
                 logger.error(" signup create Logs failed " + err.message);
                 req.logout();
