@@ -5,6 +5,7 @@
 // load all the things we need
 // var passport = require('passport');
 var mongoose = require('mongoose');
+var logger = require('log4js').getLogger('css');
 var genericModel = require(__dirname + '../../ressources/models/mongooseGeneric');
 var LocalStrategy = require('passport-local').Strategy;
 // expose this function to our app using module.exports
@@ -22,7 +23,7 @@ module.exports = function (passport) {
     // The result of the serializeUser method is attached to the session as req.session.passport.user =
     passport.serializeUser(function (account, done) {
         //C'est Ici que le profil du user doit être loader
-        console.log("Passport SerializeUser  account : %j", account);
+        logger.debug("Passport SerializeUser  account : %j", account);
         done(null, account);
     });
 
@@ -31,8 +32,7 @@ module.exports = function (passport) {
     // This user object is attached to the request as req.user making it accessible in our request handling.
     //
     passport.deserializeUser(function (account, done) {
-
-        console.log("Passport DeserializeUser  account: %j", account);
+        logger.debug("Passport DeserializeUser  account: %j", account);
         done(null, account);
 
     });
@@ -55,7 +55,7 @@ module.exports = function (passport) {
         },
         // -- Check auth account i DB
         function (req, login, password, done) {
-            console.log('\tPassport  login [%s], password: [%s], body [%s]',
+            logger.debug('Passport  login [%s], password: [%s], body [%s]',
                 login, password, req.body);
             var Accounts = GLOBAL.schemas['Account'];
             // asynchronous
@@ -66,29 +66,31 @@ module.exports = function (passport) {
                 }, function (err, _account) {
                     // --
                     if (err) {
-                        console.log("\tPassport account read db err message : [%s]", err.message);
+                        logger.debug("Passport account read db err message : [%s]", err.message);
                         return done(err);
                     }
                     console.log('PASSEPORT _account : ', _account);
                     if (!_account) {
-                        console.log("\tPassport account not found in db for login : [%j]",
+                        logger.debug("Passport account not found in db for login : [%j]",
                             login);
-                        return done(null, false, {message: 'Passport account not found in db for login : ' + login  });
+                        return done(null, false, {"flag": "login", "login": login, "message": 'Passport account not found in db for login : ' + login  });
                     } else {
+                        //-- load du profile et affectation à la session
+                        //-- If profile exist
+                        if (_account.profile == 'undefined' || _account.profile.length == 0)
+                            req.session.profile = 'default';
+                        else
+                            req.session.profile = _account.profile[0].name;
                         //Verification the user Identification
-                        console.log("\tPassport account find : [%j], session id [%s]",
+                        logger.debug("Passport account find : [%j], session id [%s]",
                             _account, req.sessionID);
-                        if (login === _account._doc.login
-                            && password === _account._doc.password) {
-                            // On doit aussi load l'annuaire des authorisations pour
-                            // le
-                            // mettre dans la session le compte
-                            //req.session.account = _account;
-                            // -- req.session.annuaire =
-                            return done(null, _account);
+                        //-
+                        //Test Password
+                        if (login === _account.login && password === _account.password) {
+                            return done(null, _account, {"flag": "ok", "login": login, "message": null  });
                         } else {
                             //Bab Password
-                            return done(null, false, {message: 'Bad Password for login : ' + login });
+                            return done(null, false, {"flag": "password", "login": login, "message": 'Passport Bad Password for login : ' + login  });
                         }
                         ;
                     }
