@@ -13,6 +13,8 @@ Font CRYSTAL by Felipe Munoz http://openfontlibrary.org/en/font/crystal
 */
 @import url(http://openfontlibrary.org/face/crystal);
 
+body { padding-top: 70px; }
+
 html, body {
     height: 100%;
     font-family: 'Arial', 'Helvetica', sans-serif;
@@ -51,13 +53,13 @@ footer > .container {
 }
 
 body {
-    padding-top: 51px;
+    padding-top: 53px;
     background: #1E1E1E;
     color: #f9f9f9;
 }
 
 a {
-    color: #bcbcbc;
+    color: #575252;
 }
 
 .text-center {
