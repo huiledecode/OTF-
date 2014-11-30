@@ -16,29 +16,33 @@ exports.uploader = {
         var _controler = req.session.controler;
         var values = _controler.params;
     // ici params est un objet simple à insérer
-    var file = values.file;
-    logger.debug('params updater with file : ', values);
-    logger.debug('----> file data : ' + file.name + '-' + file.path + '-' + file.size);
-    /** TODO ici je recopie le code d'alliage pour la copie du fichier image */
-    if(!fs.existsSync('./public/uploads/images')) {
-      fs.mkdirSync('./public/uploads/images', [0777]);
-    }
-    if (file.size > 0) { // des données ont été uploadées
-      var file_name_uve = file.name;
-      var target_path = './public/uploads/images/' + file_name_uve;
-      var tmp_path = './' + file.path;
-      var readStream = fs.createReadStream(tmp_path);
-      //-- On retaille l'image par défaut
-      gm(readStream).resize(109).stream(function (err, stdout, stderr) {
-        stdout.pipe(fs.createWriteStream(target_path));
-        stdout.on('end', function () {
-          fs.unlink(tmp_path, function (err) { // suppression du fichier temporaire (ex. : ZWnIYKUmNPjagjXlZGr0V9sx.jpg )
-            if (err) throw err;
-            logger.debug('--->fichier copié dans : ' + target_path);
-              return cb(null, {data: {file: file}, room: _controler.room});
+    if (typeof file != 'undefined') {
+      var file = values.file;
+      /** TODO ici je recopie le code d'alliage pour la copie du fichier image */
+      if(!fs.existsSync('./public/uploads/images')) {
+        fs.mkdirSync('./public/uploads/images', [0777]);
+      }
+      if (file.size > 0) { // des données ont été uploadées
+        logger.debug('params updater with file : ', values);
+        logger.debug('----> file data : ' + file.name + '-' + file.path + '-' + file.size);
+        var file_name_uve = file.name;
+        var target_path = './public/uploads/images/' + file_name_uve;
+        var tmp_path = './' + file.path;
+        var readStream = fs.createReadStream(tmp_path);
+        //-- On retaille l'image par défaut
+        gm(readStream).resize(109).stream(function (err, stdout, stderr) {
+          stdout.pipe(fs.createWriteStream(target_path));
+          stdout.on('end', function () {
+            fs.unlink(tmp_path, function (err) { // suppression du fichier temporaire (ex. : ZWnIYKUmNPjagjXlZGr0V9sx.jpg )
+              if (err) throw err;
+              logger.debug('--->fichier copié dans : ' + target_path);
+                return cb(null, {data: {file: file}, room: _controler.room});
+            });
           });
-        });
-      }); //-- Fin redimensionnement image
+        }); //-- Fin redimensionnement image
+      }
+    } else {
+      return cb(null, {data: {file: file}, room: _controler.room});
     }
   },
 
