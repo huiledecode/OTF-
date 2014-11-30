@@ -30,7 +30,7 @@
         "params_names": [],
         "auth": true
     },
-    "POST/uploadImage": {
+    "POST/uploadFile": {
         "module": "uploader",
         "methode": "oneFile",
         "screen": "index",
@@ -42,7 +42,7 @@
         "screen": "userOne",
         "auth": true,
         "params_names": ["login"],
-        "data_model": "accounts"
+        "data_model": "Accounts"
     },
     "GET/login": {
         "module": "login",
