@@ -72,7 +72,7 @@ exports.finder = {
             var _params = { query: _controler.params, ref: _controler.data_ref};
             model.popDocuments(_params, function (err, list) {
                 logger.debug('Populate Result  :', list);
-                return cb(null, {result: list, room: _controler.room});
+                return cb(null, {result: list, "state": req.session.login_info.state, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
