@@ -5,6 +5,12 @@
         "screen": "index",
         "auth": true
     },
+    "GET/elow": {
+        "module": "elow",
+        "methode": "view",
+        "screen": "elow_view",
+        "auth": false
+    },
     "POST/signupAccount": {
         "module": "signupAccount",
         "methode": "signup",
