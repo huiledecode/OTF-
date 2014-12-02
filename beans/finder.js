@@ -26,8 +26,8 @@ exports.finder = {
         try {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocuments({}, function (err, list_users) {
-                logger.debug('liste des utilisateurs :', list_users);
-                return cb(null, {result: list_users, room: _controler.room});
+                logger.debug('liste des utilisateurs :', JSON.stringify(list_users));
+                return cb(null, {result: list_users, "state": req.session.login_info.state, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
@@ -50,7 +50,7 @@ exports.finder = {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocument(_controler.params, function (err, one_user) {
                 logger.debug('liste des utilisateurs :', one_user);
-                return cb(null, {result: one_user, room: _controler.room});
+                return cb(null, {result: one_user, "state": req.session.login_info.state, room: _controler.room});
             });
 
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
