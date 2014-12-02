@@ -43,6 +43,14 @@ var cookie_name = 'connect.sid';
 var app = express();
 //--
 // view engine setup
+
+//
+var handlebars = require("handlebars");
+var assemble = require('assemble');
+//var layout_helpers = require("handlebars-helpers/lib/helpers/helpers-layouts");
+var helpers = require("handlebars-helpers");
+//layout_helpers.register(handlebars);
+helpers.register(handlebars, {}, {grunt: {}, assemble: assemble});
 var hbs = exphbs.create({
     extname: '.hbs',
     defaultLayout: 'main',
