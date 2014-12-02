@@ -1,12 +1,11 @@
 <!doctype html>
 <html>
-{{#block "head"}}
-    {{> head}}
-{{/block}}
+{{{block "head"}}}
 <body>
+{{{block "header"}}}
 <div class="wrapper">
-    {{{body}}}
+    {{{block "body"}}}
 </div>
-{{> footer}}
+{{{block "footer"}}}
 </body>
 </html>

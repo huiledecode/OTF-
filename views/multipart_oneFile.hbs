@@ -1,6 +1,12 @@
-{{> menu}}
-<script type="text/javascript">
-    function readURL(input) {
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+    <script type="text/javascript">
+        function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             var nom_id = (input.value.match(/[^\/\\]+$/gi)[0]).substring(0,(input.value.match(/[^\/\\]+$/gi)[0]).length-4);
@@ -48,3 +54,7 @@
         </div>
     </div>
 </div>
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}

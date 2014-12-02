@@ -1,56 +1,67 @@
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h3>{{title}} <p>{{lowercase "TEST"}}</p></h3>
-            <h5>
-                {{#compare state 'connected' operator="=="}}
-                    <p class="text-success">CONNECTED</p>
-                {{/compare}}
+{{#content "head"}}
+    {{> head}}
+{{/content}}
 
-                {{#compare state 'not_connected' operator="=="}}
-                    <p class="text-danger">Connection Failed</p>
-                    <p class="text-danger">{{message}}</p>
-                {{/compare}}
+{{#content "body"}}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h3>{{title}} <p>{{lowercase "TEST"}}</p></h3>
+                <h5>
+                    {{#compare state 'connected' operator="=="}}
+                        <p class="text-success">CONNECTED</p>
+                    {{/compare}}
 
-                {{#compare state 'logout' operator="=="}}
-                    <p class="text-danger">Logout</p>
+                    {{#compare state 'not_connected' operator="=="}}
+                        <p class="text-danger">Connection Failed</p>
 
-                    <p class="text-danger">{{message}}</p>
-                {{/compare}}
-            </h5>
+                        <p class="text-danger">{{message}}</p>
+                    {{/compare}}
+
+                    {{#compare state 'logout' operator="=="}}
+                        <p class="text-danger">Logout</p>
+
+                        <p class="text-danger">{{message}}</p>
+                    {{/compare}}
+                </h5>
+
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8"
+                      action="/signupAccount">
+                    {{#compare flag 'login' operator="=="}}
+                        <p class="text-danger"> Login Failed</p>
+                    {{/compare}}
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                            <input type="text" class="form-control" placeholder="Idenfiant" id="login" name="login">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                            <input type="password" class="form-control" placeholder="Mot de passe" id="password"
+                                   name="password">
+                            {{#compare flag 'password' operator="=="}}
+                                <p class="text-danger">Password Failed</p>
+                            {{/compare}}
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
 
         </div>
-    </div>
-    <div class="row-fluid">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/signupAccount">
-                {{#compare flag 'login' operator="=="}}
-                    <p class="text-danger"> Login Failed</p>
-                {{/compare}}
-                <div class="form-group">
-                    <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-                        <input type="text" class="form-control" placeholder="Idenfiant" id="login" name="login">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-                        <input type="password" class="form-control" placeholder="Mot de passe" id="password"
-                               name="password">
-                        {{#compare flag 'password' operator="=="}}
-                            <p class="text-danger">Password Failed</p>
-                        {{/compare}}
-                    </div>
-
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-                        <button type="submit" class="btn btn-primary">Sign In</button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
 
     </div>
-
-</div>
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}

@@ -1,26 +1,36 @@
-{{> menu}}
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <h3>ERROR SOMETHING WRONG ?</h3>
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h3>ERROR SOMETHING WRONG ?</h3>
 
-            <h3>{{title}}</h3>
+                <h3>{{title}}</h3>
+            </div>
+        </div>
+
+
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <p> STATUS CODE <span class="label label-danger">{{status}}</span></p>
+
+                <p> ERROR MESSAGE <span class="label label-danger">{{message}}</span></p>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <p><a href='/index'>Retour Acccueil </a></p>
+                <a href="/logout">Déconnexion</a>
+            </div>
         </div>
     </div>
-
-
-    <div class="row-fluid">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <p> STATUS CODE <span class="label label-danger">{{status}}</span></p>
-
-            <p> ERROR MESSAGE <span class="label label-danger">{{message}}</span></p>
-        </div>
-    </div>
-
-    <div class="row-fluid">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <p><a href='/index'>Retour Acccueil </a></p>
-            <a href="/logout">Déconnexion</a>
-        </div>
-    </div>
-</div>
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}
