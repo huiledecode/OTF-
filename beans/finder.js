@@ -78,8 +78,4 @@ exports.finder = {
             logger.error(err);
         }
     }
-
-    /* Todo : Réfléchir à l'insertion dans MongoDB de façon aussi générique que le find.
-     Todo : voir du côté des schémas mongoose qui permette 'insérer directement un bodyContents ??
-     */
 };
