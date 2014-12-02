@@ -93,8 +93,12 @@ var hbs = exphbs.create({
             } else {
                 return options.inverse(this);
             }
+        },
+        json : function(context) {
+          return JSON.stringify(context);
         }
-    }
+
+}
 });
 
 app.engine('.hbs', hbs.engine);
