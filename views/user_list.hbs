@@ -1,4 +1,10 @@
-{{> menu}}
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -118,3 +124,7 @@
         {{/each}}
     </div-->
 </div>
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}
+{{/content}}
