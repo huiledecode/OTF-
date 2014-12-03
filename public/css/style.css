@@ -30,7 +30,7 @@ hr {
 
 /* wrapper for page content to push down footer */
 .page-container {
-    min-height: 100%;
+    min-height: 10%;
     height: auto !important;
     height: 100%;
     /* negative indent footer by its height */
