@@ -7,7 +7,7 @@
 var logger = require('log4js').getLogger('css');
 var mongoose = require('mongoose');
 var ObjectID = require('mongodb').ObjectID;
-var genericModel = require(__dirname + '/../../../ressources/models/mongooseGeneric');
+var genericModel = require('../ressources/models/mongooseGeneric');
 
 /*
  * SET users datas into MongoDB.
