@@ -7,6 +7,15 @@
             "profile": []
         }
     },
+    "AccountId": {
+      "collection": "accounts",
+      "schema": {
+        "_id": "ObjectId",
+        "login": "String",
+        "password": "String",
+        "profile": []
+      }
+    },
     "Logs": {
         "collection": "log",
         "schema": {
