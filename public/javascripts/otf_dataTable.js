@@ -1,7 +1,15 @@
 /**
  * Created by stephane on 03/12/14.
  */
-function setDataTable(datas) {
+function setDataTable(datas, dblclick_action, suppr_action) {
+
+  // Ajout fonction startsWith sur les String Javascript
+  if (typeof String.prototype.startsWith != 'function') {
+    // see below for better implementation!
+    String.prototype.startsWith = function (str){
+      return this.indexOf(str) == 0;
+    };
+  }
 
   var aSelected = [];
   var clicked = false;
@@ -37,8 +45,8 @@ function setDataTable(datas) {
     var reponse = confirm('ATTENTION : Voulez-vous vraiment supprimer la ligne N° : ' + aSelected);
     if (reponse) {
       for(var j=0;j<aSelected.length;j++) {
-        $.get('/deletextrauser?_id='+aSelected[j], function (data) {
-          window.location.href='/listextrauser';
+        $.get(suppr_action+'?_id='+aSelected[j], function (data) {
+          window.location.href='/index'; // voire ici a récupérer le retour
         });
       }
     }
@@ -59,14 +67,14 @@ function setDataTable(datas) {
     oldThis = $(this);
     $(this).toggleClass('row_selected');
   });
-
-  $(document).on("dblclick", "#listereponses > tbody > tr", function() {
+if (typeof dblclick_action != 'undefined') {
+  $(document).on("dblclick", "#listereponses > tbody > tr", function () {
     $(this).toggleClass('row_selected');
     if (typeof oldThis != 'undefined') oldThis.toggleClass('row_selected');
-    var idUve = tabMonitor.fnGetData(tabMonitor.fnGetPosition(this))[0];
-    window.location.href='/modifextrauser?_id='+idUve;
+    var id = tabMonitor.fnGetData(tabMonitor.fnGetPosition(this))[0];
+    window.location.href = dblclick_action + '?_id=' + eval(id);
   });
-
+}
 
 
   for (var i=0;i<datas.length;i++) {
@@ -74,7 +82,7 @@ function setDataTable(datas) {
     var data =  datas[i];
     Object.keys(data).forEach(function (key) {
       console.log('Valeur pour ' + key + ' : ' + data[key]);
-      if (key != '__v') objectDatas.push("\'"+data[key]+"\'");
+      if (key != '__v') objectDatas.push(data[key]);
     });
     tabJsonClient.push(objectDatas);
   }
