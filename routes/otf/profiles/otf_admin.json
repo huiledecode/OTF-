@@ -90,6 +90,22 @@
         "params_names": ["login", "password"],
         "data_model": "Account"
     },
+    "GET/updateuser" : {
+        "module": "finder",
+        "methode": "one",
+        "screen": "updateuser",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Account"
+    },
+    "GET/deleteuser" : {
+      "module": "deleter",
+      "methode": "oneById",
+      "screen": "user_list",
+      "auth": true,
+      "params_names": ["_id"],
+      "data_model": "AccountId"
+    },
     "GET/index": {
         "module": "index",
         "methode": "titre",
