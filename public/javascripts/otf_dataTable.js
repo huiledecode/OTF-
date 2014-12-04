@@ -7,7 +7,6 @@ function setDataTable(datas) {
   var clicked = false;
   var listIdSelected = "";
   var oldThis;
-//var datas = {{{json result}}};
   var objectStruct = Object.getOwnPropertyNames(datas[datas.length - 1]).sort();
 //var objectStruct = Object.keys(datas[datas.length - 1]).sort();
   console.log('---->> datas[0]', objectStruct);
