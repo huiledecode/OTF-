@@ -33,8 +33,8 @@ function setDataTable(datas) {
   });
 
   /* Click event handler */
-  $(document).on("click", "#suppruve", function() {
-    var reponse = confirm('ATTENTION : Voulez-vous vraiment supprimer l\'utilisateur N° : ' + aSelected);
+  $(document).on("click", "#suppr", function() {
+    var reponse = confirm('ATTENTION : Voulez-vous vraiment supprimer la ligne N° : ' + aSelected);
     if (reponse) {
       for(var j=0;j<aSelected.length;j++) {
         $.get('/deletextrauser?_id='+aSelected[j], function (data) {
