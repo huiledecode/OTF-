@@ -72,7 +72,7 @@ if (typeof dblclick_action != 'undefined') {
     $(this).toggleClass('row_selected');
     if (typeof oldThis != 'undefined') oldThis.toggleClass('row_selected');
     var id = tabMonitor.fnGetData(tabMonitor.fnGetPosition(this))[0];
-    window.location.href = dblclick_action + '?_id=' + eval(id);
+    window.location.href = dblclick_action + '?_id=' + id;
   });
 }
 
