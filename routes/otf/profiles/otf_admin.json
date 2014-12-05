@@ -93,7 +93,7 @@
     "GET/updateuser" : {
         "module": "finder",
         "methode": "one",
-        "screen": "updateuser",
+        "screen": "formupdateuser",
         "auth": true,
         "params_names": ["_id"],
         "data_model": "Account"
