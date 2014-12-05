@@ -101,10 +101,11 @@
     "GET/deleteuser" : {
       "module": "deleter",
       "methode": "oneById",
-      "screen": "user_list",
+      "screen": "users",
       "auth": true,
       "params_names": ["_id"],
-      "data_model": "AccountId"
+      "data_model": "AccountId",
+      "redirect" : true
     },
     "GET/index": {
         "module": "index",
