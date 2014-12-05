@@ -228,9 +228,11 @@ a {
     font-family: 'CRYSTAL';
 }
 
-.row_selected {
-    background-color: #737373;
-    color: #ffffff;
+table.table tr.even.row_selected td {
+    background-color: #9fafd1;
+}
+table.table tr.odd.row_selected td {
+    background-color: #9fafd1;
 }
 
 .nav-tabs > li > a {
