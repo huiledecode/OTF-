@@ -187,6 +187,12 @@ a {
     width: 80%;
 }
 
+.btn-block {
+    width: 20%;
+    margin: 1em;
+    margin-left :40%;
+}
+
 .btn {
     border-color: transparent;
 }
