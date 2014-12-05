@@ -116,6 +116,14 @@
       "data_model": "AccountId",
       "redirect" : true
     },
+    "GET/updatelogs" : {
+       "module": "finder",
+       "methode": "one",
+       "screen": "formupdatelogs",
+       "auth": true,
+       "params_names": ["_id"],
+       "data_model": "Logs"
+    },
     "GET/index": {
         "module": "index",
         "methode": "titre",
