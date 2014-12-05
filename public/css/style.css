@@ -228,6 +228,11 @@ a {
     font-family: 'CRYSTAL';
 }
 
+.row_selected {
+    background-color: #737373;
+    color: #ffffff;
+}
+
 .nav-tabs > li > a {
     border-radius: 0;
 }
