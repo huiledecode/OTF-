@@ -5,34 +5,19 @@
     {{> header}}
 {{/content}}
 {{#content "body"}}
-    <div class="container-fluid">
+    <div id="containerform" class="container-fluid">
         <div class="row-fluid">
             <div class="col-xs-12 col-sm-12">
                 <h3>UpdateUser</h3>
             </div>
         </div>
-        <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/setuser">
-            <input type="hidden" class="form-control" placeholder="id" id="_id" name="_id" value="{{result._id}}">
-            <div class="row-fluid">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Idenfiant" id="login" name="login" value="{{result.login}}">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password" value="{{result.password}}">
-                    </div>
-                </div>
-            </div>
-            <div class="row-fluid">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+        <script>
+            //<![CDATA[
+            $(document).ready(function() {
+                setFormUpdate({{{json result}}}, "/setuser");
+            });
+            //]]>
+        </script>
     </div>
     {{#content "footer"}}
         {{> footer}}
