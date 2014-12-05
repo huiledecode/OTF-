@@ -46,7 +46,7 @@ function setDataTable(datas, dblclick_action, suppr_action) {
     if (reponse) {
       for(var j=0;j<aSelected.length;j++) {
         $.get(suppr_action+'?_id='+aSelected[j], function (data) {
-          window.location.href='/index'; // voire ici a récupérer le retour
+          //alert('Ligne N° '+ aSelected[j] + ' supprimée !'); // voire ici a récupérer le retour
         });
       }
     }
