@@ -185,6 +185,7 @@ a {
 
 .form-control {
     width: 80%;
+    margin-bottom: 0.8em;
 }
 
 .btn-block {
