@@ -11,7 +11,8 @@
                 <h3>UpdateUser</h3>
             </div>
         </div>
-        <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/adduser">
+        <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/setuser">
+            <input type="hidden" class="form-control" placeholder="id" id="_id" name="_id" value="{{result._id}}">
             <div class="row-fluid">
                 <div class="col-md-4">
                     <div class="form-group">
