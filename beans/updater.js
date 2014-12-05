@@ -6,7 +6,6 @@
  */
 var logger = require('log4js').getLogger('css');
 var mongoose = require('mongoose');
-var ObjectID = require('mongodb').ObjectID;
 var genericModel = require('../ressources/models/mongooseGeneric');
 
 /*
@@ -20,10 +19,10 @@ exports.updater = {
         // ici params est un objet simple à insérer
         var theId = values._id;
         delete values._id;
+        var model = GLOBAL.schemas[_controler.data_model];
         logger.debug('params updater : ', values);
         try {
-            document = new genericModel.mongooseGeneric(_controler.path, _controler.schema, _controler.data_model);
-            document.updateDocument({_id: theId}, values, function (err, numberAffected) {
+          model.updateDocument({_id: theId}, values, function (err, numberAffected) {
                 if (err) {
                     logger.info('----> error : ' + err);
                 } else {
@@ -33,16 +32,7 @@ exports.updater = {
             });
         } catch (errc) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.debug('----> error catch : ' + errc);
-            modele = global.db.model(_controler.path);
-            // requete ici si model existe dejà dans mongoose
-            modele.update({_id: theId}, values, function (err, numberAffected) {
-                if (err) {
-                    logger.info('---> error : ' + err);
-                } else {
-                    logger.debug('Utilisateur sélectionné : ', numberAffected);
-                    return cb(null, {data: numberAffected, room: _controler.room});
-                }
-            });
+            return cb(err);
         }
     },
 
