@@ -98,6 +98,15 @@
         "params_names": ["_id"],
         "data_model": "Account"
     },
+    "POST/setuser" : {
+        "module": "updater",
+        "methode": "one",
+        "screen": "users",
+        "auth": true,
+        "params_names": ["_id", "login", "password"],
+        "data_model": "AccountId",
+        "redirect" : true
+    },
     "GET/deleteuser" : {
       "module": "deleter",
       "methode": "oneById",
