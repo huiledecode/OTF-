@@ -6,11 +6,11 @@ var fs = require('fs');
 var mongoose = require('mongoose');
 var genericModel = require('../../../ressources/models/mongooseGeneric');
 
-exports.loader = {
+module.exports = {
     /**
      *
      */
-    load: function (directory) {
+    loadModels: function (directory) {
         //temporaire
         var directory_schema = {};
         GLOBAL.schemas = [];
@@ -47,7 +47,7 @@ exports.loader = {
         var file;
         // on récupére la liste des fichiers
         try {
-            files = fs.readdirSync(directory.profile);
+            files = fs.readdirSync(directory.profile, 'utf8');
             logger.debug("loadProfiles files [%j] ", files);
 
         } catch (err) {

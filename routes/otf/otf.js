@@ -21,9 +21,16 @@ var url = require("url");
 function otf(app) {
     //
     var conf = { schema: __dirname + "/../directory_schema.json", profile: __dirname+ "/profiles/"};
-    var schema_loader = require('./otf_modules/schema_loader');
-    schema_loader.loader.load(conf);
-    schema_loader.loader.loadProfiles(conf);
+    // Try IO
+    try {
+        var schema_loader = require('./otf_modules/schema_loader');
+        schema_loader.loadModels(conf);
+        schema_loader.loadProfiles(conf);
+    } catch (e) {
+        logger.debug(" OTF INIT PROBLEM message : " + e.messages);
+        throw(e);
+        process.exit(0);
+    }
 
 //-- Context applicatif
     appContext = app;
