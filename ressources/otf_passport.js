@@ -1,15 +1,15 @@
 /**
  * Created by epa on 10/06/14.
  */
-// config/passport.js
+// config/otf_passport.js
 // load all the things we need
-// var passport = require('passport');
+var passport = require('passport');
 var mongoose = require('mongoose');
 var logger = require('log4js').getLogger('css');
 var genericModel = require(__dirname + '../../ressources/models/mongooseGeneric');
 var LocalStrategy = require('passport-local').Strategy;
 // expose this function to our app using module.exports
-module.exports = function (passport) {
+module.exports = function (app) {
     //http://toon.io/understanding-passportjs-authentication-flow/
     // =========================================================================
     // passport session setup ==================================================
@@ -98,5 +98,8 @@ module.exports = function (passport) {
                 });
             });// ~ nextTick
         }));
+    //
+    app.use(passport.initialize());
+    app.use(passport.session());
 
 };

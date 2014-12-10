@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
 //--
-require('../ressources/oplog')();
-//
-//var cookieParser = require('cookie-parser');
+require('../ressources/otf_oplog')();
 //--
 // Logger Configuration
 var log4js = require('log4js');
@@ -31,8 +29,6 @@ var server = app.listen(app.get('port'), app.get('host'), function () {
 });
 //--
 // SERVER SOCKET
-//-- create a new Server
-//sio = require('socket.io')(server, {log: false});
 sio.listen(server, {log: false});
 logger.debug("WebSocket Started");
 //-- Middleware function
