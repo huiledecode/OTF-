@@ -24,7 +24,7 @@ exports.deleter = {
         //-- Accounts Model
         //var modele = mongoose.model(model);
         // Test Emit WebSocket Event
-        logger.debug(" One User emmit call");
+        logger.debug(" Deleted One User emmit call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
           var model = GLOBAL.schemas[_controler.data_model];

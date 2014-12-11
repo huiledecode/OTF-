@@ -73,7 +73,7 @@
         "screen": "userOne",
         "auth": true,
         "params_names": ["login"],
-        "data_model": "Account"
+        "data_model": "AccountId"
     },
     "GET/formadduser": {
         "module": "getview",

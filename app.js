@@ -10,7 +10,7 @@
 //--
 //--
 // @TODO Json config à mettre en place avec relod si modification !
-var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/css_em1';
+var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/otf_demo';
 var options = {server: { poolSize: 5 }};
 require("./ressources/otf_db").initDb(dbUrl, options);
 //--
