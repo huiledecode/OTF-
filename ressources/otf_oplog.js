@@ -2,7 +2,7 @@
  * Created by epa on 12/06/14.
  */
 var MongoOplog = require('mongo-oplog');
-var oplog = MongoOplog('mongodb://127.0.0.1:27017/local', 'test.posts').tail();
+var oplog = MongoOplog('mongodb://127.0.0.1:27017/local', 'otf_demo').tail();
 
 
 module.exports = function () {
@@ -11,7 +11,18 @@ module.exports = function () {
     });
 
     oplog.on('insert', function (doc) {
-        console.log(doc.op);
+      var dataModel = doc.ns.split('.')[1];
+      console.log('****> insert on dataModel : ' + dataModel);
+      for (var _sessionId in GLOBAL.whoWhat) {
+        console.log('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
+        if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
+        {
+          if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
+            GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
+          }
+        }
+      }
+      console.log(doc.op);
     });
 
     oplog.on('update', function (doc) {
