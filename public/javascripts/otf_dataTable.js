@@ -27,6 +27,7 @@ function setDataTable(datas, dblclick_action, suppr_action) {
   $("#monitor").html('<div class="panel-body"><div class="table-responsive"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="listereponses"></table></div></div>');
   tabMonitor = $("#listereponses").dataTable({
     "bJQueryUI": true,
+    "sAjaxDataProp": "",
     "sPaginationType": "full_numbers",
     "aaData": tabJsonClient, //données du tableau datatable récupérer dans la listereponses
     "oTableTools": {
@@ -36,6 +37,7 @@ function setDataTable(datas, dblclick_action, suppr_action) {
     "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
       //détecter un clic sur la ligne via un lien
       $('td:eq(0)', nRow).html('<a href="#" onclick="callDetail(\''+$.trim(aData[0])+'\')">' + aData[0] + '</a>');
+      $(nRow).attr("id", aData["_id"]); // Change row ID attribute to match database row id
       //return nRow;
     }
   });
@@ -76,7 +78,7 @@ if (typeof dblclick_action != 'undefined') {
   });
 }
 
-
+  /* Remplissage du dataTable de façon générique */
   for (var i=0;i<datas.length;i++) {
     var objectDatas = new Array();
     var data =  datas[i];
