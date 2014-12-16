@@ -11,7 +11,7 @@
         "screen": "index",
         "params_names": ["login", "password"],
         "auth": false,
-        "data_model": "Account",
+        "data_model": "Accounts",
         "redirect": true
     },
     "GET/logout": {
@@ -56,7 +56,7 @@
         "screen": "user_list",
         "auth": true,
         "params_names": [],
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "GET/logs": {
         "module": "finder",
@@ -80,7 +80,7 @@
         "methode": "view",
         "screen": "formadduser",
         "auth": true,
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "POST/adduser": {
         "module": "inserter",
@@ -88,7 +88,7 @@
         "screen": "index",
         "auth": true,
         "params_names": ["login", "password"],
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "GET/updateuser" : {
         "module": "finder",
@@ -96,7 +96,7 @@
         "screen": "formupdateuser",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "POST/setuser" : {
         "module": "updater",
