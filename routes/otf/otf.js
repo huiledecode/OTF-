@@ -10,7 +10,8 @@ var express = require('express');
 var router = express.Router();
 var appContext;
 var passport = require('passport');
-var url = require("url");
+var url = require("url")
+GLOBAL.whoWhat = new Array();
 //-- load annuaire file in sync mode
 //
 
@@ -232,6 +233,8 @@ function otfAction(req, res, next) {// attention il ne
                 //
                 logger.debug(" otf final %j", result);
                 //
+                // inscription dans un tableau de qui fait quoi pour le push des données oplog ?
+                GLOBAL.whoWhat[req.sessionID] = {"what" :req.url, "data_model" : req.session.controler.data_model };
                 // On gére le redirect pour l'authentification
                 //@TODO try catch sur le renderer
                 if (controler.isRedirect)
@@ -240,8 +243,8 @@ function otfAction(req, res, next) {// attention il ne
                     res.render(req.session.controler.screen, result);
             });
         }
-    });
-}
+    });}
+
 // --
 // -- Gestion des erreurs Si erreur lors du traitement de la requête par le
 // routeur dynamique de OTF
