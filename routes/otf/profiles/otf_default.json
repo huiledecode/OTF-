@@ -17,7 +17,7 @@
         "screen": "index",
         "params_names": ["login", "password"],
         "auth": false,
-        "data_model": "Account",
+        "data_model": "Accounts",
         "redirect": true
     },
     "GET/logout": {
@@ -61,7 +61,7 @@
         "screen": "user_list",
         "auth": true,
         "params_names": [],
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "GET/logs": {
         "module": "finder",
@@ -78,14 +78,14 @@
         "screen": "userOne",
         "auth": true,
         "params_names": ["login"],
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "GET/formadduser": {
         "module": "getview",
         "methode": "view",
         "screen": "formadduser",
         "auth": true,
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "POST/adduser": {
         "module": "inserter",
@@ -93,7 +93,7 @@
         "screen": "index",
         "auth": true,
         "params_names": ["login", "password"],
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "GET/index": {
         "module": "index",
