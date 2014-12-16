@@ -57,7 +57,7 @@ module.exports = function (app) {
         function (req, login, password, done) {
             logger.debug('Passport  login [%s], password: [%s], body [%s]',
                 login, password, req.body);
-            var Accounts = GLOBAL.schemas['Account'];
+            var Accounts = GLOBAL.schemas['Accounts'];
             // asynchronous
             process.nextTick(function () {
                 //--
