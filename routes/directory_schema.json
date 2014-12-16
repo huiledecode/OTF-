@@ -1,5 +1,5 @@
 {
-    "Account": {
+    "Accounts": {
         "collection": "accounts",
         "schema": {
             "login": "String",
@@ -17,7 +17,7 @@
       }
     },
     "Logs": {
-        "collection": "log",
+        "collection": "logs",
         "schema": {
             "date": "String",
             "event": "String",
@@ -26,7 +26,7 @@
             "session": "String",
             "user_id": {
                 "type": "ObjectId",
-                "ref": "Account"
+                "ref": "Accounts"
             }
         }
     }
