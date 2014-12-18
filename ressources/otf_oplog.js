@@ -26,15 +26,48 @@ module.exports = function () {
     });
 
     oplog.on('update', function (doc) {
-        console.log(doc.op);
+      var dataModel = doc.ns.split('.')[1];
+      console.log('****> update on dataModel : ' + dataModel);
+      for (var _sessionId in GLOBAL.whoWhat) {
+        console.log('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
+        if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
+        {
+          if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
+            GLOBAL.sio.sockets.in(_sessionId).emit('updateOk', doc);
+          }
+        }
+      }
+      console.log(doc.op);
     });
 
     oplog.on('delete', function (doc) {
-        console.log(doc.op._id);
+      var dataModel = doc.ns.split('.')[1];
+      console.log('****> update on dataModel : ' + dataModel);
+      for (var _sessionId in GLOBAL.whoWhat) {
+        console.log('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
+        if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
+        {
+          if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
+            GLOBAL.sio.sockets.in(_sessionId).emit('deleteOk', doc);
+          }
+        }
+      }
+      console.log(doc.op);
     });
 
     oplog.on('error', function (error) {
-        console.log(error);
+      var dataModel = doc.ns.split('.')[1];
+      console.log('****> update on dataModel : ' + dataModel);
+      for (var _sessionId in GLOBAL.whoWhat) {
+        console.log('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
+        if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
+        {
+          if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
+            GLOBAL.sio.sockets.in(_sessionId).emit('errorMongo', doc);
+          }
+        }
+      }
+      console.log(error);
     });
 
     oplog.on('end', function () {
