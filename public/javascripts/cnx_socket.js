@@ -20,6 +20,7 @@ socket.on('deleteOk', function (data) {
   console.log('données supprimées en provenance du serveur : ' , data);
   var table = $('#listereponses').dataTable();
   table.fnDeleteRow($('#'+data.o._id));
+  table.draw(false);
 });
 /**
  * Created by epa on 12/09/14.
