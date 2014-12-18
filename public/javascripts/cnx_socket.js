@@ -4,7 +4,7 @@ socket.on('ack', function (data) {
 });
 
 socket.on('insertOk', function(data) {
-  console.log('données en provenance du serveur : ' , data);
+  console.log('données insérées en provenance du serveur : ' , data);
   delete data.o.__proto;
   delete data.o.__v;
   var objectStruct = Object.getOwnPropertyNames(data.o).sort();
@@ -16,7 +16,11 @@ socket.on('insertOk', function(data) {
   $('#listereponses').dataTable().fnAddData(tabDataToAdd);
 });
 
-
+socket.on('deleteOk', function (data) {
+  console.log('données supprimées en provenance du serveur : ' , data);
+  var table = $('#listereponses').dataTable();
+  table.fnDeleteRow($('#'+data.o._id));
+});
 /**
  * Created by epa on 12/09/14.
  */
