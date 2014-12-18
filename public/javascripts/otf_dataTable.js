@@ -37,9 +37,11 @@ function setDataTable(datas, dblclick_action, suppr_action) {
     "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
       //détecter un clic sur la ligne via un lien
       $('td:eq(0)', nRow).html('<a href="#" onclick="callDetail(\''+$.trim(aData[0])+'\')">' + aData[0] + '</a>');
-      $(nRow).attr("id", aData["_id"]); // Change row ID attribute to match database row id
-      //return nRow;
+    },
+    "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+      $(nRow).attr('id', aData[0]);
     }
+
   });
 
   /* Click event handler */
