@@ -23,3 +23,13 @@ Before to start "otf2", you need to install mongoDB and start it with a Replicat
 
 <code>$ mongod --ReplSet otf_demo</code>
 
+Into un mongo shell you need to configure replicatSet like this :
+
+<code>>var config = {_id: "test", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code><br/>
+<code>>rs.initiate(config)</code>
+
+Now in the otf directory you can start the demo application by the shell script :
+
+<code>$ ./start.sh</code><br/>
+<code>sudoer password : </code><br/>
+
