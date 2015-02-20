@@ -33,3 +33,5 @@ Now in the otf directory you can start the demo application by the shell script 
 <code>$ ./start.sh</code><br/>
 <code>sudoer password : </code><br/>
 
+Now you can start your browser and type this url : 
+<code>http://localhost:3000</code>
