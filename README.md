@@ -32,7 +32,7 @@ Before to start "otf2", you need to install mongoDB and start it with a Replicat
 
 Into un mongo shell you need to configure replicatSet like this :
 
-<code>>var config = {_id: "test", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code><br/>
+<code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code><br/>
 <code>>rs.initiate(config)</code>
 
 Now in the otf directory you can start the demo application by the shell script :
