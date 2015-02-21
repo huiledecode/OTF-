@@ -1,0 +1,1 @@
+{ "options" : { "create" : "users", "autoIndexId" : true, "size" : 0, "capped" : false, "max" : 0, "strict" : true }, "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "otf_demo.users", "name" : "_id_" } ] }
