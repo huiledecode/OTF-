@@ -43,6 +43,6 @@ Now in the otf directory you can start the demo application by the shell script 
 Now you can start your browser and type this url : 
 <code>http://localhost:3000</code>
 
-You can see authenticaton page ogf otf_demo application :
+You can see authenticaton page of otf_demo application :
 
 <img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-2_accueil_OTF.png" />
