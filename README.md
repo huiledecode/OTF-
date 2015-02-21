@@ -9,8 +9,8 @@ Also, OTF² has some generic modules which make actions :  writing, reading, del
 
 You need to install mongoDB to use OTF² and restore the database of the demo application :
 
-<code>cd dump</code><br />
-<code>mongorestore ./otf_demo</code>
+<code>$ cd dump</code><br />
+<code>$ mongorestore ./otf_demo</code>
 
 # Quick Start
 
