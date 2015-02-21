@@ -45,4 +45,4 @@ Now you can start your browser and type this url :
 
 You can see authenticaton page ogf otf_demo application :
 
-<img src="http://www.huiledecode.org/otf/img/capture_2015-02-2_accueil_OTF.png" />
+<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-2_accueil_OTF.png" />
