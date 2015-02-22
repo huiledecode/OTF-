@@ -64,6 +64,6 @@ You can enter into back-office by give the login "admin" and the password "otf" 
 
 <img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-22_index_OTF.png" />
 
-# How to create 1 pages ?
+# How to ?
 
 
