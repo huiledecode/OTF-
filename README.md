@@ -7,24 +7,37 @@ Also, OTF² has some generic modules which make actions :  writing, reading, del
 
 # Prerequisites
 
-You need to install mongoDB to use OTF² and restore the database of the demo application :
+You need to install mongoDB to use OTF², on Ubuntu 14.04 you just need to make :
+
+<code>$ sudo apt-get install mongodb</code>
+
+After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
+
+<code>$ git clone https://github.com/huiledecode/otf.git</code>
+
+change the current directory to "otf" :
+
+<code>$ cd otf</code>
+
+And go into dump directory :
 
 <code>$ cd dump</code><br />
+
+Restore database MongoDB like this :
+
 <code>$ mongorestore ./otf_demo</code>
 
 # Quick Start
 
-Open a terminal, go into your workspace directory and type :
-
-<code>$ git clone https://github.com/huiledecode/otf.git</code>
-
-change directory to "otf" :
+Open a terminal, go into directory "otf" :
 
 <code>$ cd otf</code>
 
 get all the dependancies by npm :
 
 <code>$ npm install</code>
+
+Wait a moment for dependancies
 
 Before to start "otf2", you need to install mongoDB and start it with a ReplicatSet
 
