@@ -58,4 +58,12 @@ Now you can start your browser and type this url :
 
 You can see authenticaton page of otf_demo application :
 
-<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-2_accueil_OTF.png" />
+<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-2_login_OTF.png" />
+
+You can enter into back-office by give the login "admin" and the password "otf" into the athetication page of the demo application. You can see now a menu bar at the top if the index page.
+
+<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-22_index_OTF.png" />
+
+# How to create 1 pages ?
+
+
