@@ -40,7 +40,7 @@ Get all the dependancies by npm :
 
 Wait a moment for dependancies
 
-Before launching "otf2", you need to install mongoDB and start it with a ReplicatSet
+Before launching OTF², you need to install mongoDB and start it with a ReplicatSet
 
 <code>$ mongod --ReplSet otf_demo</code>
 
@@ -68,6 +68,7 @@ You can access backend by giving the login "admin" and the password "otf" into t
 # How to ?
 
 You can see in demo application the menu "users" which display the list of users authorized to connect to the backend. 
+
 <img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-23_users_OTF.png" />
 
 What happens when you click on "users" link in the top menu :
@@ -80,16 +81,18 @@ How can we do this into OTF² ?
 Follow the rabbit ;-) :
 
 You need to set the "<b>routes/otf/profiles/otf_admin.json</b>" file. It defines actions (pathnames) which can be used by the user account :
-<code><pre>(...)<br/>
-   "<b>GET/users</b>": {<br/>
-    &nbsp;&nbsp;"module": "<b>finder</b>",<br/>
-    &nbsp;&nbsp;"methode": "<b>list</b>",<br/>
-    &nbsp;&nbsp;"screen": "<b>user_list</b>",<br/>
-    &nbsp;&nbsp;"auth": <b>true</b>,<br/>
-    &nbsp;&nbsp;"params_names": <b>[]</b>,<br/>
-    &nbsp;&nbsp;"data_model": "<b>Accounts</b>"<br/>
-   },<br/>(...)
-</pre></code>          
+```js
+(...)
+   "<b>GET/users</b>": {
+    &nbsp;&nbsp;"module": "<b>finder</b>",
+    &nbsp;&nbsp;"methode": "<b>list</b>",
+    &nbsp;&nbsp;"screen": "<b>user_list</b>",
+    &nbsp;&nbsp;"auth": <b>true</b>,
+    &nbsp;&nbsp;"params_names": <b>[]</b>,
+    &nbsp;&nbsp;"data_model": "<b>Accounts</b>"
+   },
+(...)
+```        
 
 To understand the "<b>Flight Plan</b>", we need to explore all the attributes in the json file "<b>otf_admin.json</b>" :
 <ul>
@@ -102,15 +105,47 @@ To understand the "<b>Flight Plan</b>", we need to explore all the attributes in
 </ul>
 
 Extract of "<b>directory_schema.json</b>" :
-<code><pre>
-"<b>Accounts</b>": {<br/>
- &nbsp;&nbsp;"collection": "<b>accounts</b>",<br/>
- &nbsp;&nbsp;"schema": {<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;"login": "<b>String</b>",<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;"password": "<b>String</b>",<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;"profile": <b>[]</b><br/>
- &nbsp;&nbsp;}<br/>
-},<br/>(...)
-</pre></code>
+```js
+"<b>Accounts</b>": {
+ &nbsp;&nbsp;"collection": "<b>accounts</b>",
+ &nbsp;&nbsp;"schema": {
+ &nbsp;&nbsp;&nbsp;&nbsp;"login": "<b>String</b>",
+ &nbsp;&nbsp;&nbsp;&nbsp;"password": "<b>String</b>",
+ &nbsp;&nbsp;&nbsp;&nbsp;"profile": <b>[]</b>
+ &nbsp;&nbsp;}
+},(...)
+```
 
+To generate a view, OTF² is using the template ["Handlebars"] (http://handlebarsjs.com/). Now we'll see the template which is displaying for the users list
+when a click is happening on Users's menu :
+
+```js
+    {{#content "head"}}
+        {{> head}}
+    {{/content}}
+    {{#content "header"}}
+        {{> header}}
+    {{/content}}
+    {{#content "body"}}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <h3>List Users</h3>
+            </div>
+        </div>
+        <button id="suppr" type="button" class="btn btn-primary btn-lg btn-block">Delete Row</button>
+        <!-- Javascript d'initialisation d'un datatable jquery bootstrapisé -->
+        <script>
+            //<![CDATA[
+            $(document).ready(function() {
+                setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
+             });
+            //]]>
+        </script>
+    </div>
+        {{#content "footer"}}
+            {{> footer}}
+        {{/content}}
+    {{/content}}
+```
 
