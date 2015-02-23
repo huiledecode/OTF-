@@ -84,12 +84,12 @@ You need to set the "<b>routes/otf/profiles/otf_admin.json</b>" file. It defines
 ```js
 (...)
    "<b>GET/users</b>": {
-    &nbsp;&nbsp;"module": "<b>finder</b>",
-    &nbsp;&nbsp;"methode": "<b>list</b>",
-    &nbsp;&nbsp;"screen": "<b>user_list</b>",
-    &nbsp;&nbsp;"auth": <b>true</b>,
-    &nbsp;&nbsp;"params_names": <b>[]</b>,
-    &nbsp;&nbsp;"data_model": "<b>Accounts</b>"
+        "module": "<b>finder</b>",
+        "methode": "<b>list</b>",
+        "screen": "<b>user_list</b>",
+        "auth": <b>true</b>,
+        "params_names": <b>[]</b>,
+        "data_model": "<b>Accounts</b>"
    },
 (...)
 ```        
@@ -107,12 +107,12 @@ To understand the "<b>Flight Plan</b>", we need to explore all the attributes in
 Extract of "<b>directory_schema.json</b>" :
 ```js
 "<b>Accounts</b>": {
- &nbsp;&nbsp;"collection": "<b>accounts</b>",
- &nbsp;&nbsp;"schema": {
- &nbsp;&nbsp;&nbsp;&nbsp;"login": "<b>String</b>",
- &nbsp;&nbsp;&nbsp;&nbsp;"password": "<b>String</b>",
- &nbsp;&nbsp;&nbsp;&nbsp;"profile": <b>[]</b>
- &nbsp;&nbsp;}
+        "collection": "<b>accounts</b>",
+        "schema": {
+                "login": "<b>String</b>",
+                "password": "<b>String</b>",
+                "profile": <b>[]</b>
+        }
 },(...)
 ```
 
