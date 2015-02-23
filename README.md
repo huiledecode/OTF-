@@ -67,6 +67,29 @@ You can enter into back-office by give the login "admin" and the password "otf" 
 # How to ?
 
 You can see in demo application the menu "users" which display the list of users autorized to
-connect to the back-office
+connect to the back-office. 
+
+<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-23_users_OTF.png" />
+
+What's happen when you click on "users" link in the top menu :
+
+1- You sent a pathname "/users" from GET HTTP method<br/>
+2- You request the server to read into the accounts collection of mongoDB,<br/>
+3- You need to display the data into a JQuery datatable<br/>
+
+How can we do this into OTF² ? like this :
+
+You need to see the "<b>otf_admin.json</b>" file that defined actions (pathnames) which can be used by the user account :
+<code><pre>(...)<br/>
+   "<b>GET/users</b>": {<br/>
+    &nbsp;&nbsp;"module": "<b>finder</b>",<br/>
+    &nbsp;&nbsp;"methode": "<b>list</b>",<br/>
+    &nbsp;&nbsp;"screen": "<b>user_list</b>",<br/>
+    &nbsp;&nbsp;"auth": <b>true</b>,<br/>
+    &nbsp;&nbsp;"params_names": <b>[]</b>,<br/>
+    &nbsp;&nbsp;"data_model": "<b>Accounts</b>"<br/>
+   },<br/>(...)
+</pre></code>          
+
 
 
