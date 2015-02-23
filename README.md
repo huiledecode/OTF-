@@ -109,7 +109,7 @@ Extract of "<b>directory_schema.json</b>" :
  &nbsp;&nbsp;&nbsp;&nbsp;"login": "<b>String</b>",<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;"password": "<b>String</b>",<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;"profile": <b>[]</b><br/>
- &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+ &nbsp;&nbsp;}<br/>
  &nbsp;&nbsp;},<br/>(...)
 </pre></code>
 
