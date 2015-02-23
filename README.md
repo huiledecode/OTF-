@@ -98,7 +98,7 @@ To understand the "<b>Flight Plan</b>", we need to explore all the attributes in
 <ul>
     <li> <b>module</b> : define the name of the module to load (i.e : "<b>finder</b>"),</li>
     <li> <b>methode</b> : define the name of the function which will be called to make the action (i.e. : "<b>list</b>"),</li>
-    <li> <b>screen</b> : define the template page which will be displayed once the action is done ("i.e. : "<b>user_list></b>),</li>
+    <li> <b>screen</b> : define the template page which will be displayed once the action is done ("i.e. : "<b>user_list</b>),</li>
     <li> <b>auth</b> : define if the action requires an authentication : (i.e. : "<b>true</b>),</li>
     <li> <b>params_names</b> : define into an array the "params" which can be used to filter the reading into MongoDB. <br>Data can be used to be inserted into a collection. The result depends on the generic component used : finder => filter / inserter => params to insert</li>
     <li> <b>datas_model</b> : define the name of the mongoose schema which map the data of MongoDB's collections.<br> You can see some examples of schema into the file named "<b>directory_schema.json</b>"   
@@ -147,4 +147,8 @@ when a click is happening on Users's menu :
     {{/content}}
 {{/content}}
 ```
+For convenience we have implemented a javascript function to create dynamically a JQuery DataTable :
 
+```js
+setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
+```
