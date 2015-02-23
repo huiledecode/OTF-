@@ -66,4 +66,7 @@ You can enter into back-office by give the login "admin" and the password "otf" 
 
 # How to ?
 
+You can see in demo application the menu "users" which display the list of users autorized to
+connect to the back-office
+
 
