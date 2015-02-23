@@ -134,7 +134,6 @@ when a click is happening on Users's menu :
             </div>
         </div>
         <button id="suppr" type="button" class="btn btn-primary btn-lg btn-block">Delete Row</button>
-        <!-- Javascript d'initialisation d'un datatable jquery bootstrapisé -->
         <script>
             //<![CDATA[
             $(document).ready(function() {
