@@ -10,52 +10,49 @@ Also, OTF² has some generic modules to produce specific actions : writing / rea
 
 You need to install Node.js, npm and mongoDB to use OTF², on Ubuntu 14.04 you just need to make :
 
-<code>$ sudo apt-get install nodejs npm mongodb</code>
+<pre><code>$ sudo apt-get install nodejs npm mongodb</code></pre>
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
-<code>$ git clone https://github.com/huiledecode/otf.git</code>
+<pre><code>$ git clone https://github.com/huiledecode/otf.git</code></pre>
 
 change the current directory to "otf" :
 
-<code>$ cd otf</code>
+<pre><code>$ cd otf</code></pre>
 
 And go into dump directory :
 
-<code>$ cd dump</code><br />
+<pre><code>$ cd dump</code></pre>
 
 Restore database MongoDB like this :
 
-<code>$ mongorestore ./otf_demo</code>
+<pre><code>$ mongorestore ./otf_demo</code></pre>
 
 # Quick Start
 
 Open a terminal, go into directory "otf" :
 
-<code>$ cd otf</code>
+<pre><code>$ cd otf</code></pre>
 
 Get all the dependancies by npm :
 
-<code>$ npm install</code>
+<pre><code>$ npm install</code></pre>
 
 Wait a moment for dependancies
 
-Before launching OTF², you need to install mongoDB and start it with a ReplicatSet
-
-<code>$ mongod --ReplSet otf_demo</code>
+Before launching OTF², you need to install mongoDB and start it with a ReplicatSet :
+<pre><code>$ mongod --ReplSet otf_demo</code></pre>
 
 Into mongo shell you need to configure replicatSet like this :
-
-<code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code><br/>
-<code>>rs.initiate(config)</code>
+<pre><code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code></pre>
+<pre><code>>rs.initiate(config)</code></pre>
 
 Now in the otf directory you can start the demo application :
-
-<code>$ ./start.sh</code><br/>
-<code>sudoer password : </code><br/>
+<pre><code>$ ./start.sh</code></pre>
+<pre><code>sudoer password : </code></pre>
 
 Now you can fire up your browser and access your OTF app with the following url : 
-<code>http://localhost:3000</code>
+<pre><code>http://localhost:3000</code></pre>
 
 You can see authenticaton page of otf_demo application :
 
