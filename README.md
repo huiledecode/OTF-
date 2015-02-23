@@ -114,8 +114,8 @@ Extract of "<b>directory_schema.json</b>" :
 ```
 
 To generate a view, OTF² is using the template ["Handlebars"] (http://handlebarsjs.com/). Now we'll see the template which is displaying for the users list
-when a click is happening on Users's menu :
-**views/user_list.hbs**
+when a click is happening on Users's menu :<br/>
+Extract of **views/user_list.hbs**
 ```js
 {{#content "head"}}
     {{> head}}
