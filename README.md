@@ -156,7 +156,7 @@ setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
 ```
 * The first parameter is an Handlabars expression to get json data from the OTF² module,
 * The second parameter is a String which defined the pathname of modification's action,
-* The third parameter is a String which defined the pathname of delete's action, il is using the first column to get the Id of the row sent to delete.
+* The third parameter is a String which defined the pathname of delete's action, it is using the first column to get the Id of the row sent to delete.
  
 
 (to be continued...)
