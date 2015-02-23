@@ -141,6 +141,11 @@ when a click is happening on Users's menu :
          });
         //]]>
     </script>
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="monitor" class="panel panel-default"></div>
+        </div><!-- /.col-lg-12 -->
+    </div>
 </div>
     {{#content "footer"}}
         {{> footer}}
