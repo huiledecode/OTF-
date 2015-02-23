@@ -83,13 +83,13 @@ Follow the rabbit ;-) :
 You need to set the "<b>routes/otf/profiles/otf_admin.json</b>" file. It defines actions (pathnames) which can be used by the user account :
 ```js
 (...)
-   "<b>GET/users</b>": {
-        "module": "<b>finder</b>",
-        "methode": "<b>list</b>",
-        "screen": "<b>user_list</b>",
-        "auth": <b>true</b>,
-        "params_names": <b>[]</b>,
-        "data_model": "<b>Accounts</b>"
+   "GET/users": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "user_list",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Accounts"
    },
 (...)
 ```        
@@ -106,12 +106,12 @@ To understand the "<b>Flight Plan</b>", we need to explore all the attributes in
 
 Extract of "<b>directory_schema.json</b>" :
 ```js
-"<b>Accounts</b>": {
-        "collection": "<b>accounts</b>",
+"Accounts": {
+        "collection": "accounts",
         "schema": {
-                "login": "<b>String</b>",
-                "password": "<b>String</b>",
-                "profile": <b>[]</b>
+                "login": "String",
+                "password": "String",
+                "profile": []
         }
 },(...)
 ```
