@@ -101,7 +101,7 @@ To explain the "<b>Flight Plan</b>", we need to explain all the attributes in th
     <li> <b>datas_model</b> : defined the name of the mongoose schema which mapped the datas of the MongoDB's collections. <br> You can see some examples of schema into the file named "<b>directory_schema.json</b>"   
 </ul>
 
-Extract of "<b>directory_schema.json</b>" : <br/>
+Extract of "<b>directory_schema.json</b>" :
 <code><pre>
 "<b>Accounts</b>": {<br/>
  &nbsp;&nbsp;"collection": "<b>accounts</b>",<br/>
