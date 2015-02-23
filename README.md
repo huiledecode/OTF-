@@ -120,31 +120,31 @@ To generate a view, OTF² is using the template ["Handlebars"] (http://handlebar
 when a click is happening on Users's menu :
 
 ```js
-    {{#content "head"}}
-        {{> head}}
-    {{/content}}
-    {{#content "header"}}
-        {{> header}}
-    {{/content}}
-    {{#content "body"}}
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <h3>List Users</h3>
-            </div>
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <h3>List Users</h3>
         </div>
-        <button id="suppr" type="button" class="btn btn-primary btn-lg btn-block">Delete Row</button>
-        <script>
-            //<![CDATA[
-            $(document).ready(function() {
-                setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
-             });
-            //]]>
-        </script>
     </div>
-        {{#content "footer"}}
-            {{> footer}}
-        {{/content}}
+    <button id="suppr" type="button" class="btn btn-primary btn-lg btn-block">Delete Row</button>
+    <script>
+        //<![CDATA[
+        $(document).ready(function() {
+            setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
+         });
+        //]]>
+    </script>
+</div>
+    {{#content "footer"}}
+        {{> footer}}
     {{/content}}
+{{/content}}
 ```
 
