@@ -157,3 +157,9 @@ For convenience we have implemented a javascript function to create dynamically 
 ```js
 setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
 ```
+
+(to be continued...)
+
+# Licence
+
+OTF² is under LGPL V3 licence, you can see the licence file into the repository
