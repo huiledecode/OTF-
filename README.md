@@ -8,9 +8,9 @@ Also, OTF² has some generic modules to produce specific actions : writing / rea
 
 # Prerequisites
 
-You need to install mongoDB to use OTF², on Ubuntu 14.04 you just need to make :
+You need to install Node.js, npm and mongoDB to use OTF², on Ubuntu 14.04 you just need to make :
 
-<code>$ sudo apt-get install mongodb</code>
+<code>$ sudo apt-get install nodejs npm mongodb</code>
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
