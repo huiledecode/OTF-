@@ -1,14 +1,14 @@
 {
     "GET/": {
-        "module": "index",
-        "methode": "titre",
-        "screen": "index",
-        "auth": true
+      "module": "index",
+      "methode": "titre",
+      "screen": "index",
+      "auth": true
     },
-    "GET/elow": {
-        "module": "elow",
-        "methode": "view",
-        "screen": "elow_view",
+    "GET/login": {
+        "module": "login",
+        "methode": "titre",
+        "screen": "login",
         "auth": false
     },
     "POST/signupAccount": {
@@ -27,78 +27,5 @@
         "params_names": [],
         "auth": false,
         "redirect": true
-    },
-
-    "GET/multipart": {
-        "module": "index",
-        "methode": "titre",
-        "screen": "multipart_oneFile",
-        "auth": true
-    },
-    "POST/uploadImage": {
-        "module": "uploader",
-        "methode": "oneFile",
-        "screen": "index",
-        "auth": true
-    },
-    "GET/user": {
-        "module": "finder",
-        "methode": "one",
-        "screen": "userOne",
-        "auth": true,
-        "params_names": ["login"],
-        "data_model": "accounts"
-    },
-    "GET/login": {
-        "module": "login",
-        "methode": "titre",
-        "screen": "login",
-        "auth": false
-    },
-    "GET/users": {
-        "module": "finder",
-        "methode": "list",
-        "screen": "user_list",
-        "auth": true,
-        "params_names": [],
-        "data_model": "Accounts"
-    },
-    "GET/logs": {
-        "module": "finder",
-        "methode": "populate",
-        "screen": "log_list",
-        "auth": true,
-        "params_names": [],
-        "data_model": "Logs",
-        "data_ref": "user_id"
-    },
-    "POST/user": {
-        "module": "finder",
-        "methode": "one",
-        "screen": "userOne",
-        "auth": true,
-        "params_names": ["login"],
-        "data_model": "Accounts"
-    },
-    "GET/formadduser": {
-        "module": "getview",
-        "methode": "view",
-        "screen": "formadduser",
-        "auth": true,
-        "data_model": "Accounts"
-    },
-    "POST/adduser": {
-        "module": "inserter",
-        "methode": "one",
-        "screen": "index",
-        "auth": true,
-        "params_names": ["login", "password"],
-        "data_model": "Accounts"
-    },
-    "GET/index": {
-        "module": "index",
-        "methode": "titre",
-        "screen": "index",
-        "auth": true
     }
 }

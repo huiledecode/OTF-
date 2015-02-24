@@ -5,14 +5,11 @@
         "screen": "index",
         "auth": true
     },
-    "POST/signupAccount": {
-        "module": "signupAccount",
-        "methode": "signup",
-        "screen": "index",
-        "params_names": ["login", "password"],
-        "auth": false,
-        "data_model": "Accounts",
-        "redirect": true
+    "GET/login": {
+      "module": "login",
+      "methode": "titre",
+      "screen": "login",
+      "auth": false
     },
     "GET/logout": {
         "module": "signupAccount",
@@ -22,7 +19,6 @@
         "auth": false,
         "redirect": true
     },
-
     "GET/multipart": {
         "module": "index",
         "methode": "titre",
@@ -43,12 +39,6 @@
         "auth": true,
         "params_names": ["login"],
         "data_model": "Accounts"
-    },
-    "GET/login": {
-        "module": "login",
-        "methode": "titre",
-        "screen": "login",
-        "auth": false
     },
     "GET/users": {
         "module": "finder",
@@ -129,5 +119,11 @@
         "methode": "titre",
         "screen": "index",
         "auth": true
+    },
+    "GET/glances" : {
+      "module" : "glances",
+      "methode" : "getData",
+      "screen" : "glancesviewtab",
+      "auth" : true
     }
 }

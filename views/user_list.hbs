@@ -11,12 +11,12 @@
             <h3>List Users</h3>
         </div>
     </div>
-    <button id="suppr" type="button" class="btn btn-primary btn-lg btn-block">Supprimer l'utilisateur de l'Extranet</button>
+    <button id="suppr" type="button" class="btn btn-primary btn-lg btn-block">Delete Row</button>
     <!-- Javascript d'initialisation d'un datatable jquery bootstrapisé -->
     <script>
         //<![CDATA[
         $(document).ready(function() {
-            setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
+            setDataTable({{{json result}}}, "monitor", "/updateuser", "/deleteuser");
         });
         //]]>
     </script>

@@ -1,7 +1,7 @@
 /**
  * Created by stephane on 03/12/14.
  */
-function setDataTable(datas, dblclick_action, suppr_action) {
+function setDataTable(datas, idmonitor, dblclick_action, suppr_action) {
 
   // Ajout fonction startsWith sur les String Javascript
   if (typeof String.prototype.startsWith != 'function') {
@@ -15,7 +15,7 @@ function setDataTable(datas, dblclick_action, suppr_action) {
   var clicked = false;
   var listIdSelected = "";
   var oldThis;
-  var objectStruct = Object.getOwnPropertyNames(datas[datas.length - 1]).sort();
+  var objectStruct = Object.getOwnPropertyNames(datas[datas.length - 1]);
 //var objectStruct = Object.keys(datas[datas.length - 1]).sort();
   console.log('---->> datas[0]', objectStruct);
   var tabJsonClient = new Array();
@@ -24,8 +24,8 @@ function setDataTable(datas, dblclick_action, suppr_action) {
     if (objectStruct[i] != '__v') listColumns.push({"sTitle" : objectStruct[i], "sClass": "center"});
   }
   /** Création de la table jquery pour afficher la liste des clients connectés sur le serveur */
-  $("#monitor").html('<div class="panel-body"><div class="table-responsive"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="listereponses"></table></div></div>');
-  tabMonitor = $("#listereponses").dataTable({
+  $("#"+idmonitor).html('<div class="panel-body"><div class="table-responsive"><table class="table table-striped table-bordered table-hover dataTable no-footer" id="listereponses"></table></div></div>');
+    var tabMonitor = $("#listereponses").dataTable({
     "bJQueryUI": true,
     "sAjaxDataProp": "",
     "sPaginationType": "full_numbers",

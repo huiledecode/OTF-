@@ -28,6 +28,15 @@ hr {
     border-color: #E8E7E7;
 }
 
+/* style label des gauges */
+.label-gauge {
+    position:absolute;
+    margin-top:100px;
+    margin-bottom:10px;
+    margin-left:80px;
+    font-weight:bold;
+}
+
 /* wrapper for page content to push down footer */
 .page-container {
     min-height: 10%;
