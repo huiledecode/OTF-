@@ -41,7 +41,7 @@ Get all the dependancies by npm :
 Wait a moment for dependancies
 
 Before launching OTF², you need to install mongoDB and start it with a ReplicatSet :
-<pre><code>$ mongod --ReplSet otf_demo</code></pre>
+<pre><code>$ mongod --replSet otf_demo</code></pre>
 
 Into mongo shell you need to configure replicatSet like this :
 <pre><code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code></pre>
