@@ -64,13 +64,13 @@ You can access backend by giving the login "admin" and the password "otf" into t
 
 # How to ?
 
-You can see in demo application the menu "users" which display the list of users authorized to connect to the backend. 
+You can see in demo application the menu "users" which displays the list of users authorized to connect to the backend. 
 
 <img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-23_users_OTF.png" />
 
 What happens when you click on "users" link in the top menu :
 
-1- You sent a pathname "<b>/users</b>" from GET HTTP method<br/>
+1- You send a pathname "<b>/users</b>" from GET HTTP method<br/>
 2- You request the server to read into the accounts collection of MongoDB,<br/>
 3- You need to display the data into a JQuery DataTable<br/>
 
@@ -98,7 +98,7 @@ To understand the "<b>Flight Plan</b>", we need to explore all the attributes in
     <li> <b>screen</b> : define the template page which will be displayed once the action is done ("i.e. : "<b>user_list</b>),</li>
     <li> <b>auth</b> : define if the action requires an authentication : (i.e. : "<b>true</b>),</li>
     <li> <b>params_names</b> : define into an array the "params" which can be used to filter the reading into MongoDB. <br>Data can be used to be inserted into a collection. The result depends on the generic component used : finder => filter / inserter => params to insert</li>
-    <li> <b>datas_model</b> : define the name of the mongoose schema which map the data of MongoDB's collections.<br> You can see some examples of schema into the file named "<b>directory_schema.json</b>"   
+    <li> <b>datas_model</b> : define the name of the mongoose schema which maps the data of MongoDB's collections.<br> You can see some examples of schema into the file named "<b>directory_schema.json</b>"   
 </ul>
 
 Extract of "<b>directory_schema.json</b>" :
