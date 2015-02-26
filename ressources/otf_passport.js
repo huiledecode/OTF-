@@ -53,7 +53,7 @@ module.exports = function (app) {
             // allows us to pass back the entire request to the
             // callback
         },
-        // -- Check auth account i DB
+        // -- Check auth account in DB
         function (req, login, password, done) {
             logger.debug('Passport  login [%s], password: [%s], body [%s]',
                 login, password, req.body);

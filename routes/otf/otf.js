@@ -9,6 +9,7 @@ var logger = require('log4js').getLogger('css');
 var express = require('express');
 var router = express.Router();
 var appContext;
+var managerSession;
 var passport = require('passport');
 var url = require("url")
 GLOBAL.whoWhat = new Array();
@@ -19,7 +20,9 @@ GLOBAL.whoWhat = new Array();
 //---
 // Fonction exportées pour paramétrer OTF
 // Attention à l'odre des router.use et router.get et router.post
-function otf(app) {
+function otf(app, sessionStore) {
+    //
+    managerSession = sessionStore;
     //
     var conf = { schema: __dirname + "/../directory_schema.json", profile: __dirname+ "/profiles/"};
     // Try IO
@@ -237,8 +240,14 @@ function otfAction(req, res, next) {// attention il ne
                 GLOBAL.whoWhat[req.sessionID] = {"what" :req.url, "data_model" : req.session.controler.data_model };
                 // On gére le redirect pour l'authentification
                 //@TODO try catch sur le renderer
-                if (controler.isRedirect)
+                if (controler.isRedirect) {
+
                     res.redirect('/' + req.session.controler.screen);
+                    //res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+                    // res.writeHead(301, {'content-type': 'text/html'});
+                    res.end();
+                }
+
                 else
                     res.render(req.session.controler.screen, result);
             });

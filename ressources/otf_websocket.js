@@ -2,10 +2,13 @@
  * Created by epa on 10/12/14.
  */
 var log = require('log4js').getLogger('css');
+var util = require('util');
 module.exports = function (sessionStore, secret, cookieName) {
+
 
 //-- GLOBAL
     GLOBAL.sio = require('socket.io')();
+    // on copie les infos choisies de la session à la socket
     sio.use(function authorization(socket, next) {
         //
         var data = socket.handshake;
@@ -13,6 +16,12 @@ module.exports = function (sessionStore, secret, cookieName) {
         //--
         var _sessionStore = sessionStore;
         var _cookieParser = require('cookie-parser')(secret);
+        // TEST sur memorySession de la liste des sessions active sessionStore.all(cb)
+        //_sessionStore.all(function(err,sessions){
+        //    if (!err )
+        //        log.debug(" TEST LIST SESSION MEMORY SESSION : "+util.inspect(sessions));
+        //
+        //});
         //--
         if (data && data.headers && data.headers.cookie) {
             //--
@@ -24,6 +33,7 @@ module.exports = function (sessionStore, secret, cookieName) {
                 //var sessionId = data.cookies[cookie_name];
                 log.debug("Websocket Authorization Verify sessionID  [%j]", sessionId);
                 _sessionStore.get(sessionId, function (err, session) {
+                    // on verifie que la session est authentifiée
                     // log.debug('Websocket Authorization  cookie [%j] ', data.signedCcookies);
                     if (err || !session || !session.passport || !session.passport.user) {
                         log.debug('Websocket Authorization Failed not in sessionStore sessionId :', sessionId);
@@ -33,7 +43,7 @@ module.exports = function (sessionStore, secret, cookieName) {
                     else {
                         log.debug('Websocket Authorization  for sessionId :', sessionId);
                         //data.session = session;
-                        //@TODO généré un UUID par fle module flake-idgen pour la room et ajouter à la session et au data
+                        //@TODO généré un UUID par fle module flake-idgen pour la room et ajouter à la session et au data socket
                         data.sessionid = sessionId;
                         data.user = session.passport.user.login;
                         next();
@@ -48,7 +58,12 @@ module.exports = function (sessionStore, secret, cookieName) {
 
     });
 
-//});
+
+    sio.use(function trace(socket, next) {
+        log.debug(" Trace WS : " + util.inspect(socket.fns));
+        next();
+    });
+
 
 //--
     sio.on('connection', function (socket) {

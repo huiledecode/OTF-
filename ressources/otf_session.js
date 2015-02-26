@@ -7,10 +7,12 @@ module.exports = function (app, secret, cookie_name) {
     var cookieParser = require('cookie-parser');
     var session = require("express-session");
     var sessionStore;
+    // TimeOut de session en secondes et prefix de la keyy pour REDIS
+    var options = {"ttl": "120", "prefix": "sess:"};
     // Store Memory or Redis
     if (process.env.NODE_SESSION == "REDIS") {
         var RedisStore = require('./connect-redis')(session);
-        sessionStore = new RedisStore();
+        sessionStore = new RedisStore(options);
         console.log("NODE_SESSION = REDIS");
     } else {
         var MemoryStore = session.MemoryStore;

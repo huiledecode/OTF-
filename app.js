@@ -51,11 +51,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Managment Session Store
 var sessionStore = require('./ressources/otf_session')(app, secret, cookie_name);
 //--
+// OPOLOG PLUBISH/SUBCRIBE WEBSOCKET FRAMEWORK
+require('./ressources/otf_oplog')(sessionStore);
+//--
 // Authentification Managment by Passport
 require('./ressources/otf_passport')(app);
 //--
 // Routes Managment by Otf Framework
-require('./routes/otf/otf')(app);
+require('./routes/otf/otf')(app, sessionStore);
 //--
 //WebSocket Managment
 require('./ressources/otf_websocket')(sessionStore, secret, cookie_name);

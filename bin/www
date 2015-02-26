@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 //--
-require('../ressources/otf_oplog')();
+//require('../ressources/otf_oplog')();
 //--
 // Logger Configuration
 var log4js = require('log4js');
