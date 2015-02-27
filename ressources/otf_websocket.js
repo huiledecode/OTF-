@@ -19,8 +19,17 @@ module.exports = function (sessionStore, secret, cookieName) {
         // TEST sur memorySession de la liste des sessions active sessionStore.all(cb)
         //_sessionStore.all(function(err,sessions){
         //    if (!err )
-        //        log.debug(" TEST LIST SESSION MEMORY SESSION : "+util.inspect(sessions));
+        //    {
+        //        log.debug("WEBSOCKET MODULE TEST LIST SESSIONS [%s] ",util.inspect(sessions));
+        //        if (sessions)
+        //        {
+        //            for (var session  in sessions)
+        //            {
+        //                 log.debug("sessionid %s, cookie %s, controler %s, data [%s]",session,util.inspect(sessions[session].cookie),util.inspect(sessions[session].controler),util.inspect(sessions[session]));
+        //            }
+        //        }
         //
+        //    }
         //});
         //--
         if (data && data.headers && data.headers.cookie) {

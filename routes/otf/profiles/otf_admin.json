@@ -11,12 +11,21 @@
       "screen": "login",
       "auth": false
     },
+    "POST/signupAccount": {
+        "module": "signupAccount",
+        "methode": "signup",
+        "screen": "index",
+        "params_names": ["login", "password"],
+        "auth": false,
+        "data_model": "Accounts",
+        "redirect": true
+    },
     "GET/logout": {
         "module": "signupAccount",
         "methode": "logout",
         "screen": "login",
         "params_names": [],
-        "auth": false,
+        "auth": true,
         "redirect": true
     },
     "GET/multipart": {
@@ -30,7 +39,8 @@
         "module": "uploader",
         "methode": "oneFile",
         "screen": "index",
-        "auth": true
+        "auth": true,
+        "redirect": true
     },
     "GET/user": {
         "module": "finder",
@@ -75,10 +85,11 @@
     "POST/adduser": {
         "module": "inserter",
         "methode": "one",
-        "screen": "index",
+        "screen": "users",
         "auth": true,
         "params_names": ["login", "password"],
-        "data_model": "Accounts"
+        "data_model": "Accounts",
+        "redirect": true
     },
     "GET/updateuser" : {
         "module": "finder",

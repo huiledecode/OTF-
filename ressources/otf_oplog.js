@@ -1,6 +1,7 @@
 /**
  * Created by epa on 12/06/14.
  */
+var logger = require('log4js').getLogger('css');
 var MongoOplog = require('mongo-oplog');
 var oplog = MongoOplog('mongodb://127.0.0.1:27017/local', 'otf_demo').tail();
 var util = require("util");
@@ -11,49 +12,48 @@ module.exports = function (sessionStore) {
     srvSession = sessionStore;
     //
     oplog.on('op', function (data) {
-        console.log("OPLOG ON [%s]", util.inspect(data));
+        logger.debug("OPLOG ON [%s]", util.inspect(data));
     });
 
     oplog.on('insert', function (doc) {
       var dataModel = doc.ns.split('.')[1];
-      console.log('****> insert on dataModel : ' + dataModel);
-        //srvSession.all(function (err, sessions){
-        //    for (var _sessionId in sessions) {
-        //        console.log('OPOLOG ON  Session N° %s ',_sessionId);
-        //       //
-        //        var session =   JSON.stringify(sessions[_sessionId] ) ;
-        //        if (typeof session.controler != 'undefined')
-        //        {
-        //             console.log('OPOLOG ON  Session N° %s  DATA_MODEL %s ' ,  _sessionId, (session.controler.data_model).toLowerCase() );
-        //            //
-        //            if (dataModel === (session.controler.data_model.toLowerCase()))
-        //            {
-        //                console.log("OPOLOG ON emit insertOk to sesionid : %s with doc : %s ",_sessionId,doc);
-        //                GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
-        //            }
-        //        }
-        //    }
-        //    console.log(doc.op);
-        //});
+        logger.debug('****> insert on dataModel : ' + dataModel);
+        // Avec le sessionStore de REDIS à tester avec memory
+        srvSession.all(function (err, sessions) {
+            for (var _sessionId in sessions) {
+                logger.debug('OPOLOG ON  Session N° %s ', _sessionId);
+                //
+                //var session =   JSON.stringify(sessions[_sessionId] ) ;
+                if (typeof sessions[_sessionId].controler.data_model != 'undefined') {
+                    logger.debug('OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
+                    //
+                    if (dataModel === (sessions[_sessionId].controler.data_model.toLowerCase())) {
+                        logger.debug("OPOLOG ON EMIT insertOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
+                        GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
+                    }
+                }
+            }
+            logger.debug(doc.op);
+        });
         // Pour toutes les sessions qui sont accrochées au même MODEL on emit la modification c'est une varainte du Publish - Subcribe
-      for (var _sessionId in GLOBAL.whoWhat) {
-        console.log('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
-        if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
-        {
-            //
-          if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
-            GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
-          }
-        }
-      }
-      console.log(doc.op);
+        //for (var _sessionId in GLOBAL.whoWhat) {
+        //  logger.debug('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
+        //  if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
+        //  {
+        //      //
+        //    if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
+        //      GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
+        //    }
+        //  }
+        //}
+        //logger.debug(doc.op);
     });
 
     oplog.on('update', function (doc) {
       var dataModel = doc.ns.split('.')[1];
-      console.log('****> update on dataModel : ' + dataModel);
+        logger.debug('****> update on dataModel : ' + dataModel);
       for (var _sessionId in GLOBAL.whoWhat) {
-        console.log('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
+          logger.debug('whoWhat N° ' + _sessionId + ': ', GLOBAL.whoWhat[_sessionId]);
         if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
         {
           if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
@@ -61,14 +61,14 @@ module.exports = function (sessionStore) {
           }
         }
       }
-      console.log(doc.op);
+        logger.debug(doc.op);
     });
 
     oplog.on('delete', function (doc) {
       var dataModel = doc.ns.split('.')[1];
-      console.log('****> update on dataModel : ' + dataModel);
+        logger.debug('****> update on dataModel : ' + dataModel);
       for (var _sessionId in GLOBAL.whoWhat) {
-        console.log('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
+          logger.debug('whoWhat N° ' + _sessionId + ': ', GLOBAL.whoWhat[_sessionId]);
         if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
         {
           if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
@@ -76,18 +76,18 @@ module.exports = function (sessionStore) {
           }
         }
       }
-      console.log(doc.op);
+        logger.debug(doc.op);
     });
 
     oplog.on('error', function (error) {
-      console.log(error);
+        logger.debug(error);
     });
 
     oplog.on('end', function () {
-        console.log('Stream ended');
+        logger.debug('Stream ended');
     });
 
     oplog.stop(function () {
-        console.log('server stopped');
+        logger.debug('server stopped');
     });
 };

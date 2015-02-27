@@ -7,12 +7,13 @@
  * MIT Licensed
  */
 /***
- * EPA MODIFICATION
+ * EPA OTF MODIFICATION
  * 2015
- *
+ * méthode all
  * @type {*|exports}
  */
-
+var util = require("util");
+var logger = require('log4js').getLogger('css');
 var debug = require('debug')('connect:redis');
 var redis = require('redis');
 var default_port = 6379;
@@ -233,37 +234,37 @@ module.exports = function (session) {
      * @param callback
      * @api public
      */
-        //@TODO Gestion des expirations
+    /**
+     * return un tableaux littérale de sessions
+     * @param fn
+     */
     RedisStore.prototype.all = function (fn) {
-        //this.prefix
-        //debug('ALL "%s"', sid);
+        // Sauvegarde de l'Instance RedisStore en cours
         var store = this;
-        var sessions = Object.create(null);
+        // Tableau des sessions
+        var sessions = new Object();
+        ;
         //
         store.client.keys(this.prefix + "*", function (err, all_keys) {
-
             if (err)
                 return fn(err);
             //
             if (all_keys.length <= 0)    // retourne un tableau vide
                 return fn(null, sessions);
             //
-            console.log("REDIS All Session length : [%s]", all_keys.length);
-            // if (    all_keys.length === 1){
+            logger.debug("REDIS All Session length : [%s]", util.inspect(all_keys.length));
             //
-            // }else{
-            //
-            // }
             store.client.mget(all_keys, function (er, data) {
                 if (er) {
-                    console.log("REDIS mget ERROR message  [%s]", er.toString());
+                    logger.debug("REDIS mget ERROR message  [%s]", util.inspect(er));
                     return fn(er);
                 }
-                console.log("REDIS MGET RESULT [%s]", data);
+                logger.debug("REDIS MGET RESULT [%s]", util.inspect(data));
                 all_keys.forEach(function (psid, pos) {
                     // psid -> sid
                     var sid = psid.substring(store.prefix.length);
-                    sessions[sid] = data[pos];
+                    sessions[sid] = JSON.parse(data[pos].toString());
+                    logger.debug("REDIS add session %s data %s", sid, util.inspect(sessions[sid]));
                 });
                 return fn(null, sessions);
             });
