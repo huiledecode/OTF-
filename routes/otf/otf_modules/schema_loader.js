@@ -1,6 +1,7 @@
 /**
  * Created by sma and epa on 20/11/14.
  */
+var util = require("util");
 var logger = require('log4js').getLogger('css');
 var fs = require('fs');
 var mongoose = require('mongoose');
@@ -16,11 +17,11 @@ module.exports = {
         GLOBAL.schemas = [];
         // Load File
         try {
-            logger.debug("Load Schema Name [%s]", directory);
+            logger.debug("Load Schema Name [%s]", util.inspect(directory));
             directory_schema = JSON.parse(fs.readFileSync(directory.schema, 'utf8'));
-            logger.debug("Load Schema      [%s]", directory_schema);
+            logger.debug("Load Schema      [%s]", util.inspect(directory_schema));
         } catch (err) {
-            logger.debug(" Load Schema File ERROR mess [%s] ", err.message);
+            logger.debug(" Load Schema File ERROR mess [%s] ", util.inspect(err.message));
         }
         // Tableaux
         try {
@@ -39,8 +40,29 @@ module.exports = {
         }
     },
 
+    loadConfig: function (directory) {
+        //temporaire
+        var directory_config = {};
+        GLOBAL.config = [];
+        console.log("******************************")
+        console.log("** OTF FRAMEWOK STARTUP ... **");
+        console.log("******************************")
+        // Load File
+        try {
+            console.log("INIT : Load Configuration [%s]", util.inspect(directory));
+            directory_config = JSON.parse(fs.readFileSync(directory.config, 'utf8'));
+            //logger.debug("Load Configuration      [%s]", util.inspect(directory_config));
+            GLOBAL.config = directory_config;
+        } catch (err) {
+            logger.debug(" Load Configuration File ERROR mess [%s] ", err.message);
+            throw err;
+        }
+        // Tableaux
+
+    },
+
     loadProfiles: function (directory) {
-        logger.debug("loadProfile directory (%j]", directory);
+        logger.debug("loadProfile directory (%j]", util.inspect(directory));
         GLOBAL.profiles = [];
         //-- on récupère la liste des fichier json
         var files;
@@ -48,7 +70,7 @@ module.exports = {
         // on récupére la liste des fichiers
         try {
             files = fs.readdirSync(directory.profile, 'utf8');
-            logger.debug("loadProfiles files [%j] ", files);
+            logger.debug("loadProfiles files [%j] ", util.inspect(files));
 
         } catch (err) {
             logger.error("loadProfile read list file failed [%j]", directory, " message [%s]", err.message);
@@ -70,7 +92,7 @@ module.exports = {
                     logger.debug("loadProfiles file Name     [%s] ", name);
                     logger.debug("loadProfiles profile Name [%s] ", profileName);
                     var _json = JSON.parse(fs.readFileSync(directory.profile + "/" + name, 'utf8'));
-                    logger.debug("loadProfiles json profile    [%j] ", _json);
+                    logger.debug("loadProfiles json profile    [%j] ", util.inspect(_json));
                     GLOBAL.profiles[profileName] = (_json);
                 } else {
                     logger.warn("loadProfiles not found for file [%s] ", name);

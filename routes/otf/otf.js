@@ -71,6 +71,8 @@ function getControler(req, cb) {
     var ref;
     var content_type = req.headers['content-type'];
     //--
+
+
     //-- USER PROFILE
     if (req.session.profile) {
         logger.debug(" User Profile is %s", req.session.profile)
@@ -102,7 +104,7 @@ function getControler(req, cb) {
 
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
-    if (auth && !req.isAuthenticated()) {
+    if (auth && !req.isAuthenticated() || typeof req.session.passport.user == 'undefine') {
         logger.debug("OTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
         module = 'login';
         methode = 'titre';
