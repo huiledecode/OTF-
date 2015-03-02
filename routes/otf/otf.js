@@ -12,7 +12,7 @@ var appContext;
 var managerSession;
 var passport = require('passport');
 var url = require("url")
-GLOBAL.whoWhat = new Array();
+//GLOBAL.whoWhat = new Array();
 //-- load annuaire file in sync mode
 //
 
@@ -239,7 +239,7 @@ function otfAction(req, res, next) {// attention il ne
                 logger.debug(" otf final %j", result);
                 //
                 // inscription dans un tableau de qui fait quoi pour le push des données oplog ?
-                GLOBAL.whoWhat[req.sessionID] = {"what" :req.url, "data_model" : req.session.controler.data_model };
+                // GLOBAL.whoWhat[req.sessionID] = {"what" :req.url, "data_model" : req.session.controler.data_model };
                 // On gére le redirect pour l'authentification
                 //@TODO try catch sur le renderer
                 if (controler.isRedirect) {
