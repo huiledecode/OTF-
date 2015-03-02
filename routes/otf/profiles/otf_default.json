@@ -1,9 +1,15 @@
 {
     "GET/": {
-      "module": "index",
-      "methode": "titre",
-      "screen": "index",
-      "auth": true
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/index": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
     },
     "GET/login": {
         "module": "login",
