@@ -3,25 +3,34 @@
 //--
 //require('../ressources/otf_oplog')();
 //--
+var util = require("util");
+// CONFIGURATEUR
+require('../ressources/otf_config');
+
 // Logger Configuration
 var log4js = require('log4js');
-log4js.configure('./ressources/log4js.json', { reloadSecs: 300 });
+log4js.configure(GLOBAL.config["LOGS"].path, { reloadSecs: GLOBAL.config["LOGS"].reload });
 mongoAppender = require('log4js-node-mongodb');
 log4js.addAppender(
-    mongoAppender.appender({connectionString: 'localhost:27017/log'}),
+    mongoAppender.appender({connectionString: GLOBAL.config["LOGS"].reload}),
     'cheese'
 );
 
 var logger = log4js.getLogger('ccs');
 var loggerMongo = log4js.getLogger('mongo');
 //--
-var debug = require('debug')('OTF');
+if (GLOBAL.config["ENV"].modes === 'DEBUG')
+    var debug = require('debug')('OTF');
+//TEST CONFIGURATEUR
+//logger.debug(" CONFIGURATUER %s",util.inspect(GLOBAL.config));
 
 //--
 var app = require('../app');
-app.set('port', process.env.NODE_PORT || 3000);
+//var conf = app.get('config');
+//logger.debug(" CONFIGURATION : %s",util.inspect(conf));
+app.set('port', GLOBAL.config["LOGS"].port || process.env.NODE_PORT || 3000);
 //app.set('host', process.env.NODE_HOST || "0.0.0.0");
-app.set('host', process.env.NODE_HOST || "0.0.0.0");
+app.set('host', GLOBAL.config["LOGS"].host || process.env.NODE_HOST || "0.0.0.0");
 //
 var server = app.listen(app.get('port'), app.get('host'), function () {
     logger.debug("Express server listening on http://%s:%d", app.get('host'), app.get('port'));
@@ -29,7 +38,7 @@ var server = app.listen(app.get('port'), app.get('host'), function () {
 });
 //--
 // SERVER SOCKET
-sio.listen(server, {log: false});
+sio.listen(server, {log: GLOBAL.config["WEBSOCK"].log});
 logger.debug("WebSocket Started");
 //-- Middleware function
 

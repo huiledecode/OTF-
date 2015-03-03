@@ -10,8 +10,8 @@
 //--
 //--
 // @TODO Json config à mettre en place avec relod si modification !
-var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/otf_demo';
-var options = {server: { poolSize: 5 }};
+var dbUrl = GLOBAL.config["MONGO"].url || process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/otf_demo';
+var options = GLOBAL.config["MONGO"].options || {server: { poolSize: 5 }};
 require("./ressources/otf_db").initDb(dbUrl, options);
 //--
 // Looger log4j
@@ -25,11 +25,12 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
-var secret = '7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"';
-var cookie_name = 'connect.sid';
+var secret = GLOBAL.config["SESSION"].secret || '7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"';
+var cookie_name = GLOBAL.config["SESSION"].cookie_name || 'connect.sid';
 //--
 // Express Configuration
 var app = express();
+//var app;
 //--
 // view engine setup
 require('./ressources/otf_viewer')(app);
@@ -64,6 +65,7 @@ require('./routes/otf/otf')(app, sessionStore);
 require('./ressources/otf_websocket')(sessionStore, secret, cookie_name);
 //--
 //-- TEST PASSAGE CONTEXT APPLICATIF
+
 app.locals.test = 'OTF localsValue';
 app.set('test', 'OTF setValue');
 
