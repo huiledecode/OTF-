@@ -59,8 +59,6 @@ function getControler(req, cb) {
     var ref;
     var content_type = req.headers['content-type'];
     //--
-
-
     //-- USER PROFILE
     if (req.session.profile) {
         logger.debug("OTF² User Profile is %s", req.session.profile)

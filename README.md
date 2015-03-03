@@ -8,9 +8,9 @@ Also, OTF² has some generic modules to produce specific actions : writing / rea
 
 # Prerequisites
 
-You need to install Node.js, npm and mongoDB to use OTF², on Ubuntu 14.04 you just need to make :
+You need to install Node.js, npm, mongoDB and Redis to use OTF², on Ubuntu 14.04 you just need to make :
 
-<pre><code>$ sudo apt-get install nodejs npm mongodb</code></pre>
+<pre><code>$ sudo apt-get install nodejs npm mongodb redis</code></pre>
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
@@ -41,7 +41,7 @@ Get all the dependancies by npm :
 Wait a moment for dependancies
 
 Before launching OTF², you need to install mongoDB and start it with a ReplicatSet :
-<pre><code>$ mongod --ReplSet otf_demo</code></pre>
+<pre><code>$ mongod --replSet otf_demo</code></pre>
 
 Into mongo shell you need to configure replicatSet like this :
 <pre><code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code></pre>
@@ -64,13 +64,13 @@ You can access backend by giving the login "admin" and the password "otf" into t
 
 # How to ?
 
-You can see in demo application the menu "users" which display the list of users authorized to connect to the backend. 
+You can see in demo application the menu "users" which displays the list of users authorized to connect to the backend. 
 
 <img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-23_users_OTF.png" />
 
 What happens when you click on "users" link in the top menu :
 
-1- You sent a pathname "<b>/users</b>" from GET HTTP method<br/>
+1- You send a pathname "<b>/users</b>" from GET HTTP method<br/>
 2- You request the server to read into the accounts collection of MongoDB,<br/>
 3- You need to display the data into a JQuery DataTable<br/>
 
@@ -98,7 +98,7 @@ To understand the "<b>Flight Plan</b>", we need to explore all the attributes in
     <li> <b>screen</b> : define the template page which will be displayed once the action is done ("i.e. : "<b>user_list</b>),</li>
     <li> <b>auth</b> : define if the action requires an authentication : (i.e. : "<b>true</b>),</li>
     <li> <b>params_names</b> : define into an array the "params" which can be used to filter the reading into MongoDB. <br>Data can be used to be inserted into a collection. The result depends on the generic component used : finder => filter / inserter => params to insert</li>
-    <li> <b>datas_model</b> : define the name of the mongoose schema which map the data of MongoDB's collections.<br> You can see some examples of schema into the file named "<b>directory_schema.json</b>"   
+    <li> <b>datas_model</b> : define the name of the mongoose schema which maps the data of MongoDB's collections.<br> You can see some examples of schema into the file named "<b>directory_schema.json</b>"   
 </ul>
 
 Extract of "<b>directory_schema.json</b>" :
@@ -154,7 +154,7 @@ For convenience we have implemented a javascript function to create dynamically 
 ```js
 setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
 ```
-* The first parameter is an Handlabars expression to get json data from the OTF² module,
+* The first parameter is an Handlebars expression to get json data from the OTF² module,
 * The second parameter is a String which defined the pathname of modification's action,
 * The third parameter is a String which defined the pathname of delete's action, it is using the first column to get the Id of the row sent to delete.
  
