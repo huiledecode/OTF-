@@ -5,7 +5,7 @@ sudo killall mongod
 sudo mongod --replSet otf_demo &
 #sleep 1
 #sudo service mongodb restart
-sleep 4
+sleep 5
 
 node --debug ./bin/www
 
