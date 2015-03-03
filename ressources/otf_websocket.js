@@ -40,17 +40,17 @@ module.exports = function (sessionStore, secret, cookieName) {
                 }
                 var sessionId = data.signedCookies[cookieName];
                 //var sessionId = data.cookies[cookie_name];
-                log.debug("Websocket Authorization Verify sessionID  [%j]", sessionId);
+                log.debug("OTF² Websocket Authorization Verify sessionID  [%j]", sessionId);
                 _sessionStore.get(sessionId, function (err, session) {
                     // on verifie que la session est authentifiée
                     // log.debug('Websocket Authorization  cookie [%j] ', data.signedCcookies);
                     if (err || !session || !session.passport || !session.passport.user) {
-                        log.debug('Websocket Authorization Failed not in sessionStore sessionId :', sessionId);
+                        log.warn('OTF² Websocket Authorization Failed not in sessionStore sessionId :', sessionId);
                         next(new Error("Websocket not authorized Passport Failed"));
                         //accept(null, true);
                     }
                     else {
-                        log.debug('Websocket Authorization  for sessionId :', sessionId);
+                        log.debug('OTF² Websocket Authorization  OK for sessionId :', sessionId);
                         //data.session = session;
                         //@TODO généré un UUID par fle module flake-idgen pour la room et ajouter à la session et au data socket
                         data.sessionid = sessionId;
@@ -61,7 +61,7 @@ module.exports = function (sessionStore, secret, cookieName) {
             });
         }
         else {
-            return next(new Error('Websocket Authorization No cookie transmitted.'));
+            return next(new Error('OTF² Websocket Authorization No cookie transmitted.'));
         }
 
 
@@ -69,7 +69,7 @@ module.exports = function (sessionStore, secret, cookieName) {
 
 
     sio.use(function trace(socket, next) {
-        log.debug(" Trace WS : " + util.inspect(socket.fns));
+        log.debug("OTF² Trace WS : " + util.inspect(socket.fns));
         next();
     });
 
@@ -77,17 +77,17 @@ module.exports = function (sessionStore, secret, cookieName) {
 //--
     sio.on('connection', function (socket) {
         //socket.broadcast.to(id).emit('my message', msg);
-        log.debug(" WS connection socket.id :" + socket.id);
+        log.debug("OTF² WS connection socket.id :" + socket.id);
         //log.debug(" WS connection cookie    : " + socket.request.headers.cookie);
-        log.debug(" WS connection sessionId : " + socket.handshake.sessionid);
+        log.debug("OTF² WS connection sessionId : " + socket.handshake.sessionid);
         //log.debug(" WS connection user : " + socket.client.request.session.passport.user);
-        log.debug(" WS connection user : " + socket.handshake.user);
+        log.debug("OTF² WS connection user : " + socket.handshake.user);
         //
         socket.join(socket.handshake.sessionid);
         //
         var mess = {'sessionid': socket.handshake.sessionid, 'user': socket.handshake.user};
         sio.sockets.in(socket.handshake.sessionid).emit('ack', mess);
-        log.debug(" WS connection Room n° : " + socket.handshake.sessionid);
+        log.debug("OTF² WS connection Room n° : " + socket.handshake.sessionid);
 
     });
 

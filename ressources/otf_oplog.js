@@ -12,23 +12,23 @@ module.exports = function (sessionStore) {
     srvSession = sessionStore;
     //
     oplog.on('op', function (data) {
-        logger.debug("OPLOG ON [%s]", util.inspect(data));
+        logger.debug("OTF² OPLOG ON [%s]", util.inspect(data));
     });
 
     oplog.on('insert', function (doc) {
       var dataModel = doc.ns.split('.')[1];
-        logger.debug('****> insert on dataModel : ' + dataModel);
+        logger.debug('OTF² ****> insert on dataModel : ' + dataModel);
         // Avec le sessionStore de REDIS à tester avec memory
         srvSession.all(function (err, sessions) {
             for (var _sessionId in sessions) {
-                logger.debug('OPOLOG ON  Session N° %s ', _sessionId);
+                logger.debug('OTF² OPOLOG ON  Session N° %s ', _sessionId);
                 //
                 //var session =   JSON.stringify(sessions[_sessionId] ) ;
                 if (typeof sessions[_sessionId].controler.data_model != 'undefined') {
-                    logger.debug('OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
+                    logger.debug('OTF² OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
                     //
                     if (dataModel === (sessions[_sessionId].controler.data_model.toLowerCase())) {
-                        logger.debug("OPOLOG ON EMIT insertOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
+                        logger.debug("OTF² OPOLOG ON EMIT insertOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
                         GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
                     }
             }
@@ -51,17 +51,17 @@ module.exports = function (sessionStore) {
 
     oplog.on('update', function (doc) {
       var dataModel = doc.ns.split('.')[1];
-        logger.debug('****> update on dataModel : ' + dataModel);
+        logger.debug('OTF² ****> update on dataModel : ' + dataModel);
         srvSession.all(function (err, sessions) {
             for (var _sessionId in sessions) {
-                logger.debug('OPOLOG ON  Session N° %s ', _sessionId);
+                logger.debug('OTF² OPOLOG ON  Session N° %s ', _sessionId);
                 //
                 //var session =   JSON.stringify(sessions[_sessionId] ) ;
                 if (typeof sessions[_sessionId].controler.data_model != 'undefined') {
-                    logger.debug('OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
+                    logger.debug('OTF² OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
                     //
                     if (dataModel === (sessions[_sessionId].controler.data_model.toLowerCase())) {
-                        logger.debug("OPOLOG ON EMIT updateOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
+                        logger.debug("OTF² OPOLOG ON EMIT updateOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
                         GLOBAL.sio.sockets.in(_sessionId).emit('updateOk', doc);
                     }
           }
@@ -72,17 +72,17 @@ module.exports = function (sessionStore) {
 
     oplog.on('delete', function (doc) {
       var dataModel = doc.ns.split('.')[1];
-        logger.debug('****> update on dataModel : ' + dataModel);
+        logger.debug('OTF² ****> update on dataModel : ' + dataModel);
         srvSession.all(function (err, sessions) {
             for (var _sessionId in sessions) {
-                logger.debug('OPOLOG ON  Session N° %s ', _sessionId);
+                logger.debug('OTF² OPOLOG ON  Session N° %s ', _sessionId);
                 //
                 //var session =   JSON.stringify(sessions[_sessionId] ) ;
                 if (typeof sessions[_sessionId].controler.data_model != 'undefined') {
-                    logger.debug('OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
+                    logger.debug('OTF² OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
                     //
                     if (dataModel === (sessions[_sessionId].controler.data_model.toLowerCase())) {
-                        logger.debug("OPOLOG ON EMIT deleteOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
+                        logger.debug("OTF² OPOLOG ON EMIT deleteOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
                         GLOBAL.sio.sockets.in(_sessionId).emit('deleteOk', doc);
                     }
           }
@@ -96,10 +96,10 @@ module.exports = function (sessionStore) {
     });
 
     oplog.on('end', function () {
-        logger.debug('Stream ended');
+        logger.debug('OTF² Stream ended');
     });
 
     oplog.stop(function () {
-        logger.debug('server stopped');
+        logger.debug('OTF² server stopped');
     });
 };

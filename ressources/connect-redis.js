@@ -243,7 +243,7 @@ module.exports = function (session) {
         var store = this;
         // Tableau des sessions
         var sessions = new Object();
-        ;
+
         //
         store.client.keys(this.prefix + "*", function (err, all_keys) {
             if (err)
@@ -252,52 +252,23 @@ module.exports = function (session) {
             if (all_keys.length <= 0)    // retourne un tableau vide
                 return fn(null, sessions);
             //
-            logger.debug("REDIS All Session length : [%s]", util.inspect(all_keys.length));
+            logger.debug("OTF² REDIS All Session length : [%s]", util.inspect(all_keys.length));
             //
             store.client.mget(all_keys, function (er, data) {
                 if (er) {
-                    logger.debug("REDIS mget ERROR message  [%s]", util.inspect(er));
+                    logger.debug("OTF² REDIS mget ERROR message  [%s]", util.inspect(er));
                     return fn(er);
                 }
-                logger.debug("REDIS MGET RESULT [%s]", util.inspect(data));
+                logger.debug("OTF² REDIS MGET RESULT [%s]", util.inspect(data));
                 all_keys.forEach(function (psid, pos) {
                     // psid -> sid
                     var sid = psid.substring(store.prefix.length);
                     sessions[sid] = JSON.parse(data[pos].toString());
-                    logger.debug("REDIS add session %s data %s", sid, util.inspect(sessions[sid]));
+                    logger.debug("OTF² REDIS add session %s data %s", sid, util.inspect(sessions[sid]));
                 });
                 return fn(null, sessions);
             });
-            //var key_types = {};
-            //
-            // DEBUG STYLE sinon on renvoie direct all_keys
-            //all_keys.forEach(function (psid, pos) { // use second arg of forEach to get
-            //
-            //    //
-            //    store.client.get(psid, function (er, data) {
-            //        if (er) return fn(er);
-            //        // if (!data) return fn();
-            //        var sid = psid.substring(store.prefix.length);
-            //        console.log("REDIS Fetch Key-sessionID %s  ",psid);
-            //        var result;
-            //        data = data.toString();
-            //        console.log('REDIS Fetch Data: %s', sid, data);
-            //
-            //       //try {
-            //       //    result = JSON.parse(data);
-            //       //}
-            //       //catch (er) {
-            //       //    return fn(er);
-            //       //}
-            //        sessions[sid] = data;
-            //        //return fn(null, result);
-            //    });
-            //    //console.log('REDIS SESIONS || Session n° %s || Data: %s', sid,sessions[sid]);
-            //});
-
         });
-        //console.log(" REDIS SESIONS LENGTH %s",sessions.length);
-
     };
 
 

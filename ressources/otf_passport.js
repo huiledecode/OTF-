@@ -23,7 +23,7 @@ module.exports = function (app) {
     // The result of the serializeUser method is attached to the session as req.session.passport.user =
     passport.serializeUser(function (account, done) {
         //C'est Ici que le profil du user doit être loader
-        logger.debug("Passport SerializeUser  account : %j", account);
+        logger.debug("OTF² Passport SerializeUser  account : %j", account);
         done(null, account);
     });
 
@@ -32,7 +32,7 @@ module.exports = function (app) {
     // This user object is attached to the request as req.user making it accessible in our request handling.
     //
     passport.deserializeUser(function (account, done) {
-        logger.debug("Passport DeserializeUser  account: %j", account);
+        logger.debug("OTF² Passport DeserializeUser  account: %j", account);
         done(null, account);
 
     });
@@ -55,7 +55,7 @@ module.exports = function (app) {
         },
         // -- Check auth account in DB
         function (req, login, password, done) {
-            logger.debug('Passport  login [%s], password: [%s], body [%s]',
+            logger.debug('OTF² Passport  login [%s], password: [%s], body [%s]',
                 login, password, req.body);
             var Accounts = GLOBAL.schemas['Accounts'];
             // asynchronous
@@ -66,12 +66,12 @@ module.exports = function (app) {
                 }, function (err, _account) {
                     // --
                     if (err) {
-                        logger.debug("Passport account read db err message : [%s]", err.message);
+                        logger.debug("OTF² Passport account read db err message : [%s]", err.message);
                         return done(err);
                     }
-                    console.log('PASSEPORT _account : ', _account);
+                    console.log('OTF² PASSEPORT _account : ', _account);
                     if (!_account) {
-                        logger.debug("Passport account not found in db for login : [%j]",
+                        logger.debug("OTF² Passport account not found in db for login : [%j]",
                             login);
                         return done(null, false, {"flag": "login", "login": login, "message": 'Passport account not found in db for login : ' + login  });
                     } else {
@@ -82,7 +82,7 @@ module.exports = function (app) {
                         else
                             req.session.profile = _account.profile[0].name;
                         //Verification the user Identification
-                        logger.debug("Passport account find : [%j], session id [%s]",
+                        logger.debug("OTF² Passport account find : [%j], session id [%s]",
                             _account, req.sessionID);
                         //-
                         //Test Password

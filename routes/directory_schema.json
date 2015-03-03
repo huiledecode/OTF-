@@ -6,15 +6,16 @@
             "password": "String",
             "profile": []
         }
+
     },
     "AccountId": {
-      "collection": "accounts",
-      "schema": {
-        "_id": "ObjectId",
-        "login": "String",
-        "password": "String",
-        "profile": []
-      }
+        "collection": "accounts",
+        "schema": {
+            "_id": "ObjectId",
+            "login": "String",
+            "password": "String",
+            "profile": []
+        }
     },
     "Logs": {
         "collection": "logs",
@@ -28,6 +29,7 @@
                 "type": "ObjectId",
                 "ref": "Accounts"
             }
+
         }
     }
 

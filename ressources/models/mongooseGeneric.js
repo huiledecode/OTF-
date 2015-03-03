@@ -5,6 +5,9 @@ var paginate = require("mongoose-pages");
 //- var schema = new mongoose.Schema({ name: 'string', size: 'string' });
 //- var Tank = mongoose.model('Tank', schema);
 function mongooseGeneric(_schemaName, _schema, collection) {
+    if (db.models[_schemaName])
+        delete db.models[_schemaName];
+
     this.documentSchema = mongoose.Schema(_schema);
     paginate.anchor(this.documentSchema);
     //paginate.skip(this.documentSchema);

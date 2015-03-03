@@ -23,18 +23,6 @@ var url = require("url")
 function otf(app, sessionStore) {
     //
     managerSession = sessionStore;
-    //
-    var conf = { schema: __dirname + "/../directory_schema.json", profile: __dirname+ "/profiles/"};
-    // Try IO
-    try {
-        var schema_loader = require('./otf_modules/schema_loader');
-        schema_loader.loadModels(conf);
-        schema_loader.loadProfiles(conf);
-    } catch (e) {
-        logger.debug(" OTF INIT PROBLEM message : " + e.messages);
-        throw(e);
-        process.exit(0);
-    }
 
 //-- Context applicatif
     appContext = app;
@@ -75,10 +63,10 @@ function getControler(req, cb) {
 
     //-- USER PROFILE
     if (req.session.profile) {
-        logger.debug(" User Profile is %s", req.session.profile)
+        logger.debug("OTF² User Profile is %s", req.session.profile)
         annuaire = GLOBAL.profiles[req.session.profile];
     } else {
-        logger.debug(" User Profile is default");
+        logger.debug("OTF² User Profile is default");
         annuaire = GLOBAL.profiles["default"];
     }
 
@@ -111,12 +99,12 @@ function getControler(req, cb) {
         screen = 'login';
         redirect = true;
     } else if (!auth) {
-        logger.debug("OTF Page non sécurisée  [session id : [%s] ]", req.sessionID);// redirect to loggin
+        logger.debug("OTF² Page non sécurisée  [session id : [%s] ]", req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
     } else if (req.user !== 'undefined') {
-        logger.debug("OTF Page sécurisé et  authentifié [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
+        logger.debug("OTF² Page sécurisée & authentifiée [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
@@ -207,7 +195,7 @@ function getControler(req, cb) {
 
 // --
 function logHttpRequest(req, res, next) {
-    logger.debug("\napp Log Handler [ %s %s ]", req.method, req.url);
+    logger.debug("\nOTF² app Log Handler [ %s %s ]", req.method, req.url);
     next();
 }
 
@@ -216,7 +204,7 @@ function logHttpRequest(req, res, next) {
 // --
 function otfAction(req, res, next) {// attention il ne
     // --
-    logger.debug('OTF buildAction [ URL [type : %s], [Path : %s] [REMOTE IP : %s]', req.method, req.url, req.connection.remoteAddress);
+    logger.debug('OTF² build Action [ URL [type : %s], [Path : %s] [REMOTE IP : %s]', req.method, req.url, req.connection.remoteAddress);
     //logger.debug(" Test Context Applicatif  by app.set %s", appContext.get('test'));
     //logger.debug(" Test Context Applicatif  by app.locals %s", appContext.locals.test);
     // --
@@ -236,7 +224,7 @@ function otfAction(req, res, next) {// attention il ne
                 if (errBean)
                     return next(handleError('OTF ERROR Controler Action failed', '501', "Controller Execution Failed for [" + req.session.controler.type + req.session.controler.path + "] Error Message [" + errBean + "]"));
                 //
-                logger.debug(" otf final %j", result);
+                logger.debug("OTF² Controler Action Return %j", result);
                 //
                 // inscription dans un tableau de qui fait quoi pour le push des données oplog ?
                 // GLOBAL.whoWhat[req.sessionID] = {"what" :req.url, "data_model" : req.session.controler.data_model };
@@ -264,7 +252,7 @@ function otfAction(req, res, next) {// attention il ne
 function errorHandler(err, req, res, next) {
     var status = err.status || '500';
     logger.error(
-            "OTF Error Handler Http Status Code " + status + " Error cause by : [%s]",
+            "OTF² Error Handler Http Status Code " + status + " Error cause by : [%s]",
         err.message);
     res.status(status);
     var ret = {title: err.title, status: status, message: err.message};
@@ -274,7 +262,7 @@ function errorHandler(err, req, res, next) {
 
 
 function checkAndCreateDirectory(directoryName, cb) {
-    logger.debug('OTF call checkAndCreateDirectory for directory ' + directoryName);
+    logger.debug('OTF² call checkAndCreateDirectory for directory ' + directoryName);
     fs.exists(directoryName, function (exists) {
         if (!exists) {
             fs.mkdir(directoryName, '0777', function (err) {
@@ -283,11 +271,11 @@ function checkAndCreateDirectory(directoryName, cb) {
                     //   return cb(null);
                     // } // ignore the error if the folder already exists
                     // else {
-                    logger.debug("OTF Error to create Directory Upload File, message : " + err.toSting());
+                    logger.debug("OTF² Error to create Directory Upload File, message : " + err.toSting());
                     return cb(err);
                     //} // something else went wrong
                 } //else cb(null); // successfully created folder
-                logger.debug("OTF Create Directory : " + directoryName);
+                logger.debug("OTF² Create Directory : " + directoryName);
                 return cb(null);
             });
 
@@ -332,7 +320,7 @@ function uploadFile(req, filteredQuery, cb) {
 }
 
 function handleError(title, status, message) {
-    logger.error('[OTF:getController] ' + message);
+    logger.error('[OTF²:getController] ' + message);
     var error = new Error(title);
     error.status = status
     error.title = title;
