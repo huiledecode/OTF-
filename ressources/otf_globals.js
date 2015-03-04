@@ -7,7 +7,7 @@ var loader = require('../routes/otf/otf_modules/schema_loader');
 var conf_file = "/home/epa/WebstormProjects/OTF_NEW/otf/bin/config.json";
 var conf = __dirname + '/../bin/config.json';
 var schema = __dirname + '/../routes/directory_schema.json';
-var profiles = __dirname + '/../routes/otf/profiles'
+var profiles = __dirname + '/../routes/otf/profiles';
 //
 var chokidar = require("chokidar");
 var watcher;
@@ -72,7 +72,7 @@ watcher.on('change', function (path, stats) {
         }
         log.debug("configuration reloaded !!");
     }
-    if (path === schema) {
+    else if (path === schema) {
         try {
             //reload_db();
             loader.loadModels(conf_loader);
@@ -83,7 +83,7 @@ watcher.on('change', function (path, stats) {
         }
         log.debug("schema reloaded !!");
     }
-    if (path === profiles) {
+    else {  // (path === profiles) { //jamais d'égalité
         try {
             loader.loadProfiles(conf_loader);
         } catch (e) {
