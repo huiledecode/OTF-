@@ -35,18 +35,6 @@ module.exports = function (sessionStore) {
             }
             logger.debug(doc.op);
         });
-        // Pour toutes les sessions qui sont accrochées au même MODEL on emit la modification c'est une varainte du Publish - Subcribe
-        //for (var _sessionId in GLOBAL.whoWhat) {
-        //  logger.debug('whoWhat N° '+ _sessionId +': ' , GLOBAL.whoWhat[_sessionId] );
-        //  if (typeof (GLOBAL.whoWhat[_sessionId]).data_model != 'undefined')
-        //  {
-        //      //
-        //    if (dataModel === (GLOBAL.whoWhat[_sessionId]).data_model.toLowerCase()) {
-        //      GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
-        //    }
-        //  }
-        //}
-        //logger.debug(doc.op);
     });
 
     oplog.on('update', function (doc) {
