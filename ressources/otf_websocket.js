@@ -1,7 +1,7 @@
 /**
  * Created by epa on 10/12/14.
  */
-var log = require('log4js').getLogger('css');
+var log = require('log4js').getLogger('otf_webSocket');
 var util = require('util');
 module.exports = function (sessionStore, secret, cookieName) {
 

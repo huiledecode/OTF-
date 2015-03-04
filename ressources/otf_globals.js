@@ -35,9 +35,9 @@ try {
     // Start MongoDB
     reload_db();
     // Logger Initalisation File & DB
-    log = log4js.getLogger('css');
+    log = log4js.getLogger('otf_globals');
     log.debug('>>> OTF² LOG4J INIT');
-    logMongo = log4js.getLogger('mongo');
+    logMongo = log4js.getLogger('otf_globals');
     log.debug('>>> OTF² LOG4J MONGO  INIT');
     //
     // Load DB MODELS

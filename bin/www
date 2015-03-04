@@ -14,7 +14,7 @@ require('../ressources/otf_globals');
 // After INIT
 //--
 var log4js = require('log4js');
-var logger = log4js.getLogger('ccs');
+var logger = log4js.getLogger('www');
 var loggerMongo = log4js.getLogger('mongo');
 //--
 if (GLOBAL.config["ENV"].modes === 'DEBUG')

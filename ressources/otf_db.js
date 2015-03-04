@@ -4,7 +4,7 @@
 //-- Db Setup
 var mongoose = require('mongoose');
 //var dbUrl = process.env.MONGODB_URL || 'mongodb://@127.0.0.1:27017/css_em1';
-var logger = require('log4js').getLogger('ccs');
+var logger = require('log4js').getLogger('otf_db');
 //var options = {server: { poolSize: 5 }};
 function getPoolConnection(dbUrl, options) {
     //

@@ -2,7 +2,7 @@
  * Created by sma and epa on 20/11/14.
  */
 var util = require("util");
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('schema_loader');
 var fs = require('fs');
 var mongoose = require('mongoose');
 var genericModel = require('../../../ressources/models/mongooseGeneric');

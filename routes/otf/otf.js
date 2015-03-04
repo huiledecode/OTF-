@@ -5,7 +5,7 @@
 var fs = require('fs');
 var multiparty = require('multiparty');
 var util = require('util');
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('otf');
 var express = require('express');
 var router = express.Router();
 var appContext;
@@ -240,7 +240,8 @@ function otfAction(req, res, next) {// attention il ne
                     res.render(req.session.controler.screen, result);
             });
         }
-    });}
+    });
+}
 
 // --
 // -- Gestion des erreurs Si erreur lors du traitement de la requête par le

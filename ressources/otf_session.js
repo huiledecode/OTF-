@@ -3,7 +3,7 @@
  */
 
 var util = require("util");
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('otf_session');
 
 module.exports = function (app, secret, cookie_name) {
     var cookieParser = require('cookie-parser');

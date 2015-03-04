@@ -1,7 +1,7 @@
 /**
  * Created by epa on 12/06/14.
  */
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('otf_oplog');
 var MongoOplog = require('mongo-oplog');
 var oplog = MongoOplog('mongodb://127.0.0.1:27017/local', 'otf_demo').tail();
 var util = require("util");
