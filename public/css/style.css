@@ -31,10 +31,23 @@ hr {
 /* style label des gauges */
 .label-gauge {
     position:absolute;
-    margin-top:100px;
-    margin-bottom:10px;
-    margin-left:80px;
+    width: 100%;
     font-weight:bold;
+    text-align: center;
+    top: 55%;
+    /*left: 35%;*/
+    /*margin-top:100px; */
+    /*margin-bottom:10px; */
+    /*margin-left:80px; */
+    /*font-size:25px;*/
+}
+
+.aligndroit{
+    float:right;
+}
+
+canvas.gauge {
+    width: 100%;
 }
 
 /* wrapper for page content to push down footer */
@@ -188,7 +201,7 @@ a {
 
 /* theme */
 .btn, .form-control, .alert, .progress, .panel, .list-group, .well, .list-group-item:first-child {
-    border-radius: 1px;
+    border-radius: 5px;
     box-shadow: 0 0 0;
 }
 
