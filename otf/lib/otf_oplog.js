@@ -2,6 +2,7 @@
  * Created by epa on 12/06/14.
  */
 var logger = require('log4js').getLogger('otf_oplog');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var MongoOplog = require('mongo-oplog');
 var oplog = MongoOplog('mongodb://127.0.0.1:27017/local', 'otf_demo').tail();
 var util = require("util");
@@ -24,7 +25,7 @@ module.exports = function (sessionStore) {
                 logger.debug('OTF² OPOLOG ON  Session N° %s ', _sessionId);
                 //
                 //var session =   JSON.stringify(sessions[_sessionId] ) ;
-                if (typeof sessions[_sessionId].controler.data_model != 'undefined') {
+                if (typeof sessions[_sessionId].controler != 'undefined' && typeof sessions[_sessionId].controler.data_model != 'undefined') {
                     logger.debug('OTF² OPOLOG ON  Session N° %s  DATA_MODEL %s ', _sessionId, sessions[_sessionId].controler.data_model.toLowerCase());
                     //
                     if (dataModel === (sessions[_sessionId].controler.data_model.toLowerCase())) {

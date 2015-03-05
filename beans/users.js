@@ -1,7 +1,8 @@
 /*
  * GET users listing.
  */
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('users');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 
 /*

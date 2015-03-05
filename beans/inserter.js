@@ -4,7 +4,8 @@
  * l'annuaire otf json est capable de faire un insert et d'insérer un
  * ou des objets json dans le model passé dans l'annuaire.
  */
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('inserter');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 //var genericModel = require(__dirname + '/../../../ressources/models/mongooseGeneric');
 

@@ -4,7 +4,8 @@
  * l'annuaire otf json est capable de faire un insert et d'insérer un
  * ou des objets json dans le model passé dans l'annuaire.
  */
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('deleter');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 var genericModel = require('../otf/lib/otf_mongooseGeneric');
 
@@ -27,8 +28,8 @@ exports.deleter = {
         logger.debug(" Deleted One User emmit call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
         try {
-          var model = GLOBAL.schemas[_controler.data_model];
-          model.deleteDocument({_id: _controler.params._id}, function (err, nb_deleted) {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.deleteDocument({_id: _controler.params._id}, function (err, nb_deleted) {
                 logger.debug('delete row :', nb_deleted);
                 return cb(null, {data: nb_deleted, room: _controler.room});
             });

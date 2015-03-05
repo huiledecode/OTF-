@@ -13,7 +13,8 @@
  * @type {*|exports}
  */
 var util = require("util");
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('connect-redis');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var debug = require('debug')('connect:redis');
 var redis = require('redis');
 var default_port = 6379;

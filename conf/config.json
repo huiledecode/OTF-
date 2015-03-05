@@ -1,6 +1,6 @@
 {
     "ENV": {
-        "mode": "DEBUG"
+        "mode": "TEST"
     },
     "WWW": {
         "port": "3000",
@@ -9,7 +9,8 @@
     "LOGS": {
         "path": "/../../conf/log4js.json",
         "reload": "300",
-        "mongodb": "localhost:27017/log"
+        "mongodb": "localhost:27017/log",
+        "level": "ERROR"
     },
     "MONGO": {
         "url": "mongodb://@127.0.0.1:27017/otf_demo",

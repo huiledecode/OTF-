@@ -3,6 +3,7 @@
  */
 var util = require("util");
 var logger = require('log4js').getLogger('schema_loader');
+
 var fs = require('fs');
 var mongoose = require('mongoose');
 var genericModel = require(__dirname + '/otf_mongooseGeneric');
@@ -50,6 +51,7 @@ module.exports = {
             directory_config = JSON.parse(fs.readFileSync(directory.config, 'utf8'));
             //logger.debug("Load Configuration      [%s]", util.inspect(directory_config));
             GLOBAL.config = directory_config;
+            logger.setLevel(GLOBAL.config["LOGS"].level);
         } catch (err) {
             console.log("OTF² Load Configuration File ERROR mess [%s] ", err.message);
             throw err;

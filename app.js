@@ -29,8 +29,10 @@ require('./otf/lib/otf_viewer')(app);
 app.use(favicon(__dirname + '/public/favicon/favicon.ico'));
 //--
 // Dev Logger
-var logger = require('morgan');
-app.use(logger('dev'));
+if (GLOBAL.config["ENV"].mode === 'DEBUG') {
+    var logger = require('morgan');
+    app.use(logger('dev'));
+}
 //--
 // Parser
 app.use(bodyParser.json());

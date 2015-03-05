@@ -1,7 +1,8 @@
 /**
  * Created by epa on 18/11/14.
  */
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('signupAccount');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 //var genericModel = require('../ressources/models/mongooseGeneric');
 var passport = require('passport');

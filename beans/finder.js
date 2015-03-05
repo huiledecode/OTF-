@@ -4,7 +4,8 @@
  * l'annuaire otf json est capable de faire un find et de retourner
  * un objet json contenant le resultat de la requête.
  */
-var logger = require('log4js').getLogger('css');
+var logger = require('log4js').getLogger('finder');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
 var genericModel = require('../otf/lib/otf_mongooseGeneric');
 

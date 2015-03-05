@@ -4,6 +4,7 @@
 
 var util = require("util");
 var logger = require('log4js').getLogger('otf_session');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 
 module.exports = function (app, secret, cookie_name) {
     var cookieParser = require('cookie-parser');
@@ -13,7 +14,7 @@ module.exports = function (app, secret, cookie_name) {
     var options = {"ttl": GLOBAL.config["SESSION"].ttl, "prefix": GLOBAL.config["SESSION"].prefix};
     // Store Memory or Redis
     if (process.env.NODE_SESSION == "REDIS") {
-        var RedisStore = require(__dirname+'/connect-redis')(session);
+        var RedisStore = require(__dirname + '/connect-redis')(session);
         sessionStore = new RedisStore(options);
         logger.debug("OTF² NODE_SESSION = REDIS");
     } else {

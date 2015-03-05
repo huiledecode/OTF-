@@ -6,6 +6,7 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var logger = require('log4js').getLogger('otf_passport');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var genericModel = require(__dirname + '/otf_mongooseGeneric');
 var LocalStrategy = require('passport-local').Strategy;
 // expose this function to our app using module.exports
@@ -69,7 +70,7 @@ module.exports = function (app) {
                         logger.debug("OTF² Passport account read db err message : [%s]", err.message);
                         return done(err);
                     }
-                    console.log('OTF² PASSEPORT _account : ', _account);
+                    logger.debug('OTF² PASSEPORT _account : ', _account);
                     if (!_account) {
                         logger.debug("OTF² Passport account not found in db for login : [%j]",
                             login);

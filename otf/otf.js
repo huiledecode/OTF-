@@ -6,6 +6,7 @@ var fs = require('fs');
 var multiparty = require('multiparty');
 var util = require('util');
 var logger = require('log4js').getLogger('otf');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var express = require('express');
 var router = express.Router();
 var appContext;

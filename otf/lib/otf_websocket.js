@@ -2,6 +2,7 @@
  * Created by epa on 10/12/14.
  */
 var log = require('log4js').getLogger('otf_webSocket');
+log.setLevel(GLOBAL.config["LOGS"].level);
 var util = require('util');
 module.exports = function (sessionStore, secret, cookieName) {
 
