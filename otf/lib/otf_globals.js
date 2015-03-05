@@ -3,11 +3,10 @@
  */
 
 var util = require("util");
-var loader = require('../routes/otf/otf_modules/schema_loader');
-var conf_file = "/home/epa/WebstormProjects/OTF_NEW/otf/bin/config.json";
-var conf = __dirname + '/../bin/config.json';
-var schema = __dirname + '/../routes/directory_schema.json';
-var profiles = __dirname + '/../routes/otf/profiles';
+var loader = require(__dirname + '/otf_schema_loader');
+var conf = __dirname + '/../../conf/config.json';
+var schema = __dirname + '/../../conf/directory_schema.json';
+var profiles = __dirname + '/../../conf/profiles';
 //
 var chokidar = require("chokidar");
 var watcher;
@@ -25,7 +24,7 @@ try {
     loader.loadConfig(conf_loader);
     console.log(">>> OTF² Mode [%s]", GLOBAL.config["ENV"].mode);
     //log4j
-    log4js.configure(GLOBAL.config["LOGS"].path, { reloadSecs: GLOBAL.config["LOGS"].reload });
+    log4js.configure(__dirname + GLOBAL.config["LOGS"].path, { reloadSecs: GLOBAL.config["LOGS"].reload });
     mongoAppender = require('log4js-node-mongodb');
     // mongodb appender
     log4js.addAppender(

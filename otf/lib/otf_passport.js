@@ -6,7 +6,7 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var logger = require('log4js').getLogger('otf_passport');
-var genericModel = require(__dirname + '../../ressources/models/mongooseGeneric');
+var genericModel = require(__dirname + '/otf_mongooseGeneric');
 var LocalStrategy = require('passport-local').Strategy;
 // expose this function to our app using module.exports
 module.exports = function (app) {

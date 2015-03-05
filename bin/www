@@ -8,7 +8,7 @@ var util = require("util");
 // Configuration Initialisation
 //        des ANNUAIRES GLOBALS
 //--
-require('../ressources/otf_globals');
+require('../otf/lib/otf_globals');
 
 //--
 // After INIT

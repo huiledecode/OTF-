@@ -5,33 +5,42 @@
         "screen": "index",
         "auth": true
     },
+    "GET/login": {
+        "module": "login",
+        "methode": "titre",
+        "screen": "login",
+        "auth": false
+    },
     "POST/signupAccount": {
         "module": "signupAccount",
         "methode": "signup",
         "screen": "index",
         "params_names": ["login", "password"],
         "auth": false,
-        "data_model": "Account"
+        "data_model": "Accounts",
+        "redirect": true
     },
     "GET/logout": {
         "module": "signupAccount",
         "methode": "logout",
         "screen": "login",
         "params_names": [],
-        "auth": false
+        "auth": true,
+        "redirect": true
     },
-
     "GET/multipart": {
         "module": "index",
         "methode": "titre",
         "screen": "multipart_oneFile",
+        "params_names": [],
         "auth": true
     },
-    "POST/uploadImage": {
+    "POST/uploadFile": {
         "module": "uploader",
         "methode": "oneFile",
         "screen": "index",
-        "auth": true
+        "auth": true,
+        "redirect": true
     },
     "GET/user": {
         "module": "finder",
@@ -39,13 +48,7 @@
         "screen": "userOne",
         "auth": true,
         "params_names": ["login"],
-        "data_model": "accounts"
-    },
-    "GET/login": {
-        "module": "login",
-        "methode": "titre",
-        "screen": "login",
-        "auth": false
+        "data_model": "Accounts"
     },
     "GET/users": {
         "module": "finder",
@@ -53,7 +56,7 @@
         "screen": "user_list",
         "auth": true,
         "params_names": [],
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "GET/logs": {
         "module": "finder",
@@ -70,27 +73,68 @@
         "screen": "userOne",
         "auth": true,
         "params_names": ["login"],
-        "data_model": "Account"
+        "data_model": "AccountId"
     },
     "GET/formadduser": {
         "module": "getview",
         "methode": "view",
         "screen": "formadduser",
         "auth": true,
-        "data_model": "Account"
+        "data_model": "Accounts"
     },
     "POST/adduser": {
         "module": "inserter",
         "methode": "one",
-        "screen": "index",
+        "screen": "users",
         "auth": true,
         "params_names": ["login", "password"],
-        "data_model": "Account"
+        "data_model": "Accounts",
+        "redirect": true
+    },
+    "GET/updateuser": {
+        "module": "finder",
+        "methode": "one",
+        "screen": "formupdateuser",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Accounts"
+    },
+    "POST/setuser": {
+        "module": "updater",
+        "methode": "one",
+        "screen": "users",
+        "auth": true,
+        "params_names": ["_id", "login", "password"],
+        "data_model": "AccountId",
+        "redirect": true
+    },
+    "GET/deleteuser": {
+        "module": "deleter",
+        "methode": "oneById",
+        "screen": "users",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "AccountId",
+        "redirect": true
+    },
+    "GET/updatelogs": {
+        "module": "finder",
+        "methode": "one",
+        "screen": "formupdatelogs",
+        "auth": true,
+        "params_names": ["_id"],
+        "data_model": "Logs"
     },
     "GET/index": {
         "module": "index",
         "methode": "titre",
         "screen": "index",
+        "auth": true
+    },
+    "GET/glances": {
+        "module": "glances",
+        "methode": "getData",
+        "screen": "glancesviewtab",
         "auth": true
     }
 }

@@ -5,7 +5,7 @@ var util = require("util");
 var logger = require('log4js').getLogger('schema_loader');
 var fs = require('fs');
 var mongoose = require('mongoose');
-var genericModel = require('../../../ressources/models/mongooseGeneric');
+var genericModel = require(__dirname + '/otf_mongooseGeneric');
 
 module.exports = {
     /**

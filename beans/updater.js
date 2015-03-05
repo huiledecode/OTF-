@@ -6,7 +6,7 @@
  */
 var logger = require('log4js').getLogger('css');
 var mongoose = require('mongoose');
-var genericModel = require('../ressources/models/mongooseGeneric');
+var genericModel = require('../otf/lib/otf_mongooseGeneric');
 
 /*
  * SET users datas into MongoDB.
@@ -22,7 +22,7 @@ exports.updater = {
         var model = GLOBAL.schemas[_controler.data_model];
         logger.debug('params updater : ', values);
         try {
-          model.updateDocument({_id: theId}, values, function (err, numberAffected) {
+            model.updateDocument({_id: theId}, values, function (err, numberAffected) {
                 if (err) {
                     logger.info('----> error : ' + err);
                 } else {

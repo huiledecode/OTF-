@@ -16,7 +16,7 @@ var glances = require('glances');
 exports.glances = {
     getData: function (req, cb) {
         var _controler = req.session.controler;
-        var client = glances.createClient({ host: '0.0.0.0', password: 'root' });
+        var client = glances.createClient({ host: GLOBAL.config["GLANCES"].host, password: 'root' });
         client.call('getAll', function (error, value) {
             if (error) {
                 console.log('Erreur : ' + error.faultString);

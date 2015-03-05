@@ -6,7 +6,7 @@
  */
 var logger = require('log4js').getLogger('css');
 var mongoose = require('mongoose');
-var genericModel = require('../ressources/models/mongooseGeneric');
+var genericModel = require('../otf/lib/otf_mongooseGeneric');
 
 /*
  * SET users datas into MongoDB.

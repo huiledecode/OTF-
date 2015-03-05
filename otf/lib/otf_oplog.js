@@ -16,7 +16,7 @@ module.exports = function (sessionStore) {
     });
 
     oplog.on('insert', function (doc) {
-      var dataModel = doc.ns.split('.')[1];
+        var dataModel = doc.ns.split('.')[1];
         logger.debug('OTF² ****> insert on dataModel : ' + dataModel);
         // Avec le sessionStore de REDIS à tester avec memory
         srvSession.all(function (err, sessions) {
@@ -31,14 +31,14 @@ module.exports = function (sessionStore) {
                         logger.debug("OTF² OPOLOG ON EMIT insertOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
                         GLOBAL.sio.sockets.in(_sessionId).emit('insertOk', doc);
                     }
-            }
+                }
             }
             logger.debug(doc.op);
         });
     });
 
     oplog.on('update', function (doc) {
-      var dataModel = doc.ns.split('.')[1];
+        var dataModel = doc.ns.split('.')[1];
         logger.debug('OTF² ****> update on dataModel : ' + dataModel);
         srvSession.all(function (err, sessions) {
             for (var _sessionId in sessions) {
@@ -52,14 +52,14 @@ module.exports = function (sessionStore) {
                         logger.debug("OTF² OPOLOG ON EMIT updateOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
                         GLOBAL.sio.sockets.in(_sessionId).emit('updateOk', doc);
                     }
-          }
-        }
+                }
+            }
         });
         logger.debug(doc.op);
     });
 
     oplog.on('delete', function (doc) {
-      var dataModel = doc.ns.split('.')[1];
+        var dataModel = doc.ns.split('.')[1];
         logger.debug('OTF² ****> update on dataModel : ' + dataModel);
         srvSession.all(function (err, sessions) {
             for (var _sessionId in sessions) {
@@ -73,8 +73,8 @@ module.exports = function (sessionStore) {
                         logger.debug("OTF² OPOLOG ON EMIT deleteOk to sessionId : %s with doc : %s ", _sessionId, util.inspect(doc));
                         GLOBAL.sio.sockets.in(_sessionId).emit('deleteOk', doc);
                     }
-          }
-        }
+                }
+            }
         });
         logger.debug(doc.op);
     });

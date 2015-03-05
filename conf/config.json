@@ -7,7 +7,7 @@
         "host": "0.0.0.0"
     },
     "LOGS": {
-        "path": "./ressources/log4js.json",
+        "path": "/../../conf/log4js.json",
         "reload": "300",
         "mongodb": "localhost:27017/log"
     },
@@ -29,5 +29,8 @@
         "ttl": "900",
         "prefix": "sess:"
 
+    },
+    "GLANCES": {
+        "host": "127.0.0.1"
     }
 }
