@@ -113,7 +113,7 @@ function getControler(req, cb) {
         // -- Load module in otf_module
         try {
 
-            instanceModule = require('../../beans/' + module);
+            instanceModule = require('../beans/' + module);
         } catch (err) {
             return cb(handleError('OTF ERROR Loading Module Error', '501', "Loading Module Error for URL [" + type + path + "] and Module [" + module + "], message [" + err.toString() + "]"));
         }
