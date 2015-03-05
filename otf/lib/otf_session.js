@@ -13,7 +13,7 @@ module.exports = function (app, secret, cookie_name) {
     var options = {"ttl": GLOBAL.config["SESSION"].ttl, "prefix": GLOBAL.config["SESSION"].prefix};
     // Store Memory or Redis
     if (process.env.NODE_SESSION == "REDIS") {
-        var RedisStore = require('./connect-redis')(session);
+        var RedisStore = require('/connect-redis')(session);
         sessionStore = new RedisStore(options);
         logger.debug("OTF² NODE_SESSION = REDIS");
     } else {
