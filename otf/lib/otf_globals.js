@@ -18,7 +18,7 @@ var logMongo;
 var conf_loader = {config: conf, schema: schema, profile: profiles};
 //
 //
-console.log(">>> OTF² Try to load file configuration ... \n[%s]\n", util.inspect(conf_loader));
+console.log("\n>>> OTF² Try to load file configuration ... \n[%s]\n", util.inspect(conf_loader));
 try {
     // load configuration file
     loader.loadConfig(conf_loader);
