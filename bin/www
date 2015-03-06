@@ -7,17 +7,15 @@
 //
 var cluster = require('cluster');
 var numCPUs;
-//var http = require('http');
-
 //
 var util = require("util");
 //--
-// Configuration Initialisation
+// Configuration : Initialisation
 //        des ANNUAIRES GLOBALS
 //--
 require('../otf/lib/otf_globals');
 //--
-// After INIT
+// LOGGER
 //--
 var log4js = require('log4js');
 var logger = log4js.getLogger('www');
@@ -25,32 +23,44 @@ var loggerMongo = log4js.getLogger('mongo');
 //--
 if (GLOBAL.config["ENV"].modes === 'DEBUG')
     var debug = require('debug')('OTF²');
-
+//
 if (GLOBAL.config["CLUSTER"].nb_cpu == 'undefine')
     numCPUs = require('os').cpus().length;
 else
     numCPUs = GLOBAL.config["CLUSTER"].nb_cpu;
+//
 logger.info("OTF² NB_CPU [%s]", numCPUs);
 //--
+// SWITCH CLUSTER OR SINGLE
+//--
+if (GLOBAL.config["CLUSTER"].mode != 'undefine' && GLOBAL.config["CLUSTER"].mode == "ON") {
+    logger.info("OTF² MODE CLUSTER ON");
+    //--
 //- CLUSTER START
 //--
-if (cluster.isMaster) {
-    // Fork workers.
-    for (var i = 0; i < numCPUs; i++) {
-        cluster.fork();
+    if (cluster.isMaster) {
+        // Fork workers.
+        for (var i = 0; i < numCPUs; i++) {
+            cluster.fork();
+        }
+
+        cluster.on('exit', function (worker, code, signal) {
+            logger.INFO('worker ' + worker.process.pid + ' died');
+        });
+    } else {
+        run();
     }
-//
-    cluster.on('exit', function (worker, code, signal) {
-        logger.INFO('worker ' + worker.process.pid + ' died');
-    });
 } else {
-    // Workers can share any TCP connection
-    // In this case its a HTTP server
-//--
-// APPLICATION INITIALISATION
-//--
+    logger.info("OTF² MODE CLUSTER OFF");
+    run();
+}
+
+
+/**
+ * START HTTP LISTENER
+ */
+function run() {
     var app = require('../app');
-//
     app.set('port', GLOBAL.config["LOGS"].port || process.env.NODE_PORT || 3000);
     app.set('host', GLOBAL.config["LOGS"].host || process.env.NODE_HOST || "0.0.0.0");
 //
@@ -58,13 +68,9 @@ if (cluster.isMaster) {
         logger.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
         //loggerMongo.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
     });
-//--
 // SERVER SOCKET
     sio.listen(server, {log: GLOBAL.config["WEBSOCK"].log});
     logger.debug("OTF² WebSocket Started");
 //-- Middleware function
-
 }
-
-
 
