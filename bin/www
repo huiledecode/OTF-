@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+//------------------------------//
+// Stef && Eric 03/05          //
+// Enable OTF² CLUSTER        //
+//-----------------------------//
+
+//-- Configuration :  des ANNUAIRES GLOBALS
+require('../otf/lib/otf_globals');
+
+// -- Configuration : LOGGER
+var log4js = require('log4js');
+var logger = log4js.getLogger('www');
+var loggerMongo = log4js.getLogger('mongo');
+
+//--
+if (GLOBAL.config["ENV"].modes === 'DEBUG')
+    var debug = require('debug')('OTF²');
+
+//-- SWITCH CLUSTER OR SINGLE
+if (GLOBAL.config["CLUSTER"].mode != 'undefine' && GLOBAL.config["CLUSTER"].mode == "ON") {
+    logger.info("OTF² MODE CLUSTER ON");
+    require('../otf/lib/otf_cluster');
+} else {
+    logger.info("OTF² MODE CLUSTER OFF");
+    run();
+}
+
+
+/**
+ * START HTTP LISTENER
+ */
+function run() {
+    var app = require('../app');
+    app.set('port', GLOBAL.config["LOGS"].port || process.env.NODE_PORT || 3000);
+    app.set('host', GLOBAL.config["LOGS"].host || process.env.NODE_HOST || "0.0.0.0");
+//-- HTTP SERVER
+    var server = app.listen(app.get('port'), app.get('host'), function () {
+        logger.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
+        //loggerMongo.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
+    });
+//-- SOCKET SERVER
+    sio.listen(server, {log: GLOBAL.config["WEBSOCK"].log});
+    logger.debug("OTF² WebSocket Started");
+}
+

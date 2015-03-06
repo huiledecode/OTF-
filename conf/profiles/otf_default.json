@@ -1,0 +1,37 @@
+{
+    "GET/": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/index": {
+        "module": "index",
+        "methode": "titre",
+        "screen": "index",
+        "auth": true
+    },
+    "GET/login": {
+        "module": "login",
+        "methode": "titre",
+        "screen": "login",
+        "auth": false
+    },
+    "POST/signupAccount": {
+        "module": "signupAccount",
+        "methode": "signup",
+        "screen": "index",
+        "params_names": ["login", "password"],
+        "auth": false,
+        "data_model": "Accounts",
+        "redirect": true
+    },
+    "GET/logout": {
+        "module": "signupAccount",
+        "methode": "logout",
+        "screen": "login",
+        "params_names": [],
+        "auth": false,
+        "redirect": true
+    }
+}

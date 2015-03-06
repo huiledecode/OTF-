@@ -1,0 +1,41 @@
+{
+    "ENV": {
+        "mode": "TEST"
+    },
+    "WWW": {
+        "port": "3000",
+        "host": "0.0.0.0"
+    },
+    "LOGS": {
+        "path": "/../../conf/log4js.json",
+        "reload": "300",
+        "mongodb": "localhost:27017/log",
+        "level": "ERROR"
+    },
+    "MONGO": {
+        "url": "mongodb://@127.0.0.1:27017/otf_demo",
+        "options": {
+            "server": {
+                "poolSize": 5
+            }
+        }
+    },
+    "WEBSOCK": {
+        "log": false
+
+    },
+    "SESSION": {
+        "secret": "7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ",
+        "cookie_name": "connect.sid",
+        "ttl": "900",
+        "prefix": "sess:"
+
+    },
+    "GLANCES": {
+        "host": "127.0.0.1"
+    },
+    "CLUSTER": {
+        "mode": "OFF",
+        "nb_cpu": "3"
+    }
+}

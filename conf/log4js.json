@@ -1,0 +1,18 @@
+{
+    "appenders": [
+        {
+            "type": "console"
+        },
+        {
+            "type": "file",
+            "filename": "log/otf.log",
+            "maxLogSize": 524288,
+            "numBackups": 3
+        },
+        {
+            "type": "file",
+            "filename": "log/otf_ccs.log",
+            "category": "otf"
+        }
+    ]
+}

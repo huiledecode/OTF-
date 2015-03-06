@@ -1,0 +1,30 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h3>{{title}}</h3>
+                <h5>
+                    {{#compare state 'connected' operator="=="}}
+                        <p class="text-success">CONNECTED</p>
+
+                        <p class="text-success">"Bienvenue {{user}}, {{message}}</p>
+                    {{/compare}}
+
+                    {{#compare state 'not_connected' operator="=="}}
+                        <p class="text-danger">NOT CONNECTED</p>
+                    {{/compare}}
+                </h5>
+            </div>
+        </div>
+
+    </div>
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}

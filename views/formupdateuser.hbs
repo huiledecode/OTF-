@@ -1,0 +1,25 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+    <div id="containerform" class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12">
+                <h3>UpdateUser</h3>
+            </div>
+        </div>
+        <script>
+            //<![CDATA[
+            $(document).ready(function() {
+                setFormUpdate({{{json result}}}, "/setuser");
+            });
+            //]]>
+        </script>
+    </div>
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}

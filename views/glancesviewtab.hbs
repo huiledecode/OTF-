@@ -1,0 +1,236 @@
+{{#content "head"}}
+    {{> head}}
+    <meta http-equiv="refresh" content="200">
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+
+    <!-- Javascript d'initialisation d'un datatable jquery bootstrapisÃ© -->
+    <script>
+        //<![CDATA[
+        $(document).ready(function()
+        {
+            {{#if result.processlist.length}}
+                setDataTable({{{json result.processlist}}}, "monitor10", "/#", "/#");
+            {{/if}}
+            {{#if result.percpu.length}}
+                setDataTable({{{json result.percpu}}}, "monitor9", "/#", "/#");
+            {{/if}}
+            {{#if result.sensors.length}}
+                setDataTable({{{json result.sensors}}}, "monitor8", "/#", "/#");
+            {{/if}}
+            {{#if result.network.length}}
+                setDataTable({{{json result.network}}}, "monitor7", "/#", "/#");
+            {{/if}}
+            {{#if result.fs.length}}
+                setDataTable({{{json result.fs}}}, "monitor6", "/#", "/#");
+            {{/if}}
+            {{#if result.diskio.length}}
+                setDataTable({{{json result.diskio}}}, "monitor5", "/#", "/#");
+            {{/if}}
+            {{#if result.memswap.length}}
+                setDataTable({{{json result.memswap}}}, "monitor4", "/#", "/#");
+            {{/if}}
+            {{#if result.mem.length}}
+                setDataTable({{{json result.mem}}}, "monitor3", "/#", "/#");
+            {{/if}}
+            {{#if result.cpu.length}}
+                setDataTable({{{json result.cpu}}}, "monitor2", "/#", "/#");
+            {{/if}}
+            {{#if result.alert.length}}
+                setDataTable({{{json result.alert}}}, "monitor1", "/#", "/#");
+            {{/if}}
+
+            var cpuTotal = ({{{json result.cpu}}});
+            var cpu = cpuTotal[0].total;
+            var cpuspan = document.getElementById("cpu");
+
+            var memUsed = ({{{json result.mem}}});
+            var mem = memUsed[0].used.substring(0, memUsed[0].used.length -11); //recup de la partie numerique
+            var unityMem =  memUsed[0].used.substring(memUsed[0].used.length -11, memUsed[0].used.length); // recup de l'unite Ko Mo ou Go
+            var memspan = document.getElementById("mem"); //recuperation du dom (document object modele = structure HTML) par son id mem
+            var memunit = document.getElementById("memunit");//recuperation du dom (document object modele = structure HTML) par son id memunit
+            memunit.innerHTML = unityMem; // ecriture de l'unite dans le span prevu
+
+            var opts = {
+                lines: 12,	// The number of lines to draw
+                angle: 0,	// The length of each line
+                lineWidth: 0.7,    // The line thickness
+                pointer: {
+                    length: 0.5,	// The radius of the inner circle
+                    strokeWidth: 0.02, // The rotation offset
+                    color: '#000000'	// Fill color
+                },
+                limitMax: 'false',	// If true, the pointer will not go past the end of the gauge
+                percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],
+                strokeColor: '#222222',	// to see which ones work best for you
+                generateGradient: true
+            };
+            var target = document.getElementById('jaugescputotal');		// your canvas element
+            var gauge = new Gauge(target).setOptions(opts);		// create sexy gauge!
+            gauge.setTextField(document.getElementById("preview-textfield_cputotal"));
+            gauge.maxValue = 100;       // set max gauge value
+            gauge.animationSpeed = 60;  // set animation speed (32 is default value)
+            gauge.set(cpu);             // set actual value
+
+            var opts = {
+                lines: 12,	// The number of lines to draw
+                angle: 0,	// The length of each line
+                lineWidth: 0.7,    // The line thickness
+                pointer: {
+                    length: 0.5,	// The radius of the inner circle
+                    strokeWidth: 0.02, // The rotation offset
+                    color: '#000000'	// Fill color
+                },
+                limitMax: 'false',	// If true, the pointer will not go past the end of the gauge
+                percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],
+                strokeColor: '#222222',	// to see which ones work best for you
+                generateGradient: true
+            };
+            var target = document.getElementById('jaugesmemused');		// your canvas element
+            var gauge = new Gauge(target).setOptions(opts);		// create sexy gauge!
+            gauge.setTextField(document.getElementById("preview-textfield_memused"));
+            var memMaxTab = ({{{json result.mem}}});
+            var memMax = ((memMaxTab[0].total).split('.')[0])*1024;
+            gauge.maxValue = memMax;		// set max gauge value
+            gauge.animationSpeed = 60;		// set animation speed (32 is default value)
+            gauge.set(parseInt(mem));       // set actual value
+
+
+        });
+
+        //]]>
+
+
+    </script>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <h3>Server:</h3>
+                <h4>{{result.system.hostname}}</h4>
+                <h5>{{result.system.os_name}} {{result.system.hr_name}}</h5>
+                <h5>Kernel {{result.system.os_version}}</h5>
+                <h5>Uptime {{result.uptime}}</h5>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-1">
+                <h3>Tasks: </h3>
+                <h5>Total: {{result.processcount.total}}</h5>
+                <h5>Running: {{result.processcount.running}}</h5>
+                <h5>Thread: {{result.processcount.thread}}</h5>
+                <h5>Sleeping: {{result.processcount.sleeping}}</h5>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-1">
+                <h3>Core:</h3>
+                <h5>Physique: {{result.core.phys}}</h5>
+                <h5>Logique: {{result.core.log}}</h5>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-1">
+                <h3>Load:</h3>
+                <h5>cpucore: {{result.load.cpucore}}</h5>
+                <h5>min1: {{result.load.min1}}</h5>
+                <h5>min5: {{result.load.min5}}</h5>
+                <h5>min15: {{result.load.min15}}</h5>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <h4 class="label-gauge">CPU: <span id="preview-textfield_cputotal"></span>%</h4>
+                <canvas class="gauge" id="jaugescputotal"></canvas>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-2">
+                <h4 class="label-gauge">RAM:<span id="preview-textfield_memused"></span><span id="memunit"></span></h4>
+                <canvas class="gauge" id="jaugesmemused"></canvas>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-1 aligndroit">
+                <h3>Times:<h4>{{result.now}}</h4></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <h3>Alert:</h3>
+                <div id="monitor1" class="panel panel-default"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-12">
+                <h5>CPU :</h5>
+                <div id="monitor2" class="panel panel-default"></div>
+            </div><!-- /.col-lg-12 -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-6">
+                <h5>Memory :</h5>
+                <div id="monitor3" class="panel panel-default"></div>
+            </div><!-- /.col-lg-12 -->
+        </div>
+        <div class="row-fluid">
+            <div class="col-lg-6">
+                <h5>Memory swap :</h5>
+                <div id="monitor4" class="panel panel-default"></div>
+            </div><!-- /.col-lg-12 -->
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-6">
+                <h5>Disques durs :</h5>
+                <div id="monitor5" class="panel panel-default"></div>
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-6">
+                <h5>Montages Disques :</h5>
+                <div id="monitor6" class="panel panel-default"></div>
+            </div><!-- /.col-lg-6 -->
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-12">
+                <h5>Reseaux :</h5>
+                <div id="monitor7" class="panel panel-default"></div>
+            </div><!-- /.col-lg-6 -->
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-4">
+                <h5>Temperature :</h5>
+                <div id="monitor8" class="panel panel-default"></div>
+            </div><!-- /.col-lg-6 -->
+            <div class="col-lg-8">
+                <h5>CPUS :</h5>
+                <div id="monitor9" class="panel panel-default"></div>
+            </div><!-- /.col-lg-12 -->
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-lg-12">
+                <h5>Liste des processus :</h5>
+                <div id="monitor10" class="panel panel-default"></div>
+            </div><!-- /.col-lg-12 -->
+        </div>
+    </div>
+
+
+    </div>
+
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}

@@ -1,0 +1,38 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "header"}}
+    {{> header}}
+{{/content}}
+{{#content "body"}}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h3>{{title}}</h3>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <p>Id : {{result._id}}</p>
+
+                <p>Login : {{result.login}}</p>
+
+                <p>Password : {{result.password}}</p>
+
+                <p>Version : {{result.__v}}</p>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <p> Room : {{room}} </p>
+
+                <p><a href='/index'>Retour Acccueil </a></p>
+
+                <p><a href="/logout">Déconnexion</a></p>
+            </div>
+        </div>
+    </div>
+    {{#content "footer"}}
+        {{> footer}}
+    {{/content}}
+{{/content}}
