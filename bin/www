@@ -6,8 +6,9 @@
 //-----------------------------//
 //
 var cluster = require('cluster');
+var numCPUs;
 //var http = require('http');
-var numCPUs = require('os').cpus().length;
+
 //
 var util = require("util");
 //--
@@ -24,17 +25,23 @@ var loggerMongo = log4js.getLogger('mongo');
 //--
 if (GLOBAL.config["ENV"].modes === 'DEBUG')
     var debug = require('debug')('OTF²');
+
+if (GLOBAL.config["CLUSTER"].nb_cpu == 'undefine')
+    numCPUs = require('os').cpus().length;
+else
+    numCPUs = GLOBAL.config["CLUSTER"].nb_cpu;
+logger.info("OTF² NB_CPU [%s]", numCPUs);
 //--
-//-
+//- CLUSTER START
 //--
 if (cluster.isMaster) {
     // Fork workers.
     for (var i = 0; i < numCPUs; i++) {
         cluster.fork();
     }
-
+//
     cluster.on('exit', function (worker, code, signal) {
-        console.log('worker ' + worker.process.pid + ' died');
+        logger.INFO('worker ' + worker.process.pid + ' died');
     });
 } else {
     // Workers can share any TCP connection
