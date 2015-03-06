@@ -1,4 +1,4 @@
-# otf
+# OTF²
 On The Fly Framework : OTF²
 
 OTF² is a Node.js development Framework which aims to simplify front end application development.  It's designed over a [finite-state machine](http://en.wikipedia.org/wiki/Finite-state_machine) model.
