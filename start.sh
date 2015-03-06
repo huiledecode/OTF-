@@ -7,5 +7,5 @@ sudo mongod --replSet otf_demo &
 #sudo service mongodb restart
 sleep 5
 
-node --debug ./bin/www
+node ./bin/www
 
