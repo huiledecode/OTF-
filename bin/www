@@ -1,15 +1,20 @@
 #!/usr/bin/env node
 
-//--
-//-
-//--
+//------------------------------//
+// Stef && Eric 03/05          //
+// Enable OTF² CLUSTER        //
+//-----------------------------//
+//
+var cluster = require('cluster');
+//var http = require('http');
+var numCPUs = require('os').cpus().length;
+//
 var util = require("util");
 //--
 // Configuration Initialisation
 //        des ANNUAIRES GLOBALS
 //--
 require('../otf/lib/otf_globals');
-
 //--
 // After INIT
 //--
@@ -20,23 +25,39 @@ var loggerMongo = log4js.getLogger('mongo');
 if (GLOBAL.config["ENV"].modes === 'DEBUG')
     var debug = require('debug')('OTF²');
 //--
+//-
+//--
+if (cluster.isMaster) {
+    // Fork workers.
+    for (var i = 0; i < numCPUs; i++) {
+        cluster.fork();
+    }
+
+    cluster.on('exit', function (worker, code, signal) {
+        console.log('worker ' + worker.process.pid + ' died');
+    });
+} else {
+    // Workers can share any TCP connection
+    // In this case its a HTTP server
+//--
 // APPLICATION INITIALISATION
 //--
-var app = require('../app');
+    var app = require('../app');
 //
-app.set('port', GLOBAL.config["LOGS"].port || process.env.NODE_PORT || 3000);
-app.set('host', GLOBAL.config["LOGS"].host || process.env.NODE_HOST || "0.0.0.0");
+    app.set('port', GLOBAL.config["LOGS"].port || process.env.NODE_PORT || 3000);
+    app.set('host', GLOBAL.config["LOGS"].host || process.env.NODE_HOST || "0.0.0.0");
 //
-var server = app.listen(app.get('port'), app.get('host'), function () {
-    logger.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
-    //loggerMongo.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
-});
+    var server = app.listen(app.get('port'), app.get('host'), function () {
+        logger.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
+        //loggerMongo.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
+    });
 //--
 // SERVER SOCKET
-sio.listen(server, {log: GLOBAL.config["WEBSOCK"].log});
-logger.debug("OTF² WebSocket Started");
+    sio.listen(server, {log: GLOBAL.config["WEBSOCK"].log});
+    logger.debug("OTF² WebSocket Started");
 //-- Middleware function
 
+}
 
-//--
+
 
