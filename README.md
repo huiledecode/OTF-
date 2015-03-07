@@ -16,8 +16,9 @@ After mongoDB installation, you can restore the database of the demo application
 
 <pre><code>$ git clone https://github.com/huiledecode/otf.git</code></pre>
 
-change the current directory to "otf" :
+change the current directory to name "otf" :
 
+<pre><code>$ mv OTF- otf</code></pre>
 <pre><code>$ cd otf</code></pre>
 
 And go into dump directory :
@@ -27,6 +28,11 @@ And go into dump directory :
 Restore database MongoDB like this :
 
 <pre><code>$ mongorestore ./otf_demo</code></pre>
+
+Create log directory
+
+<pre><code>$ cd otf</code></pre>
+<pre><code>$ mkdir log</code></pre>
 
 # Quick Start
 
@@ -50,6 +56,52 @@ Into mongo shell you need to configure replicatSet like this :
 Now in the otf directory you can start the demo application :
 <pre><code>$ ./start.sh</code></pre>
 <pre><code>sudoer password : </code></pre>
+
+OTF² cluster is OFF by default, if you like to use cluster mode, you can change config.json into conf directory :
+```js
+{
+    "ENV": {
+        "mode": "TEST"
+    },
+    "WWW": {
+        "port": "3000",
+        "host": "0.0.0.0"
+    },
+    "LOGS": {
+        "path": "/../../conf/log4js.json",
+        "reload": "300",
+        "mongodb": "localhost:27017/log",
+        "level": "ERROR"
+    },
+    "MONGO": {
+        "url": "mongodb://@127.0.0.1:27017/otf_demo",
+        "options": {
+            "server": {
+                "poolSize": 5
+            }
+        }
+    },
+    "WEBSOCK": {
+        "log": false
+
+    },
+    "SESSION": {
+        "secret": "7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ",
+        "cookie_name": "connect.sid",
+        "ttl": "900",
+        "prefix": "sess:"
+
+    },
+    "GLANCES": {
+        "host": "127.0.0.1"
+    },
+    "CLUSTER": {
+        "mode": "OFF",
+        "nb_cpu": "3"
+    }
+}
+```
+Put to "ON" the mode attribute of CLUSTER entry
 
 Now you can fire up your browser and access your OTF app with the following url : 
 <pre><code>http://localhost:3000</code></pre>
@@ -77,7 +129,7 @@ What happens when you click on "users" link in the top menu :
 How can we do this into OTF² ?
 Follow the rabbit ;-) :
 
-You need to set the "<b>routes/otf/profiles/otf_admin.json</b>" file. It defines actions (pathnames) which can be used by the user account :
+You need to set the "<b>conf/profiles/otf_admin.json</b>" file. It defines actions (pathnames) which can be used by the user account :
 ```js
 (...)
    "GET/users": {
@@ -90,6 +142,7 @@ You need to set the "<b>routes/otf/profiles/otf_admin.json</b>" file. It defines
    },
 (...)
 ```        
+Nb : OTF² is listening the changes of conf files and charging them by the module "otf globals.js"
 
 To understand the "<b>Flight Plan</b>", we need to explore all the attributes in the json file "<b>otf_admin.json</b>" :
 <ul>
