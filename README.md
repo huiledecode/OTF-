@@ -57,7 +57,7 @@ Now in the otf directory you can start the demo application :
 <pre><code>$ ./start.sh</code></pre>
 <pre><code>sudoer password : </code></pre>
 
-OTF² cluster is OFF by default, if you like to use cluster mode, you can change config.json into conf directory :
+OTF² cluster is OFF by default, if you like to use cluster mode, you must change config.json into conf directory :
 ```js
 {
     "ENV": {
