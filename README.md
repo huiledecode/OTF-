@@ -14,7 +14,7 @@ You need to install Node.js, npm, mongoDB and Redis to use OTF², on Ubuntu 14.0
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
-<pre><code>$ git clone https://github.com/huiledecode/otf.git</code></pre>
+<pre><code>$ git clone https://github.com/huiledecode/OTF-.git</code></pre>
 
 change the current directory to name "otf" :
 
