@@ -13,19 +13,18 @@ var log4js = require('log4js');
 var logger = log4js.getLogger('www');
 logger.setLevel(GLOBAL.config["LOGS"].level);
 var loggerMongo = log4js.getLogger('mongo');
+//
+printConfig();
 
 //--
 if (GLOBAL.config["ENV"].modes === 'DEBUG')
     var debug = require('debug')('OTF²');
 
 //-- SWITCH CLUSTER OR SINGLE
-if (GLOBAL.config["CLUSTER"].mode != 'undefine' && GLOBAL.config["CLUSTER"].mode == "ON") {
-    logger.info("OTF² MODE CLUSTER ON");
+if (GLOBAL.config["CLUSTER"].mode != 'undefined' && GLOBAL.config["CLUSTER"].mode == "ON")
     require('../otf/lib/otf_cluster');
-} else {
-    logger.info("OTF² MODE CLUSTER OFF");
+else
     run();
-}
 
 
 /**
@@ -45,3 +44,12 @@ function run() {
     logger.info("OTF² WebSocket Started");
 }
 
+function printConfig() {
+    var util = require("util");
+    for (var theme in GLOBAL.config) {
+        logger.info("THEMES :[%s]", theme);
+        for (var item in GLOBAL.config[theme]) {
+            logger.info("\t [%s]-->[%s]", item, util.inspect(GLOBAL.config[theme][item]));
+        }
+    }
+}

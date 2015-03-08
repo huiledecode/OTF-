@@ -12,15 +12,16 @@ module.exports = function (app, secret, cookie_name) {
     var sessionStore;
     // TimeOut de session en secondes et prefix de la keyy pour REDIS
     var options = {"ttl": GLOBAL.config["SESSION"].ttl, "prefix": GLOBAL.config["SESSION"].prefix};
+    var node_session = process.env.NODE_SESSION || GLOBAL.config["SESSION"].store || "MEMORY";
     // Store Memory or Redis
-    if (process.env.NODE_SESSION == "REDIS") {
+    if (node_session === "REDIS") {
         var RedisStore = require(__dirname + '/connect-redis')(session);
         sessionStore = new RedisStore(options);
-        logger.info("OTF² NODE_SESSION = REDIS");
+        // logger.info("OTF² NODE_SESSION = REDIS");
     } else {
         var MemoryStore = session.MemoryStore;
         sessionStore = new MemoryStore();
-        logger.info("OTF² NODE_SESSION = MEMORY");
+        // logger.info("OTF² NODE_SESSION = MEMORY");
     }
     // -- Cookies Parser
     app.use(cookieParser(secret));
