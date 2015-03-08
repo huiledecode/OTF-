@@ -15,7 +15,18 @@ var genericModel = require('../otf/lib/otf_mongooseGeneric');
 
 exports.finder = {
     list: function (req, cb) {
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        //
         var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
         //var modele = mongoose.model(model);
         //logger.debug('global.annuaire_schema avant : ', global.annuaire_schema);
         // On passe à mongooseGeneric le path unique pour l'action,
@@ -28,7 +39,7 @@ exports.finder = {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocuments({}, function (err, list_users) {
                 logger.debug('liste des utilisateurs :', JSON.stringify(list_users));
-                return cb(null, {result: list_users, "state": req.session.login_info.state, room: _controler.room});
+                return cb(null, {result: list_users, "state": state || "TEST", room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
@@ -36,8 +47,18 @@ exports.finder = {
     },
 
     one: function (req, cb) {
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
         //
         var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
         //@TODO not safety
         logger.debug('Finders.one params  : ', _controler.params);
         //logger.debug('Finders.one params  : ', _controler.params['login'].source);
@@ -51,7 +72,7 @@ exports.finder = {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocument(_controler.params, function (err, one_user) {
                 logger.debug('liste des utilisateurs :', one_user);
-                return cb(null, {result: one_user, "state": req.session.login_info.state, room: _controler.room});
+                return cb(null, {result: one_user, "state": state, room: _controler.room});
             });
 
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
@@ -59,13 +80,19 @@ exports.finder = {
         }
     },
     populate: function (req, cb) {
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
         var _controler = req.session.controler;
-        //var modele = mongoose.model(model);
-        //logger.debug('global.annuaire_schema avant : ', global.annuaire_schema);
-        // On passe à mongooseGeneric le path unique pour l'action,
-        // comme identifiant de modèle si il n'est pas déjà compilé
-        // dans mongoose
-        // Test emit WebSocket Event
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
+        //
+        //
         logger.debug(" Finder.list call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
         try {
@@ -73,7 +100,7 @@ exports.finder = {
             var _params = { query: _controler.params, ref: _controler.data_ref};
             model.popDocuments(_params, function (err, list) {
                 logger.debug('Populate Result  :', list);
-                return cb(null, {result: list, "state": req.session.login_info.state, room: _controler.room});
+                return cb(null, {result: list, "state": state, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);

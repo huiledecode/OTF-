@@ -16,11 +16,11 @@ module.exports = function (app, secret, cookie_name) {
     if (process.env.NODE_SESSION == "REDIS") {
         var RedisStore = require(__dirname + '/connect-redis')(session);
         sessionStore = new RedisStore(options);
-        logger.debug("OTF² NODE_SESSION = REDIS");
+        logger.info("OTF² NODE_SESSION = REDIS");
     } else {
         var MemoryStore = session.MemoryStore;
         sessionStore = new MemoryStore();
-        logger.debug("OTF² NODE_SESSION = MEMORY");
+        logger.info("OTF² NODE_SESSION = MEMORY");
     }
     // -- Cookies Parser
     app.use(cookieParser(secret));

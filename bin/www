@@ -11,6 +11,7 @@ require('../otf/lib/otf_globals');
 // -- Configuration : LOGGER
 var log4js = require('log4js');
 var logger = log4js.getLogger('www');
+logger.setLevel(GLOBAL.config["LOGS"].level);
 var loggerMongo = log4js.getLogger('mongo');
 
 //--
@@ -36,11 +37,11 @@ function run() {
     app.set('host', GLOBAL.config["LOGS"].host || process.env.NODE_HOST || "0.0.0.0");
 //-- HTTP SERVER
     var server = app.listen(app.get('port'), app.get('host'), function () {
-        logger.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
+        logger.info("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
         //loggerMongo.debug("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
     });
 //-- SOCKET SERVER
     sio.listen(server, {log: GLOBAL.config["WEBSOCK"].log});
-    logger.debug("OTF² WebSocket Started");
+    logger.info("OTF² WebSocket Started");
 }
 

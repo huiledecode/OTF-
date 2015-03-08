@@ -33,5 +33,14 @@
         "params_names": [],
         "auth": false,
         "redirect": true
+    },
+    "GET/logs": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "log_list",
+        "auth": false,
+        "params_names": [],
+        "data_model": "Logs",
+        "data_ref": "user_id"
     }
 }

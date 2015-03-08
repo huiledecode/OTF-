@@ -20,7 +20,7 @@ if (cluster.isMaster) {
     }
     //
     cluster.on('exit', function (worker, code, signal) {
-        logger.INFO('worker ' + worker.process.pid + ' died');
+        logger.info('worker ' + worker.process.pid + ' died');
     });
 } else {
     run();

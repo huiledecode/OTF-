@@ -10,7 +10,7 @@
         "path": "/../../conf/log4js.json",
         "reload": "300",
         "mongodb": "localhost:27017/log",
-        "level": "ERROR"
+        "level": "INFO"
     },
     "MONGO": {
         "url": "mongodb://@127.0.0.1:27017/otf_demo",
@@ -35,7 +35,7 @@
         "host": "127.0.0.1"
     },
     "CLUSTER": {
-        "mode": "OFF",
+        "mode": "ON",
         "nb_cpu": "3"
     }
 }
