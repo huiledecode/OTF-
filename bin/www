@@ -4,7 +4,8 @@
 // Stef && Eric 03/05          //
 // Enable OTF² CLUSTER        //
 //-----------------------------//
-
+//-- LOGO OTF
+require('../otf/lib/otf_logo').loadOtfLogo(__dirname + '/../public/img/OTF_semigraphic.txt');
 //-- Configuration :  des ANNUAIRES GLOBALS
 require('../otf/lib/otf_globals');
 

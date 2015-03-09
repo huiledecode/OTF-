@@ -22,7 +22,7 @@ module.exports = {
             directory_schema = JSON.parse(fs.readFileSync(directory.schema, 'utf8'));
             //logger.debug("OTF² Load Schema [%s]", util.inspect(directory_schema));
         } catch (err) {
-            logger.debug("OTF² Load Schema File ERROR mess [%s] ", util.inspect(err.message));
+            logger.error("OTF² Load Schema File ERROR mess [%s] ", util.inspect(err.message));
         }
         // Tableaux
         try {
