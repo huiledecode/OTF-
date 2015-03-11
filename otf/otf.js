@@ -218,6 +218,7 @@ function otfAction(req, res, next) {// attention il ne
             req.session.controler = controler;
             //beans.params, beans.path, beans.data_model, beans.schema, beans.room
             controler.action(req, function (errBean, result) {
+                var t1 = new Date().getMilliseconds();
                 // handling exception
                 //-- @TODO Faire une gestion des exceptions plus fine !!
                 if (errBean)
@@ -237,8 +238,11 @@ function otfAction(req, res, next) {// attention il ne
                     res.end();
                 }
 
-                else
-                    res.render(req.session.controler.screen, result);
+                else {
+                  var t2 = new Date().getMilliseconds();
+                  logger.info('controler.action callback TIME(ms) : ' + (t2-t1) + ' ms');
+                  res.render(req.session.controler.screen, result);
+                }
             });
         }
     });
