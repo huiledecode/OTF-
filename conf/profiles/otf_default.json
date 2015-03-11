@@ -36,11 +36,10 @@
     },
     "GET/logs": {
         "module": "finder",
-        "methode": "populate",
+        "methode": "list",
         "screen": "log_list",
         "auth": false,
         "params_names": [],
-        "data_model": "Logs",
-        "data_ref": "user_id"
+        "data_model": "Logs"
     }
 }
