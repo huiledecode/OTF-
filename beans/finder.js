@@ -15,6 +15,7 @@ var genericModel = require('../otf/lib/otf_mongooseGeneric');
 
 exports.finder = {
     list: function (req, cb) {
+        var t1 = new Date().getMilliseconds();
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
             error = new Error('req.session undefined');
@@ -39,6 +40,8 @@ exports.finder = {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocuments({}, function (err, list_users) {
                 logger.debug('liste des utilisateurs :', JSON.stringify(list_users));
+                var t2 = new Date().getMilliseconds();
+                logger.info('into Finder.list before return cb TIME (ms) : ' + (t2-t1) + 'ms');
                 return cb(null, {result: list_users, "state": state || "TEST", room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
