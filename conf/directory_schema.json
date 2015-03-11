@@ -17,7 +17,7 @@
             "profile": []
         }
     },
-    "Logs": {
+    "LogsAccounts": {
         "collection": "logs",
         "schema": {
             "date": "String",
@@ -31,6 +31,16 @@
             }
 
         }
+    },
+    "Logs": {
+      "collection": "logs",
+      "schema": {
+        "date": "String",
+        "event": "String",
+        "message": "String",
+        "ip": "String",
+        "session": "String"
+      }
     }
 
 }
