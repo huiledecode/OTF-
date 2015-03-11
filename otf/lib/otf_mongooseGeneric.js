@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var paginate = require("mongoose-pages");
+var logger = require('log4js').getLogger('otf_mongooseGeneric');
+//logger.setLevel(GLOBAL.config["LOGS"].level);
 
 //- var schema = new mongoose.Schema({ name: 'string', size: 'string' });
 //- var Tank = mongoose.model('Tank', schema);
@@ -36,13 +38,15 @@ mongooseGeneric.prototype.getDocument = function (_condition, _callback) {
 };
 
 mongooseGeneric.prototype.getDocuments = function (_condition, _callback) {
-
+    var t1 = new Date().getMilliseconds();
     this.document.find(_condition, function (err, result) {
         if (err) {
             _callback(err, null);
         }
         else {
-            _callback(null, result);
+            var t2 = new Date().getMilliseconds();
+          logger.info('Into mongooseGeneric.getDocuments TIME : ' + (t2-t1) + ' ms');
+          _callback(null, result);
         }
     });
 };
