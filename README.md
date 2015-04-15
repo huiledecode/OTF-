@@ -10,7 +10,7 @@ Also, OTF² has some generic modules to produce specific actions : writing / rea
 
 You need to install Node.js, npm, mongoDB and Redis to use OTF², on Ubuntu 14.04 you just need to make :
 
-<pre><code>$ sudo apt-get install nodejs npm mongodb redis</code></pre>
+<pre><code>$ sudo apt-get install nodejs npm mongodb redis-server</code></pre>
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
