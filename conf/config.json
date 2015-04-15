@@ -36,7 +36,7 @@
         "host": "127.0.0.1"
     },
     "CLUSTER": {
-        "mode": "ON",
+        "mode": "OFF",
         "nb_cpu": "3"
     }
 }
