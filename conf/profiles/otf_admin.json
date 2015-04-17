@@ -136,5 +136,13 @@
         "methode": "getData",
         "screen": "glancesviewtab",
         "auth": true
+    },
+    "GET/listmulti" : {
+        "module": "finder",
+        "methode": "listMultiSchemas",
+        "screen": "resultmultischema",
+        "auth": true,
+        "params_names": [],
+        "data_model": ["Accounts", "Logs"]
     }
 }

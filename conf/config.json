@@ -10,7 +10,7 @@
         "path": "/../../conf/log4js.json",
         "reload": "300",
         "mongodb": "localhost:27017/log",
-        "level": "INFO"
+        "level": "DEBUG"
     },
     "MONGO": {
         "url": "mongodb://@127.0.0.1:27017/otf_demo",
