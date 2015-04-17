@@ -76,6 +76,7 @@ exports.finder = {
             logger.error(err);
         }
     },
+
     populate: function (req, cb) {
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
@@ -103,6 +104,7 @@ exports.finder = {
             logger.error(err);
         }
     },
+
     listMultiSchemas : function(req, cb) {
         var t1 = new Date().getMilliseconds();
         // Input security Controle
@@ -123,7 +125,7 @@ exports.finder = {
         var result={};
         try {
             var listSchemas = _controler.data_model;
-            function getDocsMultiSchemas(i) {
+            function getDocsMultiSchemas(i, cbk) {
                 if (i<listSchemas.length) {
                     var model = GLOBAL.schemas[listSchemas[i]];
                     model.getDocuments({}, function(err, list_datas) {
@@ -137,31 +139,16 @@ exports.finder = {
                             result[listSchemas[i]] = list_datas;
                             logger.debug('affiche result pour i=' + i + '   : ', result);
                             // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
-                            getDocsMultiSchemas(i+1);
+                            getDocsMultiSchemas(i+1, cbk);
                         }
                     });
+                } else {
+                    cbk();
                 }
             }
-            getDocsMultiSchemas(0);
-            return cb(null, {result: result, "state": state || "TEST", room: _controler.room});
-                /*
-                 var filenames = [...]
-
-                 function uploader(i) {
-                   if( i < filenames.length ) {
-                     upload( filenames[i], function(err) {
-                       if( err ) {
-                         console.log('error: '+err)
-                       }
-                       else {
-                         uploader(i+1)
-                       }
-                    })
-                   }
-                 }
-                 uploader(0)
-                */
-
+            getDocsMultiSchemas(0, function () {
+                return cb(null, {result: result, "state": state || "TEST", room: _controler.room});
+            });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
         }
