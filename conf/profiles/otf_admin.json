@@ -139,7 +139,7 @@
     },
     "GET/listmulti" : {
         "module": "finder",
-        "methode": "listMultiSchemas",
+        "methode": "listMultiSchemasAsync",
         "screen": "resultmultischema",
         "auth": true,
         "params_names": [],
