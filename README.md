@@ -55,7 +55,7 @@ Mon Apr 27 10:33:17.163 	going into namespace [otf_demo.log]
 Mon Apr 27 10:33:17.164 	Creating index: { key: { _id: 1 }, ns: "otf_demo.log", name: "_id_" }
 </code>
 
-Create log directory
+<b>Create log directory</b>
 
 Go back to the OTF's root directory.
 <pre><code>$ cd otf</code></pre>
@@ -73,15 +73,15 @@ Get all the dependancies by npm :
 
 Wait a moment for dependancies
 
-Before launching OTF²,
-Create « /data/db/ » on your system.
+Before launching OTF²,</br>
+Create « /data/db/ » on the system's root.
 
-In root mode
+In sudoer mode
 <pre><code>$ sudo -s</code></pre>
 <pre><code># mkdir data</code></pre>
 <pre><code># mkdir db</code></pre>
 
-In new Terminal, you need to install mongoDB and start it with a ReplicatSet :
+You need to install mongoDB and start it with a ReplicatSet :
 <pre><code>$ sudo mongod --replSet otf_demo</code></pre>
 
 Into mongo shell you need to configure replicatSet like this :
@@ -104,10 +104,10 @@ Change the db
 
 <pre><code>> exit</code></pre>
 
-Start "redis-serveur" in 'sudo' mode
+
+In new Terminal, Start "redis-serveur" in 'sudo' mode
 
 Go back to the OTF's root directory.
-
 <pre><code>/otf$ sudo redis-server</code></pre>
 Stand "redis-server" start into the Terminal.
 
