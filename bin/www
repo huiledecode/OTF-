@@ -5,9 +5,9 @@
 // Enable OTF² CLUSTER        //
 //-----------------------------//
 //-- LOGO OTF
-require('../otf/lib/otf_logo').loadOtfLogo(__dirname + '/../public/img/OTF_semigraphic.txt');
+require('../otf_core/lib/otf_logo').loadOtfLogo(__dirname + '/../public/img/OTF_semigraphic.txt');
 //-- Configuration :  des ANNUAIRES GLOBALS
-require('../otf/lib/otf_globals');
+require('../otf_core/lib/otf_globals');
 
 // -- Configuration : LOGGER
 var log4js = require('log4js');
@@ -23,7 +23,7 @@ if (GLOBAL.config["ENV"].modes === 'DEBUG')
 
 //-- SWITCH CLUSTER OR SINGLE
 if (GLOBAL.config["CLUSTER"].mode != 'undefined' && GLOBAL.config["CLUSTER"].mode == "ON")
-    require('../otf/lib/otf_cluster');
+    require('../otf_core/lib/otf_cluster');
 else
     run();
 

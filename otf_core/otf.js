@@ -239,9 +239,9 @@ function otfAction(req, res, next) {// attention il ne
                 }
 
                 else {
-                  var t2 = new Date().getMilliseconds();
-                  logger.info('controler.action callback TIME(ms) : ' + (t2-t1) + ' ms');
-                  res.render(req.session.controler.screen, result);
+                    var t2 = new Date().getMilliseconds();
+                    logger.info('controler.action callback TIME(ms) : ' + (t2 - t1) + ' ms');
+                    res.render(req.session.controler.screen, result);
                 }
             });
         }
