@@ -5,14 +5,14 @@
         },
         {
             "type": "file",
-            "filename": "log/otf.log",
+            "filename": "log/otf_core.log",
             "maxLogSize": 524288,
             "numBackups": 3
         },
         {
             "type": "file",
             "filename": "log/otf_ccs.log",
-            "category": "otf"
+            "category": "otf_core"
         }
     ]
 }
