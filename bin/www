@@ -23,7 +23,7 @@ if (GLOBAL.config["ENV"].modes === 'DEBUG')
 
 //-- SWITCH CLUSTER OR SINGLE
 if (GLOBAL.config["CLUSTER"].mode != 'undefined' && GLOBAL.config["CLUSTER"].mode == "ON")
-    require('./lib/otf_cluster');
+    require('../otf_core/lib/otf_cluster');
 else
     run();
 
