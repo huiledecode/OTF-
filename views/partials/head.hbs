@@ -1,24 +1,33 @@
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Le premier template boostrap pour le framework OTF, produit par huile de code">
-    <meta name="keywords" content="OTF, template, bootstrap, HdC, Huile de code">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>OTF bootstrap template HdC</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="keywords" content="OTF, on the fly, nodeJS, web socket, template, bootstrap, HdC, Huile de code">
+    <meta name="content="Huile de Code SARL">
+	<meta name="generator" content="Otf Framework">
+    <title>On the fly framework real time by HdC</title>
+	<link rel="icon" type="image/png" href="/favicon/favicon.ico">
+	<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="/favicon/favicon.ico" /><![endif]-->
+	
+	<!-- CSS, Bootstrap and Font-Awesome -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/custom_css/font-awesome-4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/custom_css/style.css">
     <!-- Page-Level Plugin CSS - Tables -->
-    <link rel="stylesheet" href="../stylesheets/plugins/dataTables/dataTables.bootstrap.css" >
-    <style>
-        body {
-            padding-top: 60px;
-        }
-    </style>
-    <!-- webSocket via socket.io -->
+    <link rel="stylesheet" href="/custom_css/plugins/dataTables/dataTables.bootstrap.css">
+    
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+	<!-- webSocket via socket.io -->
     <script src="/socket.io/socket.io.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <!--if lt IE 9-->
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <!-- HDC JS -->
     <script src="/javascripts/cnx_socket.js"></script>
     <script src="/javascripts/user_socket.js"></script>
@@ -28,6 +37,4 @@
     <script src="javascripts/otf_dataTable.js"></script>
     <script src="javascripts/otf_forms.js"></script>
     <script src="javascripts/gauge.min.js"></script>
-
-
 </head>

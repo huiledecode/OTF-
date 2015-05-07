@@ -1,10 +1,10 @@
 {{#content "head"}}
     {{> head}}
 {{/content}}
-{{#content "header"}}
-    {{> header}}
+{{#content "nav"}}
+    {{> nav}}
 {{/content}}
-{{#content "body"}}
+{{#content "page"}}
     <script type="text/javascript">
         function readURL(input) {
         if (input.files && input.files[0]) {
@@ -27,6 +27,8 @@
         $("#x").show().css("margin-right","10px");
     }
 </script>
+	<!-- Page Content -->
+    <div class="container-fluid">
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -80,7 +82,8 @@
         </div>
     </div>
 </div>
-    {{#content "footer"}}
-        {{> footer}}
-    {{/content}}
+</div><!-- /Page Content -->
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
 {{/content}}

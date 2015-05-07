@@ -1,10 +1,11 @@
 {{#content "head"}}
     {{> head}}
 {{/content}}
-{{#content "header"}}
-    {{> header}}
+{{#content "nav"}}
+    {{> nav}}
 {{/content}}
-{{#content "body"}}
+{{#content "page"}}
+	<!-- Page Content -->
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -30,7 +31,7 @@
             </div>
         </div>
     </div>
-    {{#content "footer"}}
-        {{> footer}}
-    {{/content}}
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
 {{/content}}

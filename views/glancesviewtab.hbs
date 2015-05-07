@@ -1,11 +1,10 @@
 {{#content "head"}}
     {{> head}}
-    <meta http-equiv="refresh" content="200">
 {{/content}}
-{{#content "header"}}
-    {{> header}}
+{{#content "nav"}}
+    {{> nav}}
 {{/content}}
-{{#content "body"}}
+{{#content "page"}}
 
     <!-- Javascript d'initialisation d'un datatable jquery bootstrapisÃ© -->
     <script>
@@ -105,7 +104,7 @@
 
 
     </script>
-
+	<!-- Page Content -->
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="col-xs-12 col-sm-12 col-md-2">
@@ -228,9 +227,9 @@
     </div>
 
 
-    </div>
-
-    {{#content "footer"}}
-        {{> footer}}
-    {{/content}}
+    </div><!-- /Page Content -->
 {{/content}}
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}
+
