@@ -7,6 +7,7 @@ var loader = require(__dirname + '/otf_schema_loader');
 var conf = __dirname + '/../../conf/config.json';
 var schema = __dirname + '/../../conf/directory_schema.json';
 var profiles = __dirname + '/../../conf/profiles';
+var profileWS = __dirname + '../../conf/profilesWS'
 //
 var chokidar = require("chokidar");
 var watcher;
@@ -15,7 +16,7 @@ var log4js = require('log4js');
 var log;
 var logMongo;
 //
-var conf_loader = {config: conf, schema: schema, profile: profiles};
+var conf_loader = {config: conf, schema: schema, profile: profiles, profilews : profileWS};
 //
 //
 console.log("\n>>> OTF² Try to load file configuration ... \n[%s]\n", util.inspect(conf_loader));
