@@ -271,8 +271,10 @@ setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
 # Bootstrap's Interface
 
 OTF use bootstrap interface. The default Components are located into /public/
+
 If you want <b>to customise the Front-End</b>, use the "custom_css" directory, and "style.css" file.
-For add a new css file link into "head", please use /views/partials/head.hbs file.
+
+For add a new css file's link into "head" document, please use /views/partials/head.hbs file.
 
 (to be continued...)
 
