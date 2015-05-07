@@ -152,30 +152,5 @@
         "auth": true,
         "params_names": [],
         "data_model": ["Accounts", "Logs"]
-    },
-    "GET/servers" : {
-        "module": "finder",
-        "methode": "list",
-        "screen": "servers_list",
-        "auth": true,
-        "params_names": [],
-        "data_model": "Servers"
-    },
-    "GET/addserver" : {
-        "module": "inserter",
-        "methode": "one",
-        "screen": "servers",
-        "auth": true,
-        "params_names": ["ip", "nom", "system"],
-        "data_model": "Servers",
-        "redirect": true
-    },
-    "GET/updateserver": {
-        "module": "finder",
-        "methode": "one",
-        "screen": "formupdate_server",
-        "auth": true,
-        "params_names": ["_id"],
-        "data_model": "Servers"
     }
 }
