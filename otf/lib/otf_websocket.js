@@ -91,6 +91,13 @@ module.exports = function (sessionStore, secret, cookieName) {
         log.debug("OTF² WS connection Room n° : " + socket.handshake.sessionid);
 
     });
+  //--
+  // this event is generic to answer of client requests over websocket
+  // structure of data could be : data : {pathname : '/actionName', data : {...what you want .. }}
+    sio.on('action', function(data) {
+      var pathname = data.pathname ;
+
+    });
 
 
 };
