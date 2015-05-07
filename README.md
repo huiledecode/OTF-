@@ -28,7 +28,7 @@ And go into dump directory :
 Restore database MongoDB like this :
 
 <pre><code>$ mongorestore ./otf_demo</code></pre>
-<i>You should have this result :</i>
+<i>You should have this result in your Terminal:</i>
 <code>connected to: 127.0.0.1
 Mon Apr 27 10:33:17.133 ./otf_demo/logs.bson
 Mon Apr 27 10:33:17.133 	going into namespace [otf_demo.logs]
@@ -56,16 +56,15 @@ Mon Apr 27 10:33:17.164 	Creating index: { key: { _id: 1 }, ns: "otf_demo.log", 
 </code>
 
 <b>Create log directory</b>
-
 Go back to the OTF's root directory.
 <pre><code>$ cd otf</code></pre>
 <pre><code>$ mkdir log</code></pre>
 
 # Quick Start
 
-Open a terminal, go into directory "otf" :
+Open a terminal, Go back to the OTF's root directory. :
 
-<pre><code>$ cd otf</code></pre>
+<pre><code>$ cd otf_core</code></pre>
 
 Get all the dependancies by npm :
 
@@ -74,7 +73,7 @@ Get all the dependancies by npm :
 Wait a moment for dependancies
 
 Before launching OTF²,</br>
-Create « /data/db/ » on the system's root.
+Create « /data/db/ » on your system's root.
 
 In sudoer mode
 <pre><code>$ sudo -s</code></pre>
@@ -269,6 +268,11 @@ setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
 * The second parameter is a String which defined the pathname of modification's action,
 * The third parameter is a String which defined the pathname of delete's action, it is using the first column to get the Id of the row sent to delete.
  
+# Bootstrap's Interface
+
+OTF use bootstrap interface. The default Components are located into /public/
+If you want <b>to customise the Front-End</b>, use the "custom_css" directory, and "style.css" file.
+For add a new css file link into "head", please use /views/partials/head.hbs file.
 
 (to be continued...)
 
