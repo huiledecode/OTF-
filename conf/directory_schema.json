@@ -8,6 +8,7 @@
         }
 
     },
+
     "AccountId": {
         "collection": "accounts",
         "schema": {
@@ -17,6 +18,7 @@
             "profile": []
         }
     },
+
     "LogsAccounts": {
         "collection": "logs",
         "schema": {
@@ -32,6 +34,7 @@
 
         }
     },
+
     "Logs": {
       "collection": "logs",
       "schema": {
@@ -40,6 +43,15 @@
         "message": "String",
         "ip": "String",
         "session": "String"
+      }
+    },
+
+    "Servers" : {
+        "collection": "servers",
+      "schema": {
+        "ip": "String",
+        "nom": "String",
+        "system": "String"
       }
     }
 
