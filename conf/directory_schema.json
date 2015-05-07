@@ -8,7 +8,6 @@
         }
 
     },
-
     "AccountId": {
         "collection": "accounts",
         "schema": {
@@ -18,7 +17,6 @@
             "profile": []
         }
     },
-
     "LogsAccounts": {
         "collection": "logs",
         "schema": {
@@ -34,7 +32,6 @@
 
         }
     },
-
     "Logs": {
       "collection": "logs",
       "schema": {
@@ -45,7 +42,6 @@
         "session": "String"
       }
     },
-
     "Servers" : {
         "collection": "servers",
       "schema": {
