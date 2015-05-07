@@ -31,7 +31,7 @@ function otf(app, sessionStore) {
     router.use(logHttpRequest);// -- LogHttpREquest
 // -- Perform OTF Automate action
     router.use(otfAction);
-//-- Error Handler if otf throw error
+//-- Error Handler if otf_core throw error
     router.use(errorHandler);
     //
     appContext.use('/', router);
@@ -310,7 +310,7 @@ function uploadFile(req, filteredQuery, cb) {
                 // ici fichier non modifié
                 filteredQuery['file_name'] = 'none';
             }
-            // -- set session otf beans
+            // -- set session otf_core beans
             return cb(null);
         });
 

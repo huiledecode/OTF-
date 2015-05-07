@@ -23,7 +23,7 @@ var app = express();
 //var app;
 //--
 // view engine setup
-require('./otf/lib/otf_viewer')(app);
+require('./otf_core/lib/otf_viewer')(app);
 //--
 // favicon
 app.use(favicon(__dirname + '/public/favicon/favicon.ico'));
@@ -42,19 +42,19 @@ app.use(bodyParser.urlencoded());
 app.use(express.static(path.join(__dirname, 'public')));
 //--
 // Managment Session Store
-var sessionStore = require('./otf/lib/otf_session')(app, secret, cookie_name);
+var sessionStore = require('./otf_core/lib/otf_session')(app, secret, cookie_name);
 //--
 // OPOLOG PLUBISH/SUBCRIBE WEBSOCKET FRAMEWORK
-require('./otf/lib/otf_oplog')(sessionStore);
+require('./otf_core/lib/otf_oplog')(sessionStore);
 //--
 // Authentification Managment by Passport
-require('./otf/lib/otf_passport')(app);
+require('./otf_core/lib/otf_passport')(app);
 //--
 // Routes Managment by Otf Framework
-require('./otf/otf')(app, sessionStore);
+require('./otf_core/otf')(app, sessionStore);
 //--
 //WebSocket Managment
-require('./otf/lib/otf_websocket')(sessionStore, secret, cookie_name);
+require('./otf_core/lib/otf_websocket')(sessionStore, secret, cookie_name);
 //--
 //-- TEST PASSAGE CONTEXT APPLICATIF
 app.locals.test = 'OTF localsValue';

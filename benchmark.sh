@@ -14,7 +14,7 @@ url="http://127.0.0.1:3000/logs"
 post_file_data="post_data"
 path_result="."
 prefix_file="otf-cluster-concurent"
-#prefix_file="otf-single-concurent"
+#prefix_file="otf_core-single-concurent"
 
 for c in "${concurrency[@]}"
 do

@@ -6,17 +6,17 @@ Modules are loaded dynamically by otf.js, they are defined into a "flight plan" 
 
 Also, OTF² has some generic modules to produce specific actions : writing / reading / deleting / updating  mongoDB collection, files uploading, signup account, demo application.
 
-# Prerequisites
+# Pre-requisites
 
-You need to install Node.js, npm, mongoDB and Redis to use OTF², on Ubuntu 14.04 you just need to make :
+You need to install Node.js, npm, mongoDB and Redis to use OTF². For example, on Ubuntu 14.04 you just need to make :
 
-<pre><code>$ sudo apt-get install nodejs npm mongodb redis-server</code></pre>
+<pre><code>$ sudo apt-get install nodejs npm mongodb redis-server build-essential python2.7 nodejs-legacy</code></pre>
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
 <pre><code>$ git clone https://github.com/huiledecode/OTF-.git</code></pre>
 
-change the current directory to name "otf" :
+Change the current directory to name "otf" :
 
 <pre><code>$ mv OTF- otf</code></pre>
 <pre><code>$ cd otf</code></pre>
@@ -28,17 +28,43 @@ And go into dump directory :
 Restore database MongoDB like this :
 
 <pre><code>$ mongorestore ./otf_demo</code></pre>
+<i>You should have this result in your Terminal:</i>
+<code>connected to: 127.0.0.1
+Mon Apr 27 10:33:17.133 ./otf_demo/logs.bson
+Mon Apr 27 10:33:17.133 	going into namespace [otf_demo.logs]
+262 objects found
+Mon Apr 27 10:33:17.135 	Creating index: { key: { _id: 1 }, ns: "otf_demo.logs", name: "_id_" }
+Mon Apr 27 10:33:17.154 ./otf_demo/users.bson
+Mon Apr 27 10:33:17.154 	going into namespace [otf_demo.users]
+Mon Apr 27 10:33:17.157 	Created collection otf_demo.users with options: { "create" : "users", "autoIndexId" : true, "size" : 0, "capped" : false, "max" : 0, "strict" : true }
+2 objects found
+Mon Apr 27 10:33:17.157 	Creating index: { key: { _id: 1 }, ns: "otf_demo.users", name: "_id_" }
+Mon Apr 27 10:33:17.158 ./otf_demo/accounts.bson
+Mon Apr 27 10:33:17.158 	going into namespace [otf_demo.accounts]
+Mon Apr 27 10:33:17.160 	Created collection otf_demo.accounts with options: { "create" : "accounts", "autoIndexId" : true, "size" : 0, "capped" : false, "max" : 0, "strict" : true }
+1 objects found
+Mon Apr 27 10:33:17.160 	Creating index: { key: { _id: 1 }, ns: "otf_demo.accounts", name: "_id_" }
+Mon Apr 27 10:33:17.160 ./otf_demo/accountsuuid.bson
+Mon Apr 27 10:33:17.160 	going into namespace [otf_demo.accountsuuid]
+Mon Apr 27 10:33:17.162 	Created collection otf_demo.accountsuuid with options: { "create" : "accountsuuid", "autoIndexId" : true, "size" : 0, "capped" : false, "max" : 0, "strict" : true }
+1 objects found
+Mon Apr 27 10:33:17.162 	Creating index: { key: { _id: 1 }, ns: "otf_demo.accountsuuid", name: "_id_" }
+Mon Apr 27 10:33:17.163 ./otf_demo/log.bson
+Mon Apr 27 10:33:17.163 	going into namespace [otf_demo.log]
+40 objects found
+Mon Apr 27 10:33:17.164 	Creating index: { key: { _id: 1 }, ns: "otf_demo.log", name: "_id_" }
+</code>
 
-Create log directory
-
+<b>Create log directory</b>
+Go back to the OTF's root directory.
 <pre><code>$ cd otf</code></pre>
 <pre><code>$ mkdir log</code></pre>
 
 # Quick Start
 
-Open a terminal, go into directory "otf" :
+Open a terminal, Go back to the OTF's root directory. :
 
-<pre><code>$ cd otf</code></pre>
+<pre><code>$ cd otf_core</code></pre>
 
 Get all the dependancies by npm :
 
@@ -46,12 +72,43 @@ Get all the dependancies by npm :
 
 Wait a moment for dependancies
 
-Before launching OTF², you need to install mongoDB and start it with a ReplicatSet :
-<pre><code>$ mongod --replSet otf_demo</code></pre>
+Before launching OTF²,</br>
+Create « /data/db/ » on your system's root.
+
+In sudoer mode
+<pre><code>$ sudo -s</code></pre>
+<pre><code># mkdir data</code></pre>
+<pre><code># mkdir db</code></pre>
+
+You need to install mongoDB and start it with a ReplicatSet :
+<pre><code>$ sudo mongod --replSet otf_demo</code></pre>
 
 Into mongo shell you need to configure replicatSet like this :
+
+Open Mongo DB
+<pre><code>$ mongo</code></pre>
+<blockquote>MongoDB shell version: 2.4.9</blockquote>
+<blockquote>connecting to: test</blockquote>
+Change the db 
+<pre><code>> use otf_demo</code></pre>
+
 <pre><code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code></pre>
 <pre><code>>rs.initiate(config)</code></pre>
+<i>You should have this result :</i>
+<code>
+{
+	"info" : "Config now saved locally.  Should come online in about a minute.",
+	"ok" : 1
+}</code>
+
+<pre><code>> exit</code></pre>
+
+
+In new Terminal, Start "redis-serveur" in 'sudo' mode
+
+Go back to the OTF's root directory.
+<pre><code>/otf$ sudo redis-server</code></pre>
+Stand "redis-server" start into the Terminal.
 
 Now in the otf directory you can start the demo application :
 <pre><code>$ ./start.sh</code></pre>
@@ -211,6 +268,13 @@ setDataTable({{{json result}}}, "/updateuser", "/deleteuser");
 * The second parameter is a String which defined the pathname of modification's action,
 * The third parameter is a String which defined the pathname of delete's action, it is using the first column to get the Id of the row sent to delete.
  
+# Bootstrap's Interface
+
+OTF use bootstrap interface. The default Components are located into /public/
+
+If you want <b>to customise the Front-End</b>, use the "custom_css" directory, and "style.css" file.
+
+For add a new css file's link into "head" document, please use /views/partials/head.hbs file.
 
 (to be continued...)
 
