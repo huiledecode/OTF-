@@ -7,7 +7,7 @@
 var logger = require('log4js').getLogger('updater');
 logger.setLevel(GLOBAL.config["LOGS"].level);
 var mongoose = require('mongoose');
-var genericModel = require('../otf/lib/otf_mongooseGeneric');
+var genericModel = require('../otf_core/lib/otf_mongooseGeneric');
 
 /*
  * SET users datas into MongoDB.

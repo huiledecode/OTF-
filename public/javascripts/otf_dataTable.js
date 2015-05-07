@@ -15,7 +15,7 @@ function setDataTable(datas, idmonitor, dblclick_action, suppr_action) {
   var clicked = false;
   var listIdSelected = "";
   var oldThis;
-  var objectStruct = Object.getOwnPropertyNames(datas[datas.length - 1]);
+  var objectStruct = Object.getOwnPropertyNames(datas[datas.length - 1]).sort();
 //var objectStruct = Object.keys(datas[datas.length - 1]).sort();
   console.log('---->> datas[0]', objectStruct);
   var tabJsonClient = new Array();
