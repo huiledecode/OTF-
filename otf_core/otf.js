@@ -256,8 +256,7 @@ function otfAction(req, res, next) {// attention il ne
 function errorHandler(err, req, res, next) {
     var status = err.status || '500';
     logger.error(
-            "OTF² Error Handler Http Status Code " + status + " Error cause by : [%s]",
-        err.message);
+            "OTF² Error Handler Http Status Code " + status + " Error cause by : [%s]", err.message);
     res.status(status);
     var ret = {title: err.title, status: status, message: err.message};
     res.render('501', ret);
