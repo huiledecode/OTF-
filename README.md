@@ -73,7 +73,7 @@ Get all the dependancies by npm :
 Wait a moment for dependancies
 
 Before launching OTF²,</br>
-Create « /data/db/ » on your system's root.
+Create « /data/db/ » folder , on your system's root.
 
 In sudoer mode
 <pre><code>$ sudo -s</code></pre>
