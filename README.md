@@ -104,7 +104,7 @@ Change the db
 <pre><code>> exit</code></pre>
 
 
-In new Terminal, Start "redis-serveur" in 'sudo' mode
+In new Terminal, Start "redis-server" in 'sudo' mode
 
 Go back to the OTF's root directory.
 <pre><code>/otf$ sudo redis-server</code></pre>
