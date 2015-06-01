@@ -29,7 +29,7 @@ Restore database MongoDB like this :
 
 <pre><code>$ mongorestore ./otf_demo</code></pre>
 <i>You should have this result in your Terminal:</i>
-<code>connected to: 127.0.0.1
+<code><pre>connected to: 127.0.0.1
 Mon Apr 27 10:33:17.133 ./otf_demo/logs.bson
 Mon Apr 27 10:33:17.133 	going into namespace [otf_demo.logs]
 262 objects found
@@ -53,7 +53,7 @@ Mon Apr 27 10:33:17.163 ./otf_demo/log.bson
 Mon Apr 27 10:33:17.163 	going into namespace [otf_demo.log]
 40 objects found
 Mon Apr 27 10:33:17.164 	Creating index: { key: { _id: 1 }, ns: "otf_demo.log", name: "_id_" }
-</code>
+</pre></code>
 
 <b>Create log directory</b>
 Go back to the OTF's root directory.
@@ -77,8 +77,8 @@ Create « /data/db/ » folder , on your system's root.
 
 In sudoer mode
 <pre><code>$ sudo -s</code></pre>
-<pre><code># mkdir data</code></pre>
-<pre><code># mkdir db</code></pre>
+<pre><code># mkdir /data</code></pre>
+<pre><code># mkdir /data/db</code></pre>
 
 You need to install mongoDB and start it with a ReplicatSet :
 <pre><code>$ sudo mongod --replSet otf_demo</code></pre>
