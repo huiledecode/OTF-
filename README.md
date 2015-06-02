@@ -12,6 +12,12 @@ You need to install Node.js, npm, mongoDB and Redis to use OTF². For example, o
 
 <pre><code>$ sudo apt-get install nodejs npm mongodb redis-server build-essential python2.7 nodejs-legacy</code></pre>
 
+Create « /data/db/ » folder , on your system's root.(cd /)
+In sudoer mode
+<pre><code>$ sudo -s</code></pre>
+<pre><code># mkdir /data</code></pre>
+<pre><code># mkdir /data/db</code></pre>
+
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
 <pre><code>$ git clone https://github.com/huiledecode/OTF-.git</code></pre>
@@ -73,14 +79,9 @@ Get all the dependancies by npm :
 Wait a moment for dependancies
 
 Before launching OTF²,</br>
-Create « /data/db/ » folder , on your system's root.
 
-In sudoer mode
-<pre><code>$ sudo -s</code></pre>
-<pre><code># mkdir /data</code></pre>
-<pre><code># mkdir /data/db</code></pre>
-
-You need to install mongoDB and start it with a ReplicatSet :
+You need to install mongoDB and start it with a ReplicatSet , 
+1st, go to  /data/db folder
 <pre><code>$ sudo mongod --replSet otf_demo</code></pre>
 
 Into mongo shell you need to configure replicatSet like this :
