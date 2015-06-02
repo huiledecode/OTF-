@@ -16,7 +16,8 @@ Create « /data/db/ » folder , on your system's root.(cd /)
 In sudoer mode
 <pre><code>$ sudo -s</code></pre>
 <pre><code># mkdir /data</code></pre>
-<pre><code># mkdir /data/db</code></pre>
+<pre><code># cd /data</code></pre>
+<pre><code># mkdir /db</code></pre>
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
@@ -33,7 +34,7 @@ You need to start mongoDB with a ReplicatSet,
 <pre><code>$ sudo mongod --replSet otf_demo</code></pre>
 
 
-And go into dump directory :
+And return into dump directory :
 
 <pre><code>$ cd dump</code></pre>
 
