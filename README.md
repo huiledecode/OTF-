@@ -12,7 +12,7 @@ You need to install Node.js, npm, mongoDB and Redis to use OTF². For example, o
 
 <pre><code>$ sudo apt-get install nodejs npm mongodb redis-server build-essential python2.7 nodejs-legacy</code></pre>
 
-Create « /data/db/ » folder , on your system's root.(cd /)
+Create « /data/db/ » folder , on your system's root. (cd /)
 In sudoer mode
 <pre><code>$ sudo -s</code></pre>
 <pre><code># mkdir /data</code></pre>
@@ -30,11 +30,11 @@ Change the current directory to name "otf" :
 
 You need to start mongoDB with a ReplicatSet,
 
-1st, go to  /data/db folder
-<pre><code>$ sudo mongod --replSet otf_demo</code></pre>
+1st, in a new Terminal, go to  /data/db folder
+2sd : <pre><code>$ sudo mongod --replSet otf_demo</code></pre>
+3rd : close this news terminal.
 
-
-And return into dump directory :
+And return into dump directory (cd /workspace/otf/) :
 
 <pre><code>$ cd dump</code></pre>
 
