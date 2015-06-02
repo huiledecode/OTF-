@@ -27,6 +27,12 @@ Change the current directory to name "otf" :
 <pre><code>$ mv OTF- otf</code></pre>
 <pre><code>$ cd otf</code></pre>
 
+You need to start mongoDB with a ReplicatSet,
+
+1st, go to  /data/db folder
+<pre><code>$ sudo mongod --replSet otf_demo</code></pre>
+
+
 And go into dump directory :
 
 <pre><code>$ cd dump</code></pre>
@@ -79,10 +85,6 @@ Get all the dependancies by npm :
 Wait a moment for dependancies
 
 Before launching OTF²,</br>
-
-You need to install mongoDB and start it with a ReplicatSet , 
-1st, go to  /data/db folder
-<pre><code>$ sudo mongod --replSet otf_demo</code></pre>
 
 Into mongo shell you need to configure replicatSet like this :
 
