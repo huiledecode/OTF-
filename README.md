@@ -31,8 +31,8 @@ Change the current directory to name "otf" :
 You need to start mongoDB with a ReplicatSet,
 
 1st, in a new Terminal, go to  /data/db folder
-2sd : <pre><code>$ sudo mongod --replSet otf_demo</code></pre>
-3rd : close this news terminal.
+<pre><code>$ sudo mongod --replSet otf_demo</code></pre>
+2sd : close this news terminal.
 
 And return into dump directory (cd /workspace/otf/) :
 
