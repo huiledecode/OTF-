@@ -70,7 +70,7 @@ Mon Apr 27 10:33:17.164 	Creating index: { key: { _id: 1 }, ns: "otf_demo.log", 
 
 <b>Create log directory</b>
 Go back to the OTF's root directory.
-<pre><code>$ cd otf</code></pre>
+<pre><code>$ cd ..</code></pre>
 <pre><code>$ mkdir log</code></pre>
 
 # Quick Start
