@@ -10,7 +10,15 @@ Also, OTF² has some generic modules to produce specific actions : writing / rea
 
 You need to install Node.js, npm, mongoDB and Redis to use OTF². For example, on Ubuntu 14.04 you just need to make :
 
-<pre><code>$ sudo apt-get install nodejs npm mongodb redis-server build-essential python2.7 nodejs-legacy</code></pre>
+<pre><code>$ sudo apt-get install nodejs npm redis-server build-essential python2.7 nodejs-legacy</code></pre>
+
+And you to install mongoDB v2.4.14 :
+
+<pre><code>$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10</code></pre>
+<pre><code>$ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list</code></pre>
+<pre><code>$ sudo apt-get update</code></pre>
+<pre><code>$ sudo apt-get install mongodb-10gen</code></pre>
+<pre><code>$ apt-get install mongodb-10gen=2.4.14</code></pre>
 
 Create « /data/db/ » folder , on your system's root. (cd /)
 In sudoer mode
