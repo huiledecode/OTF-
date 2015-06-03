@@ -16,8 +16,7 @@ Create « /data/db/ » folder , on your system's root. (cd /)
 In sudoer mode
 <pre><code>$ sudo -s</code></pre>
 <pre><code># mkdir /data</code></pre>
-<pre><code># cd /data</code></pre>
-<pre><code># mkdir db</code></pre>
+<pre><code># mkdir /data/db</code></pre>
 
 After mongoDB installation, you can restore the database of the demo application by opening a terminal, go into your workspace directory to get source code and type :
 
