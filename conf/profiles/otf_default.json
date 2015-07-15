@@ -50,5 +50,14 @@
         "return_type" : "text/plain",
         "params_names": [],
         "data_model": "Logs"
+    },
+        "GET/jsoncontenttype" : {
+        "module": "finder",
+        "methode": "list",
+        "screen": "log_list",
+        "auth": false,
+        "return_type" : "application/json",
+        "params_names": [],
+        "data_model": "Logs"
     }
 }
