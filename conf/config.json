@@ -29,7 +29,7 @@
         "cookie_name": "connect.sid",
         "ttl": "900",
         "prefix": "sess:",
-        "store": "REDIS"
+        "store": "MEMORY"
 
     },
     "GLANCES": {
