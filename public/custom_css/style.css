@@ -27,7 +27,7 @@ a.navbar-brand{
 /*****************************/
 /******Responsiv custom******/
 @media (max-width: 767px){
-	form.navbar-form{ 
+	form.navbar-form{
 	margin:0;}
 }
 
