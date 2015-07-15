@@ -41,5 +41,14 @@
         "auth": false,
         "params_names": [],
         "data_model": "Logs"
+    },
+    "GET/testcontenttype" : {
+        "module": "finder",
+        "methode": "list",
+        "screen": "log_list",
+        "auth": false,
+        "return_type" : "text/plain",
+        "params_names": [],
+        "data_model": "Logs"
     }
 }
