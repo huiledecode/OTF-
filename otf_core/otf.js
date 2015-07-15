@@ -12,7 +12,7 @@ var router = express.Router();
 var appContext;
 var managerSession;
 var passport = require('passport');
-var url = require("url")
+var url = require("url");
 //GLOBAL.whoWhat = new Array();
 //-- load annuaire file in sync mode
 //
@@ -59,6 +59,8 @@ function getControler(req, cb) {
     var redirect;
     var ref;
     var content_type = req.headers['content-type'];
+    var return_type;
+
     //--
     //-- USER PROFILE
     if (req.session.profile) {
@@ -133,6 +135,11 @@ function getControler(req, cb) {
     } else {
         action = instanceModule[module]['execute'];
     }
+
+    // -- content-type parameter to send data to client
+    if (typeof annuaire[type + path].return_type == 'undefined') {
+        return_type = "text/html";
+    } else return_type = annuaire[type + path].return_type;
     // --
     // -- beans data structure with HTTP parameters
     controler = {
@@ -146,6 +153,7 @@ function getControler(req, cb) {
         'room': req.sessionID,
         'data_model': modele,
         'data_ref': ref,
+        'content_type' : return_type,
         //'schema': schema,
         'isRedirect': redirect
     };
@@ -241,7 +249,12 @@ function otfAction(req, res, next) {// attention il ne
                 else {
                   var t2 = new Date().getMilliseconds();
                   logger.info('controler.action callback TIME(ms) : ' + (t2-t1) + ' ms');
-                  res.render(req.session.controler.screen, result);
+                    if (controler.content_type == 'text/html') {
+                        res.render(req.session.controler.screen, result);
+                    } else {
+                        res.setHeader('Content-Type', controler.content_type);
+                        res.send(result.result);
+                    }
                 }
             });
         }
