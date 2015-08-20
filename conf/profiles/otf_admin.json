@@ -18,7 +18,8 @@
         "params_names": ["login", "password"],
         "auth": false,
         "data_model": "Accounts",
-        "redirect": true
+        "redirect": true,
+        "redirect_action" : "index"
     },
     "GET/logout": {
         "module": "signupAccount",
@@ -26,7 +27,8 @@
         "screen": "login",
         "params_names": [],
         "auth": true,
-        "redirect": true
+        "redirect": true,
+        "redirect_action" : "login"
     },
     "GET/multipart": {
         "module": "index",

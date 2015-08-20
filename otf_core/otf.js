@@ -57,6 +57,7 @@ function getControler(req, cb) {
     var screen;
     var controler = {};
     var redirect;
+    var redirect_action;
     var ref;
     var content_type = req.headers['content-type'];
     var return_type;
@@ -99,16 +100,21 @@ function getControler(req, cb) {
         methode = 'titre';
         screen = 'login';
         redirect = true;
+        redirect_action = 'login';
+
     } else if (!auth) {
         logger.debug("OTF² Page non sécurisée  [session id : [%s] ]", req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
+        redirect_action = annuaire[type + path].redirect_action;
     } else if (req.user !== 'undefined') {
         logger.debug("OTF² Page sécurisée & authentifiée [ user %j], [session id : [%s] ]", req.user, req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
+        redirect_action = annuaire[type + path].redirect_action;
+
     }
     // --
     // --
@@ -155,7 +161,8 @@ function getControler(req, cb) {
         'data_ref': ref,
         'content_type' : return_type,
         //'schema': schema,
-        'isRedirect': redirect
+        'isRedirect': redirect,
+        'redirect_action': redirect_action
     };
     /****** Traitement des paramètres pour les requête mongoDB *********/
     filter_acceptableFields = annuaire[type + path].params_names;
