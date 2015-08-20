@@ -13,6 +13,7 @@ var appContext;
 var managerSession;
 var passport = require('passport');
 var url = require("url");
+var _ = require('underscore');
 //GLOBAL.whoWhat = new Array();
 //-- load annuaire file in sync mode
 //
@@ -290,6 +291,8 @@ function otfAction(req, res, next) {// attention il ne
 }
 
 function addFlashToResult(flash, result){
+  if(_.isEmpty(flash))
+    return result;
   if(!result.flash)
     result.flash = flash;
   else{
