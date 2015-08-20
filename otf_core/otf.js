@@ -226,6 +226,7 @@ function otfAction(req, res, next) {// attention il ne
             req.session.controler = controler;
             //beans.params, beans.path, beans.data_model, beans.schema, beans.room
             controler.action(req, function (errBean, result) {
+
                 var t1 = new Date().getMilliseconds();
                 // handling exception
                 //-- @TODO Faire une gestion des exceptions plus fine !!
@@ -239,8 +240,25 @@ function otfAction(req, res, next) {// attention il ne
                 // On gére le redirect pour l'authentification
                 //@TODO try catch sur le renderer
                 if (controler.isRedirect) {
+                    logger.debug('Params sur redirect :' , controler.params);
 
-                    res.redirect('/' + req.session.controler.screen);
+                    //Pour transférer les params au redirect screen avec les éventuels messages flash
+                    req.session.params = controler.params;
+                    req.session.params = addFlashToResult(req.flash(), req.session.params);
+
+                    /** Todo Ici ajouter les params du controler pour l'action de redirect */
+                    var propertiesNames = Object.keys(controler.params);
+                    logger.debug('PropertiesNames redirect :' , propertiesNames);
+                    var params ="?";
+
+                    for (var k=0;k<propertiesNames.length;k++) {
+                        if ((propertiesNames[k] != 'password') && (propertiesNames[k] != 'passwd')) {
+                            params += propertiesNames[k] + '=' + controler.params[propertiesNames[k]] + '&';
+                        }
+                    }
+                    logger.debug('redirect_action : ' + req.session.controler.redirect_action);
+
+                    res.redirect('/' + req.session.controler.redirect_action + params);
                     //res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
                     // res.writeHead(301, {'content-type': 'text/html'});
                     res.end();
@@ -250,6 +268,9 @@ function otfAction(req, res, next) {// attention il ne
                   var t2 = new Date().getMilliseconds();
                   logger.info('controler.action callback TIME(ms) : ' + (t2-t1) + ' ms');
                     if (controler.content_type == 'text/html') {
+                        result = addFlashToResult(req.flash(), result);
+//logger.debug('###### Controleur retour vue getview avec result : ', result);
+//logger.debug('###### Controleur req.flash error ? : ', req.flash());
                         res.render(req.session.controler.screen, result);
                     } else {
                         res.setHeader('Content-Type', controler.content_type);
@@ -259,6 +280,21 @@ function otfAction(req, res, next) {// attention il ne
             });
         }
     });
+}
+
+function addFlashToResult(flash, result){
+  if(!result.flash)
+    result.flash = flash;
+  else{
+    var flashResult = result.flash;
+    for (prop in flash){
+      if(flashResult[prop])
+        Array.prototype.push.apply(flashResult[prop], flash[prop]);
+      else
+        flashResult[prop] = flash[prop];
+    }
+  }
+  return result;
 }
 
 // --

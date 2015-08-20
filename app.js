@@ -15,6 +15,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+var flash    = require('connect-flash');
 var secret = GLOBAL.config["SESSION"].secret || '7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"';
 var cookie_name = GLOBAL.config["SESSION"].cookie_name || 'connect.sid';
 //--
@@ -37,6 +38,7 @@ if (GLOBAL.config["ENV"].mode === 'DEBUG') {
 // Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(flash());
 //--
 // Static path
 app.use(express.static(path.join(__dirname, 'public')));
@@ -55,6 +57,13 @@ require('./otf_core/otf')(app, sessionStore);
 //--
 //WebSocket Managment
 require('./otf_core/lib/otf_websocket')(sessionStore, secret, cookie_name);
+
+//Flash
+app.use(function(req, res, next){
+    app.locals.flash = req.flash();
+    next();
+});
+
 //--
 //-- TEST PASSAGE CONTEXT APPLICATIF
 app.locals.test = 'OTF localsValue';

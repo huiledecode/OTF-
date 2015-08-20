@@ -2,7 +2,14 @@ exports.getview = {
 
     view: function (req, cb) {
         var _controler = req.session.controler;
-      return cb(null, { title: 'AddUser', "state": req.session.login_info.state, room: _controler.room });
+        var _params = req.session.params;
+
+      if(_controler.auth){
+        _params.title = 'AddUser';
+        _params.state = req.session.login_info.state;
+        _params.room  = _controler.room;
+      }
+      return cb(null, _params);
     }
 
 };

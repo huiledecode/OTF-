@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Le premier template boostrap pour le framework OTF, produit par huile de code">
     <meta name="keywords" content="OTF, on the fly, nodeJS, web socket, template, bootstrap, HdC, Huile de code">
-    <meta name="content="Huile de Code SARL">
+    <meta name="author" content="Huile de Code SARL">
 	<meta name="generator" content="Otf Framework">
     <title>On the fly framework real time by HdC</title>
 	<link rel="icon" type="image/png" href="/favicon/favicon.ico">
@@ -38,3 +38,24 @@
     <script src="javascripts/otf_forms.js"></script>
     <script src="javascripts/gauge.min.js"></script>
 </head>
+
+
+{{#each flash}}
+  {{#compare @key 'error' operator="=="}}
+    <div class="alert alert-danger alert-dismissable">
+      <bouton class="close" type="button" data-dismiss="alert">x</bouton>
+      {{#each this}}
+        <p>{{this}}</p>
+      {{~/each}}
+    </div>
+  {{/compare }}
+  {{#compare @key 'error' operator="!="}}
+    <div class="alert alert-{{@key}} alert-dismissable">
+      <bouton class="close" type="button" data-dismiss="alert">x</bouton>
+      {{#each this}}
+        <p>{{this}}</p>
+      {{~/each}}
+    </div>
+  {{/compare }}
+
+{{~/each}}
