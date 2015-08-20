@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var ObjectId = mongoose.Types.ObjectId;
 var paginate = require("mongoose-pages");
 var logger = require('log4js').getLogger('otf_mongooseGeneric');
 //logger.setLevel(GLOBAL.config["LOGS"].level);
@@ -65,6 +66,9 @@ mongooseGeneric.prototype.deleteDocument = function (_condition, _callback) {
 };
 
 mongooseGeneric.prototype.createDocument = function (_values, _callback) {
+
+    if(!_values.hasOwnProperty("_id"))
+      _values._id = new ObjectId();
 
     var m = new this.document(_values);
     m.save(function (err, result) {
