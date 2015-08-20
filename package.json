@@ -9,6 +9,9 @@
     "assemble": "^0.4.42",
     "bcrypt": "*",
     "body-parser": "~1.0.0",
+    "chokidar": "1.0.0-rc3",
+    "cluster": "~0.7.7",
+    "connect-flash": "^0.1.1",
     "cookie": "*",
     "cookie-parser": "*",
     "debug": "~0.7.4",
@@ -16,10 +19,12 @@
     "express-handlebars": "~1.1.0",
     "express-session": "*",
     "fs": "0.0.2",
+    "glances": "~0.1.0",
     "gm": "~1.17.0",
     "grunt": "^0.4.5",
     "handlebars": "^2.0.0",
     "handlebars-helpers": "^0.5.8",
+    "hiredis": "~0.2.0",
     "log4js": "*",
     "log4js-node-mongodb": "*",
     "mongo-oplog": "0.1.5",
@@ -29,13 +34,9 @@
     "multiparty": "~4.0.0",
     "passport": "*",
     "passport-local": "*",
+    "redis": "~0.12.1",
     "serve-favicon": "*",
     "socket.io": "*",
-    "util": "~0.10.3",
-    "glances": "~0.1.0",
-    "hiredis": "~0.2.0",
-    "redis": "~0.12.1",
-    "chokidar": "1.0.0-rc3",
-    "cluster": "~0.7.7"
+    "util": "~0.10.3"
   }
 }
