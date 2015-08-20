@@ -37,6 +37,7 @@
     "redis": "~0.12.1",
     "serve-favicon": "*",
     "socket.io": "*",
+    "underscore": "^1.8.3",
     "util": "~0.10.3"
   }
 }
