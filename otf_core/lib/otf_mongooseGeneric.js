@@ -45,8 +45,8 @@ mongooseGeneric.prototype.getDocuments = function (_condition, _callback) {
         }
         else {
             var t2 = new Date().getMilliseconds();
-          logger.info('Into mongooseGeneric.getDocuments TIME : ' + (t2-t1) + ' ms');
-          _callback(null, result);
+            logger.info('Into mongooseGeneric.getDocuments TIME : ' + (t2 - t1) + ' ms');
+            _callback(null, result);
         }
     });
 };

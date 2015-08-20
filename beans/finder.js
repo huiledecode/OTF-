@@ -35,7 +35,7 @@ exports.finder = {
             model.getDocuments({}, function (err, list_users) {
                 logger.debug('liste des utilisateurs :', JSON.stringify(list_users));
                 var t2 = new Date().getMilliseconds();
-                logger.info('into Finder.list before return cb TIME (ms) : ' + (t2-t1) + 'ms');
+                logger.info('into Finder.list before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
                 return cb(null, {result: list_users, "state": state || "TEST", room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
@@ -105,7 +105,7 @@ exports.finder = {
         }
     },
 
-    listMultiSchemas : function(req, cb) {
+    listMultiSchemas: function (req, cb) {
         var t1 = new Date().getMilliseconds();
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
@@ -122,28 +122,30 @@ exports.finder = {
         //
         logger.debug("finder.listMultiSchemas");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
-        var result={};
+        var result = {};
         try {
             var listSchemas = _controler.data_model;
+
             function getDocsMultiSchemas(i, cbk) {
-                if (i<listSchemas.length) {
+                if (i < listSchemas.length) {
                     var model = GLOBAL.schemas[listSchemas[i]];
-                    model.getDocuments({}, function(err, list_datas) {
+                    model.getDocuments({}, function (err, list_datas) {
                         if (err) {
-                            console.log('error: '+err)
+                            console.log('error: ' + err)
                         }
                         else {
                             logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
                             result[listSchemas[i]] = list_datas;
                             logger.debug('affiche result pour i=' + i + '   : ', result);
                             // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
-                            getDocsMultiSchemas(i+1, cbk);
+                            getDocsMultiSchemas(i + 1, cbk);
                         }
                     });
                 } else {
                     cbk();
                 }
             }
+
             getDocsMultiSchemas(0, function () {
                 var t2 = new Date().getMilliseconds();
                 logger.info('into Finder.listMultiSchema before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
