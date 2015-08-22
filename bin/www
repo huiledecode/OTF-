@@ -33,8 +33,8 @@ else
  */
 function run() {
     var app = require('../app');
-    app.set('port', GLOBAL.config["LOGS"].port || process.env.NODE_PORT || 3000);
-    app.set('host', GLOBAL.config["LOGS"].host || process.env.NODE_HOST || "0.0.0.0");
+    app.set('port', GLOBAL.config["WWW"].port || process.env.NODE_PORT || 3000);
+    app.set('host', GLOBAL.config["WWW"].host || process.env.NODE_HOST || "0.0.0.0");
 //-- HTTP SERVER
     var server = app.listen(app.get('port'), app.get('host'), function () {
         logger.info("OTF² server listening on http://%s:%d", app.get('host'), app.get('port'));
