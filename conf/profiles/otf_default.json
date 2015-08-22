@@ -53,7 +53,7 @@
         "params_names": [],
         "data_model": "Logs"
     },
-        "GET/jsoncontenttype" : {
+    "GET/jsoncontenttype" : {
         "module": "finder",
         "methode": "list",
         "screen": "log_list",
