@@ -66,7 +66,7 @@ function getControler(req, cb) {
     //--
     //-- USER PROFILE
     if (req.session.profile) {
-        logger.debug("OTF² User Profile is %s", req.session.profile)
+        logger.debug("OTF² User Profile is %s", req.session.profile);
         annuaire = GLOBAL.profiles[req.session.profile];
     } else {
         logger.debug("OTF² User Profile is default");
@@ -95,7 +95,7 @@ function getControler(req, cb) {
 
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
-    if (auth && !req.isAuthenticated() || typeof req.session.passport.user == 'undefine') {
+    if (auth && !req.isAuthenticated() || typeof req.session.passport == 'undefined') {
         logger.debug("OTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
         module = 'login';
         methode = 'titre';
