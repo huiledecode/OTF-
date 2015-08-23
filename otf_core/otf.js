@@ -95,7 +95,7 @@ function getControler(req, cb) {
 
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
-    if (auth && !req.isAuthenticated() || typeof req.session.passport == 'undefined') {
+    if (auth && (!req.isAuthenticated() || typeof req.session.passport == 'undefined')) {
         logger.debug("OTF Protected Page, User not identify, Redirect for Login Page. ");// redirect to loggin
         module = 'login';
         methode = 'titre';
