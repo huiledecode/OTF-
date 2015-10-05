@@ -18,6 +18,8 @@ And you to install mongoDB v2.6.10 :
 <pre><code>$ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list</code></pre>
 <pre><code>$ sudo apt-get update</code></pre>
 <pre><code>$ sudo apt-get install mongodb-org</code></pre>
+
+It's possible to define the version number like below :
 <pre><code>$ apt-get install mongodb-org=2.6.0 mongodb-org-server=2.6.0 mongodb-org-shell=2.6.0 mongodb-org-mongos=2.6.0 mongodb-org-tools=2.6.0</code></pre>
 
 Create « /data/db/ » folder , on your system's root. (cd /)
