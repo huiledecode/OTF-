@@ -225,7 +225,8 @@ function otfAction(req, res, next) {// attention il ne
     // --
     getControler(req, function (err, controler) {
         if (err)
-            next(err);
+            if (err.title == 'OTF ERROR Action not implemented') res.redirect('/login?');
+            else next(err);
         else {
             /* Appel de la méthode du bean via une callback pour permettre
              * au bean d'exécuter des actions asynchrones et donc ne pas bloquer
