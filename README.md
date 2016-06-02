@@ -157,7 +157,8 @@ OTF² cluster is OFF by default, if you like to use cluster mode, you must chang
         "secret": "7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ",
         "cookie_name": "connect.sid",
         "ttl": "900",
-        "prefix": "sess:"
+        "prefix": "sess:",
+        "store": "MEMORY"
 
     },
     "GLANCES": {
