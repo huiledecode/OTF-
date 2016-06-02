@@ -170,7 +170,9 @@ OTF² cluster is OFF by default, if you like to use cluster mode, you must chang
     }
 }
 ```
-Put to "ON" the mode attribute of CLUSTER entry
+Put to "ON" the mode attribute of CLUSTER entry to run OTF over multi CPU.
+
+NB : <i>We conducted a test on a 24-cpu server, we allocated 23 CPU OTF² and we launch 10 million authentications per 5000 simultaneously. The test lasted 40 minutes, no errors and little RAM used</i>
 
 Now you can fire up your browser and access your OTF app with the following url : 
 <pre><code>http://localhost:3000</code></pre>
