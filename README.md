@@ -41,7 +41,26 @@ You need to start mongoDB with a ReplicatSet,
 
 1st, in a new Terminal, go to  /data/db folder
 <pre><code>$ sudo mongod --replSet otf_demo</code></pre>
-2sd : close this news terminal.
+
+2sd, in a new Terminal, run mongo shell you need to configure replicatSet like this :
+
+Open Mongo DB
+<pre><code>$ mongo</code></pre>
+<blockquote>MongoDB shell version: 2.4.9</blockquote>
+<blockquote>connecting to: test</blockquote>
+Change the db 
+<pre><code>> use otf_demo</code></pre>
+
+<pre><code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code></pre>
+<pre><code>>rs.initiate(config)</code></pre>
+<i>You should have this result :</i>
+<code>
+{
+	"info" : "Config now saved locally.  Should come online in about a minute.",
+	"ok" : 1
+}</code>
+
+<pre><code>> exit</code></pre>
 
 And return into dump directory (cd /workspace/otf/) :
 
@@ -96,27 +115,6 @@ Wait a moment for dependancies
 
 Before launching OTF²,</br>
 
-Into mongo shell you need to configure replicatSet like this :
-
-Open Mongo DB
-<pre><code>$ mongo</code></pre>
-<blockquote>MongoDB shell version: 2.4.9</blockquote>
-<blockquote>connecting to: test</blockquote>
-Change the db 
-<pre><code>> use otf_demo</code></pre>
-
-<pre><code>>var config = {_id: "otf_demo", members: [{_id: 0, host: "127.0.0.1:27017"}]}</code></pre>
-<pre><code>>rs.initiate(config)</code></pre>
-<i>You should have this result :</i>
-<code>
-{
-	"info" : "Config now saved locally.  Should come online in about a minute.",
-	"ok" : 1
-}</code>
-
-<pre><code>> exit</code></pre>
-
-
 In new Terminal, Start "redis-server" in 'sudo' mode
 
 Go back to the OTF's root directory.
@@ -159,7 +157,8 @@ OTF² cluster is OFF by default, if you like to use cluster mode, you must chang
         "secret": "7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ",
         "cookie_name": "connect.sid",
         "ttl": "900",
-        "prefix": "sess:"
+        "prefix": "sess:",
+        "store": "MEMORY"
 
     },
     "GLANCES": {
@@ -171,7 +170,9 @@ OTF² cluster is OFF by default, if you like to use cluster mode, you must chang
     }
 }
 ```
-Put to "ON" the mode attribute of CLUSTER entry
+Put to "ON" the mode attribute of CLUSTER entry to run OTF over multi CPU.
+
+NB : <i>We conducted a test on a 24-cpu server, we allocated 23 CPU OTF² and we launch 10 million authentications per 5000 simultaneously. The test lasted 40 minutes, no errors and little RAM used</i>
 
 Now you can fire up your browser and access your OTF app with the following url : 
 <pre><code>http://localhost:3000</code></pre>

@@ -24,7 +24,7 @@
     "grunt": "^0.4.5",
     "handlebars": "^2.0.0",
     "handlebars-helpers": "^0.5.8",
-    "hiredis": "~0.2.0",
+    "hiredis": "0.4.1",
     "log4js": "*",
     "log4js-node-mongodb": "*",
     "mongo-oplog": "0.1.5",
