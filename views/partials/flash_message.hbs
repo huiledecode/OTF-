@@ -1,0 +1,18 @@
+{{#each flash}}
+  {{#compare @key 'error' operator="=="}}
+    <div class="alert alert-danger alert-dismissable" style="margin-left:230px">
+      <bouton class="close" type="button" data-dismiss="alert">x</bouton>
+      {{#each this}}
+        <p>{{this}}</p>
+      {{~/each}}
+    </div>
+  {{/compare }}
+  {{#compare @key 'error' operator="!="}}
+    <div class="alert alert-{{@key}} alert-dismissable" style="margin-left:230px">
+      <bouton class="close" type="button" data-dismiss="alert">x</bouton>
+      {{#each this}}
+        <p>{{this}}</p>
+      {{~/each}}
+    </div>
+  {{/compare }}
+{{~/each}}

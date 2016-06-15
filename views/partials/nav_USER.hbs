@@ -1,0 +1,116 @@
+<!-- Navigation -->
+<!-- Site wrapper -->
+   <div class="wrapper">
+     <header class="main-header">
+       <!-- Logo -->
+       <a href="/index" class="logo">
+         <!-- mini logo for sidebar mini 50x50 pixels -->
+         <span class="logo-mini"><b>A</b>Ll</span>
+         <!-- logo for regular state and mobile devices -->
+         <span class="logo-lg"><b>User</b>OTF²</span>
+       </a>
+       <!-- Header Navbar: style can be found in header.less -->
+       <nav class="navbar navbar-static-top" role="navigation">
+         <!-- Sidebar toggle button-->
+         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </a>
+         <div class="navbar-custom-menu">
+           <ul class="nav navbar-nav">
+             <!-- User Account: style can be found in dropdown.less -->
+             <li class="dropdown user user-menu">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <img src="{{#if user.avatar}}uploads/images/agent/{{user._id}}/{{user.avatar}}{{else}}/extratheme/dist/img/profile_default.jpg{{/if}}" class="user-image" alt="User Image">
+                 <span class="hidden-xs">{{user.prenom}} {{user.nom}}</span>
+               </a>
+               <ul class="dropdown-menu">
+                 <!-- User image -->
+                 <li class="user-header">
+                   <img src="{{#if user.avatar}}uploads/images/agent/{{user._id}}/{{user.avatar}}{{else}}/extratheme/dist/img/profile_default.jpg{{/if}}" class="img-circle" alt="User Image">
+                   <p>{{user.prenom}} {{user.nom}} - {{user.role.libelle}}
+                     <small>Identifiant de connexion {{user.nni}}</small>
+                   </p>
+                 </li>
+                 <!-- Menu Body -->
+                 <!-- <li class="user-body">
+                   <div class="col-xs-4 text-center">
+                     <a href="#">Followers</a>
+                   </div>
+                   <div class="col-xs-4 text-center">
+                     <a href="#">Sales</a>
+                   </div>
+                   <div class="col-xs-4 text-center">
+                     <a href="#">Friends</a>
+                   </div>
+                 </li> -->
+                 <!-- Menu Footer-->
+                 <li class="user-footer">
+                   <div class="pull-left">
+                     <a href="/fiche_profil" class="btn btn-default btn-flat">Profil</a>
+                   </div>
+                   <div class="pull-right">
+                     <a href="/logout" class="btn btn-default btn-flat">Déconnexion</a>
+                   </div>
+                 </li>
+               </ul>
+             </li>
+             <!-- Control Sidebar Toggle Button -->
+             <!-- <li>
+               <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+             </li> -->
+           </ul>
+         </div>
+       </nav>
+     </header>
+     <!-- =============================================== -->
+     <!-- Left side column. contains the sidebar -->
+     <aside class="main-sidebar">
+       <!-- sidebar: style can be found in sidebar.less -->
+       <section class="sidebar">
+         <!-- Sidebar user panel -->
+         <div class="user-panel">
+           <div class="pull-left image">
+             <img src="{{#if user.avatar}}uploads/images/agent/{{user._id}}/{{user.avatar}}{{else}}/extratheme/dist/img/profile_default.jpg{{/if}}" class="img-circle" alt="User Image">
+           </div>
+           <div class="pull-left info">
+             <p>{{user.prenom}} {{user.nom}}</p>
+             <a href="#"><i class="fa fa-circle text-success"></i> Connecté</a>
+           </div>
+         </div>
+         <!-- search form -->
+
+         <!-- /.search form -->
+         <!-- sidebar menu: : style can be found in sidebar.less -->
+         <ul class="sidebar-menu">
+           <li class="header">NAVIGATION</li>
+           <li class="treeview">
+             <a href="/index">
+               <i class="fa fa-dashboard"></i> <span>Accueil</span>
+             </a>
+           </li>
+
+           <!-- MENU VMS -->
+           <li class="treeview {{#compare url 'vms' operator='indexof'}}active{{/compare}}">
+             <a href="#">
+               <i class="fa fa-inbox"></i> <span>VMS</span> <i class="fa fa-angle-left pull-right"></i>
+             </a>
+             <ul class="treeview-menu {{#compare url 'vms' operator='indexof'}}menu-open{{/compare}}">
+               <li class="{{#compare url 'hors_tension' operator='indexof'}}active{{/compare}}"><a href="/vms_liste?type_vms=hors_tension&libelle_type_vms=Hors%20Tension"><i class="fa fa-circle-o"></i> Hors tension</a></li>
+               <li class="{{#compare url 'sous_tension' operator='indexof'}}active{{/compare}}"><a href="/vms_liste?type_vms=sous_tension&libelle_type_vms=Sous%20Tension"><i class="fa fa-circle-o"></i> Sous tension</a></li>
+               <li class="{{#compare url 'environnement' operator='indexof'}}active{{/compare}}"><a href="/vms_liste?type_vms=environnement&libelle_type_vms=Environnement"><i class="fa fa-circle-o"></i> Environnement</a></li>
+             </ul>
+           </li>
+
+           <!-- MENU SD -->
+           <li class="treeview {{#compare url 'sd_liste' operator='indexof'}}active{{/compare}}{{#compare url 'fiche_sd' operator='indexof'}}active{{/compare}}">
+             <a href="/sd_liste">
+               <i class="fa fa-fire"></i> <span>Situations Dangereuses </span>
+             </a>
+           </li>
+         </ul>
+       </section>
+       <!-- /.sidebar -->
+     </aside>

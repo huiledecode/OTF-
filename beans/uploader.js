@@ -19,7 +19,6 @@ exports.uploader = {
         // ici params est un objet simple à insérer
         if (typeof file != 'undefined') {
             var file = values.file;
-            /** TODO ici je recopie le code d'alliage pour la copie du fichier image */
             if (!fs.existsSync('./public/uploads/images')) {
                 fs.mkdirSync('./public/uploads/images', [0777]);
             }
@@ -57,7 +56,6 @@ exports.uploader = {
         delete values.file;
         logger.debug('params updater with file : ', values);
         logger.debug('----> file data : ' + file.name + '-' + file.path + '-' + file.size);
-        /** TODO ici je recopie le code d'alliage pour la copie du fichier image */
         if (!fs.existsSync('./public/uploads/images')) {
             fs.mkdirSync('./public/uploads/images', [0777]);
         }

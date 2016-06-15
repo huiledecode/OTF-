@@ -2,26 +2,97 @@
     {{> head}}
 {{/content}}
 {{#content "nav"}}
-    {{> nav}}
+  {{> nav}}
 {{/content}}
 {{#content "page"}}
-	<!-- Page Content -->
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    <h3>{{title}}</h3>
-			    <h5>
-			        {{#compare state 'connected' operator="=="}}
-					<p class="text-success">CONNECTED</p>
-					<p class="text-success">"Bienvenue {{user}}, {{message}}</p>
-			        {{/compare}}
-			        {{#compare state 'not_connected' operator="=="}}
-					<p class="text-danger">NOT CONNECTED</p>
-			        {{/compare}}
-			    </h5>
-			</div>
-		</div>
-	</div><!-- /Page Content -->
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Bienvenue dans l'espace de privé d'OTF²
+            <small>Espace d'administration de l'application</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i> Accueil</a></li>
+          </ol>
+        </section>
+
+        <section>
+          <img src="img/logo-otf-6-1_280px.png" class="img-responsive" alt="logo OTF²">
+        </section>
+        <!-- Main content -->
+        <section class="content">
+          <!-- ================= widgets accueil ======================= -->
+          <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="fa fa-users"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Infos</span>
+                  <span class="info-box-number">35</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 34%"></div>
+                  </div>
+                  <span class="progress-description">
+                    34% connectés
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="info-box bg-green">
+                <span class="info-box-icon"><i class="fa fa-users"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">News</span>
+                  <span class="info-box-number">69</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                  <span class="progress-description">
+                    100% connectés
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+
+          <!-- ================= Small boxes (Stat box) ======================= -->
+
+
+
+
+
+          <!-- Default box -->
+          <!-- <div class="box">
+            <div class="box-header with-border">
+              <h3>{{title}}</h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <h5>
+                  {{#compare state 'connected' operator="=="}}
+              <p class="text-success">CONNECTED</p>
+              <p class="text-success">Bienvenue {{user}}, {{message}}</p>
+                  {{/compare}}
+                  {{#compare state 'not_connected' operator="=="}}
+              <p class="text-danger">NOT CONNECTED</p>
+                  {{/compare}}
+                  {{#compare state 'logout' operator="=="}}
+                      <p class="text-danger">Logout</p>
+
+                      <p class="text-danger">{{message}}</p>
+                  {{/compare}}
+              </h5>
+            </div>
+          </div>-->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+
 {{/content}}
 {{#content "footer"}}
     {{> footer}}

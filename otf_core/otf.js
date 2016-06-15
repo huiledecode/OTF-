@@ -36,6 +36,7 @@ function otf(app, sessionStore) {
     router.use(errorHandler);
     //
     appContext.use('/', router);
+
 }
 
 //--
@@ -62,7 +63,6 @@ function getControler(req, cb) {
     var ref;
     var content_type = req.headers['content-type'];
     var return_type;
-
     //--
     //-- USER PROFILE
     if (req.session.profile) {
@@ -84,6 +84,7 @@ function getControler(req, cb) {
         return cb(handleError('OTF ERROR Action not implemented', '501', "Action not implemented for URL [" + type + path + "]"));
 
     // -- Authentificate flag
+
     auth = annuaire[type + path].auth;
     if (typeof auth == 'undefined')
         return cb(handleError('OTF ERROR Authentification Flag not implemented', '501', "Authentification Flag not implemented in Annuaire for URL [" + type + path + "]"));
@@ -102,7 +103,6 @@ function getControler(req, cb) {
         screen = 'login';
         redirect = true;
         redirect_action = 'login';
-
     } else if (!auth) {
         logger.debug("OTF² Page non sécurisée  [session id : [%s] ]", req.sessionID);// redirect to loggin
         module = annuaire[type + path].module;
@@ -115,7 +115,6 @@ function getControler(req, cb) {
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
         redirect_action = annuaire[type + path].redirect_action;
-
     }
     // --
     // --
@@ -142,7 +141,7 @@ function getControler(req, cb) {
     } else {
         action = instanceModule[module]['execute'];
     }
-
+    // --
     // -- content-type parameter to send data to client
     if (typeof annuaire[type + path].return_type == 'undefined') {
         return_type = "text/html";
@@ -235,7 +234,7 @@ function otfAction(req, res, next) {// attention il ne
             req.session.controler = controler;
             //beans.params, beans.path, beans.data_model, beans.schema, beans.room
             controler.action(req, function (errBean, result) {
-
+                result.url = controler.path;  // pour corriger un bug ? pas d'url en variable globale dans handlebars pour menu-treeview
                 var t1 = new Date().getMilliseconds();
                 // handling exception
                 //-- @TODO Faire une gestion des exceptions plus fine !!
@@ -250,9 +249,10 @@ function otfAction(req, res, next) {// attention il ne
                 //@TODO try catch sur le renderer
                 if (controler.isRedirect) {
                     logger.debug('Params sur redirect :' , controler.params);
-
+                    
                     //Pour transférer les params au redirect screen avec les éventuels messages flash
                     req.session.params = controler.params;
+
                     req.session.params = addFlashToResult(req.flash(), req.session.params);
 
                     /** Todo Ici ajouter les params du controler pour l'action de redirect */
@@ -307,7 +307,6 @@ function addFlashToResult(flash, result){
   }
   return result;
 }
-
 // --
 // -- Gestion des erreurs Si erreur lors du traitement de la requête par le
 // routeur dynamique de OTF

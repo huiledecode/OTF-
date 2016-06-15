@@ -2,9 +2,25 @@
     "Accounts": {
         "collection": "accounts",
         "schema": {
-            "login": "String",
+            "nom": "String",
+            "prenom": "String",
+            "titre": "String",
+            "sexe": "String",
+            "login": {"type": "String", "unique": "true"},
             "password": "String",
-            "profile": []
+            "email": "String",
+            "telephone": "String",
+            "adresse1": "String",
+            "adresse2": "String",
+            "code_postal": "String",
+            "ville": "String",
+            "actif": "Boolean",
+            "notes": "String",
+            "actif": "Boolean",
+            "role": {
+              "type": "ObjectId",
+              "ref": "Role"
+            }
         }
 
     },
@@ -14,8 +30,19 @@
             "_id": "ObjectId",
             "login": "String",
             "password": "String",
-            "profile": []
+            "role": {
+              "type": "ObjectId",
+              "ref": "Role"
+            }
         }
+    },
+    "Role": {
+      "collection": "role",
+      "schema": {
+        "_id": "ObjectId",
+        "code": "String",
+        "libelle": "String"
+      }
     },
     "LogsAccounts": {
         "collection": "logs",

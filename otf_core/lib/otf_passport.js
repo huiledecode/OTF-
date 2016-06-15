@@ -62,8 +62,9 @@ module.exports = function (app) {
             // asynchronous
             process.nextTick(function () {
                 //--
-                Accounts.getDocument({
-                    login: login
+                Accounts.popDocument({  //popDocuments(_params, function (err, list) {
+                    query: {login: login},
+                    ref: ["role"]
                 }, function (err, _account) {
                     // --
                     if (err) {
@@ -78,13 +79,12 @@ module.exports = function (app) {
                     } else {
                         //-- load du profile et affectation à la session
                         //-- If profile exist
-                        if (_account.profile == 'undefined' || _account.profile.length == 0)
+                        if (_account.role.code == 'undefined')
                             req.session.profile = 'default';
                         else
-                            req.session.profile = _account.profile[0].name;
+                            req.session.profile = _account.role.code;
                         //Verification the user Identification
-                        logger.debug("OTF² Passport account find : [%j], session id [%s]",
-                            _account, req.sessionID);
+                        logger.debug("OTF² Passport account find : [%j], session id [%s]", _account, req.sessionID);
                         //-
                         //Test Password
                         if (login === _account.login && password === _account.password) {

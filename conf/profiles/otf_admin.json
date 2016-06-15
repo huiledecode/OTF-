@@ -54,11 +54,22 @@
     },
     "GET/users": {
         "module": "finder",
-        "methode": "list",
-        "screen": "user_list",
+        "methode": "populate",
+        "screen": "liste_user",
         "auth": true,
         "params_names": [],
-        "data_model": "Accounts"
+        "data_model": "Accounts",
+        "data_ref": "role"
+    },
+    "GET/json/usersjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "liste_user",
+        "auth": true,
+        "params_names": [],
+        "data_model": "Accounts",
+        "data_ref": "role",
+        "return_type": "application/json"
     },
     "GET/logs": {
         "module": "finder",
@@ -69,6 +80,16 @@
         "data_model": "Logs",
         "data_ref": "user_id"
     },
+    "GET/json/logsjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "log_list",
+        "auth": false,
+        "params_names": [],
+        "data_model": "Logs",
+        "data_ref": "user_id",
+        "return_type": "application/json"
+    },
     "POST/user": {
         "module": "finder",
         "methode": "one",
@@ -78,20 +99,22 @@
         "data_model": "AccountId"
     },
     "GET/formadduser": {
-        "module": "getview",
-        "methode": "view",
+        "module": "finder",
+        "methode": "list",
         "screen": "formadduser",
         "auth": true,
-        "data_model": "Accounts"
+        "data_model":"Role"
+
     },
     "POST/adduser": {
         "module": "inserter",
         "methode": "one",
         "screen": "users",
         "auth": true,
-        "params_names": ["login", "password"],
+        "params_names": ["login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville",  "actif", "notes", "role"],
         "data_model": "Accounts",
-        "redirect": true
+        "redirect": true,
+        "redirect_action" : "users"
     },
     "GET/updateuser": {
         "module": "finder",
@@ -138,6 +161,12 @@
         "methode": "getData",
         "screen": "glancesviewtab",
         "auth": true
+    },
+    "GET/json/getdatanetwork" : {
+        "module": "glances",
+        "methode": "getDatanetwork",
+        "auth": false,
+        "return_type": "application/json"
     },
     "GET/listmulti" : {
         "module": "finder",

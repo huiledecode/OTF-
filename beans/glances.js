@@ -111,6 +111,41 @@ exports.glances = {
       } else return '0&nbsp;Ko';
 
     };
-  }
+  },
 
+  getDatanetwork : function (req, cb) {
+    var _controler = req.session.controler;
+    var client = glances.createClient({ host: GLOBAL.config["GLANCES"].host});
+    client.call('getAll', function(error, value) {
+      if (error) {
+        console.log('Erreur : ' + error.faultString);
+      }
+      else {
+        console.dir('valeur récupérer sur le serveur : ' + value);
+
+        var datas = JSON.parse(value);
+
+        for (var j = 0; j < datas.network.length; j++) {
+          datas.network[j].cumulative_rx = FileConvertSize(datas.network[j].cumulative_rx);
+          datas.network[j].rx = FileConvertSize(datas.network[j].rx);
+          datas.network[j].cumulative_cx = FileConvertSize(datas.network[j].cumulative_cx);
+          datas.network[j].cx = FileConvertSize(datas.network[j].cx);
+          datas.network[j].cumulative_tx = FileConvertSize(datas.network[j].cumulative_tx);
+          datas.network[j].tx = FileConvertSize(datas.network[j].tx);
+        }
+        return cb(null, {result: datas.network, "state": req.session.login_info.state, room: _controler.room});
+      }
+    });
+
+    function FileConvertSize(aSize){
+      if (aSize>0) {
+        aSize = Math.abs(parseInt(aSize, 10));
+        var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
+        for(var i=0; i<def.length; i++){
+          if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+'&nbsp;'+def[i-1][1];
+        }
+      } else return '0&nbsp;Ko';
+
+    }
+  }
 };

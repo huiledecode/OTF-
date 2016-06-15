@@ -5,29 +5,5 @@ This CSS code should follow the 'bootstrap.css'
 in your HTML file.
 license: GPL v3
 author: Huile de Code @2014-2015
-Font CRYSTAL by Felipe Munoz http://openfontlibrary.org/en/font/crystal
 */
-@font-face {
-    font-family: "CRYSTAL Regular";
-    src: url('CRYSTAL-Regular.ttf');
-}
-/*@import url(http://openfontlibrary.org/face/crystal);*/
-
-/* Custom CSS */
-body {
-/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-	/*padding-top: 70px;*/
-}
-a.navbar-brand{
-	font-family: CRYSTAL Regular;
-}
-
-
-
-/*****************************/
-/******Responsiv custom******/
-@media (max-width: 767px){
-	form.navbar-form{
-	margin:0;}
-}
 

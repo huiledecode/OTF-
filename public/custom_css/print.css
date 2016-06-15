@@ -1,0 +1,106 @@
+/*
+A custom Bootstrap 3.2 'HdC' style theme for OTF Framework
+from http://huiledecode.org
+This CSS code should follow the 'bootstrap.css'
+in your HTML file.
+license: GPL v3
+author: Huile de Code @2014-2015
+*/
+
+/* Page Header */
+.header {
+  margin: 10px 0 30px 0;
+  font-size: 14pt;
+}
+.header > small {
+  color: #666;
+  display: block;
+  margin-top: 5px;
+}
+
+table.entete, table.questions{
+  width:100%;
+  border-style: none;
+  font-size: 8pt;
+}
+table.entete td, table.signature td{
+  width:50%;
+}
+td.type{
+  text-decoration: underline;
+}
+th, td {
+  padding: 5px;
+}
+
+
+/*** titre section de question ***/
+.questionnaire{
+  margin-top:50px;
+}
+h2.titre-section{
+  font-size: 11pt;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+/***  Questions ***/
+.questions{
+  font-size: 10pt;
+}
+td.titre-questions{
+  font-style: italic;
+}
+table.points_observes{
+  clear:both;
+  width: 100%;
+}
+table.points_observes td{
+  vertical-align: top;
+  font-size: 8pt;
+}
+
+td.col-1{
+  padding-left: 5%;
+}
+td.col-1, td.col-2{
+  width: 40%;
+}
+td.col-2 img{
+  margin-top: -15px;
+  padding: 0;
+  top:0;
+}
+img.photo{
+  -webkit-transform : rotate(90deg);
+  -moz-transform : rotate(90deg);
+  -ms-transform : rotate(90deg);
+  transform : rotate(90deg);
+}
+table.actionprev{
+  clear:both;
+  width: 100%;
+  margin-bottom: 10px;
+}
+table.actionprev th{
+  font-size: 9pt;
+  color: #ecbc29!important;
+}
+table.signature {
+  width: 100%;
+}
+table.signature td{
+  text-align: center;
+}
+
+.danger{
+  color: #f3565d!important;
+}
+.aqua{
+  color: #45b6af!important;
+}
+.default{
+  color:#aaa !important;
+}
+.muted{
+  color:#c6c6c6 !important;
+}

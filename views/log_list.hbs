@@ -5,29 +5,70 @@
     {{> nav}}
 {{/content}}
 {{#content "page"}}
-	<!-- Page Content -->
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <h3>List Logs</h3>
+    <script>
+        //<![CDATA[
+        $(document).ready(function() {
+            populateGenericDatatable("/logsjson", "table_logs", "_id", 10, [], {buttons: [{edit_btn:true, name:"/fiche_user", id_name:"_id"}]});
+        });
+        //]]>
+    </script>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Gestion des logs
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#">Logs Management</a></li>
+                <li class="active">List</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-warning">
+                        <div class="box-header">
+                            <h3 class="box-title">Liste des logs OTF Démo</h3>
+                            <!-- <div class="box-tools">
+                              <div class="input-group" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
+                                <div class="input-group-btn">
+                                  <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                              </div>
+                            </div> -->
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-hover" id="table_logs">
+                                <thead>
+                                <tr>
+                                    <th mData="date">Date</th>
+                                    <th mData="event">Event</th>
+                                    <th mData="message">Message</th>
+                                    <th mData="ip">Ip</th>
+                                    <th mData="session">Session</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="dataTables_empty" colspan="10"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div>
             </div>
-        </div>
-        <!-- Javascript d'initialisation d'un datatable jquery bootstrapisé -->
-        <script>
-            //<![CDATA[
-            $(document).ready(function () {
-                setDataTable({{{json result}}}, "monitor", "/updatelogs", "/deletelogs");
-            });
-            //]]>
-        </script>
-        <div class="row">
-            <div class="col-lg-12">
-                <div id="monitor" class="panel panel-default"></div>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-    </div><!-- /Page Content -->
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+
 {{/content}}
 {{#content "footer"}}
-	{{> footer}}
+    {{> footer}}
 {{/content}}

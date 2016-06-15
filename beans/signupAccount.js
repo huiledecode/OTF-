@@ -67,8 +67,8 @@ exports.signupAccount = {
                                 logger.error(" signup create Logs failed " + err.message);
                                 return cb(err);
                             } else {
-                                req.session.login_info = { state: 'connected', user: account.login, message: " votre n° de session  est : " + req.sessionID};
-                                return cb(null, {title: 'OTF EXPRESS ', state: 'connected', user: account.login, message: " votre n° de session  est : " + req.sessionID});
+                                req.session.login_info = { state: 'connected', user: account, message: " votre n° de session  est : " + req.sessionID};
+                                return cb(null, {title: 'OTF EXPRESS ', state: 'connected', user: account, message: " votre n° de session  est : " + req.sessionID});
                             }
 
                         });
