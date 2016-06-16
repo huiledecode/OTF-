@@ -8,7 +8,7 @@
     <script>
         //<![CDATA[
         $(document).ready(function() {
-            populateGenericDatatable("/logsjson", "table_logs", "_id", 10, [], {buttons: [{edit_btn:true, name:"/fiche_user", id_name:"_id"}]});
+            populateGenericDatatable("/logsjson", "table_logs", "_id", 10, []);
         });
         //]]>
     </script>
@@ -51,7 +51,7 @@
                                     <th mData="event">Event</th>
                                     <th mData="message">Message</th>
                                     <th mData="ip">Ip</th>
-                                    <th mData="session">Session</th>
+                                    <th mData="session">Session Id</th>
                                     <th></th>
                                 </tr>
                                 </thead>
