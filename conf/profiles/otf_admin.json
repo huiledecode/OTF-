@@ -116,22 +116,24 @@
         "redirect": true,
         "redirect_action" : "users"
     },
-    "GET/updateuser": {
+    "GET/fiche_user": {
         "module": "finder",
-        "methode": "one",
+        "methode": "oneAndListMultiSchemas",
         "screen": "formupdateuser",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Accounts"
+        "data_model": "Accounts",
+        "data_ref": ["Role"]
     },
-    "POST/setuser": {
+    "POST/updateuser": {
         "module": "updater",
         "methode": "one",
         "screen": "users",
         "auth": true,
-        "params_names": ["_id", "login", "password"],
+        "params_names": ["_id", "login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville",  "actif", "notes", "role"],
         "data_model": "AccountId",
-        "redirect": true
+        "redirect": true,
+        "redirect_action": "users"
     },
     "GET/deleteuser": {
         "module": "deleter",

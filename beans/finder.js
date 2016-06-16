@@ -68,8 +68,75 @@ exports.finder = {
         try {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocument(_controler.params, function (err, one_user) {
-                logger.debug('liste des utilisateurs :', one_user);
+                logger.debug('Utilisateurs :', one_user);
                 return cb(null, {result: one_user, "state": state, room: _controler.room});
+            });
+
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+
+    oneAndListMultiSchemas: function (req, cb) {
+        var t1 = new Date().getMilliseconds();
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        //
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
+        //@TODO not safety
+        logger.debug('Finders.one params  : ', _controler.params);
+        //logger.debug('Finders.one params  : ', _controler.params['login'].source);
+        logger.debug('Finders.one room    : ', _controler.room);
+        logger.debug('Finders.one model   : ' + _controler.data_model);
+        logger.debug('Finders.one schema  : ' + _controler.schema);
+        // Test emit WebSocket Event
+        logger.debug(" One User emmit call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        var result = {};
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.getDocument(_controler.params, function (err, one_user) {
+                logger.debug('Utilisateurs :', one_user);
+                result.one = one_user;
+                try {
+                    var listSchemas = _controler.data_ref;
+                        
+                    function getDocsMultiSchemas(i, cbk) {
+                        if (i < listSchemas.length) {
+                            var model = GLOBAL.schemas[listSchemas[i]];
+                            model.getDocuments({}, function (err, list_datas) {
+                                if (err) {
+                                    console.log('error: ' + err)
+                                }
+                                else {
+                                    logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
+                                    result[listSchemas[i]] = list_datas;
+                                    logger.debug('affiche result pour i=' + i + '   : ', result);
+                                    // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
+                                    getDocsMultiSchemas(i + 1, cbk);
+                                }
+                            });
+                        } else {
+                            cbk();
+                        }
+                    }
+
+                    getDocsMultiSchemas(0, function () {
+                        var t2 = new Date().getMilliseconds();
+                        logger.info('into Finder.listMultiSchema before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
+                        return cb(null, {result: result, "state": state || "TEST", room: _controler.room});
+                    });
+                } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+                    logger.error(err);
+                }
             });
 
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric

@@ -1,43 +1,43 @@
-<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="{{#if result.user}}/modifieruser{{else}}/adduser{{/if}}">
+<form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="{{#if result.one}}/updateuser{{else}}/adduser{{/if}}">
   <div class="col-xs-12 col-sm-12">
-    <h3>{{#if result.user}} {{else}}New user{{/if}}</h3>
+    <h3>{{#if result.one}} {{else}}New user{{/if}}</h3>
   </div>
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Name/Firstname</label>
     <div class="col-sm-2">
       <select class="form-control" id="titre" name="titre" required="required">
-          {{#if result.user}}{{else}}
+          {{#if result.one}}{{else}}
           <option value="" disabled selected></option>
           {{/if}}
-          <option value="Mr" {{#if result.user}}{{#compare result.user.titre 'Mr' operator='=='}}selected{{/compare}}{{/if}}>Mr</option>
-          <option value="Mme" {{#if result.user}}{{#compare result.user.titre 'Mme' operator='=='}}selected{{/compare}}{{/if}}>Mme</option>
-          <option value="Dr" {{#if result.user}}{{#compare result.user.titre 'Dr' operator='=='}}selected{{/compare}}{{/if}}>Dr</option>
+          <option value="Mr" {{#if result.one}}{{#compare result.one.titre 'Mr' operator='=='}}selected{{/compare}}{{/if}}>Mr</option>
+          <option value="Mme" {{#if result.one}}{{#compare result.one.titre 'Mme' operator='=='}}selected{{/compare}}{{/if}}>Mme</option>
+          <option value="Dr" {{#if result.one}}{{#compare result.one.titre 'Dr' operator='=='}}selected{{/compare}}{{/if}}>Dr</option>
       </select>
     </div>
     <div class="col-sm-4">
-      <input class="form-control" placeholder="Name" type="text" name="nom" title="Ce champs est requis" value="{{#if result.user}}{{result.user.nom}}{{/if}}" required="required" autofocus/>
+      <input class="form-control" placeholder="Name" type="text" name="nom" title="Ce champs est requis" value="{{#if result.one}}{{result.one.nom}}{{/if}}" required="required" autofocus/>
     </div>
     <div class="col-sm-4">
-      <input class="form-control" placeholder="Firstname" type="text" name="prenom" title="Ce champs est requis" value="{{#if result.user}}{{result.user.prenom}}{{/if}}" required="required"/>
+      <input class="form-control" placeholder="Firstname" type="text" name="prenom" title="Ce champs est requis" value="{{#if result.one}}{{result.one.prenom}}{{/if}}" required="required"/>
     </div>
   </div>
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Login / Password</label>
     <div class="col-sm-4">
-      <input type="text" class="form-control" placeholder="Login" id="login" name="login" required="required" value="{{#if result.user}}{{result.user.login}}{{/if}}">
+      <input type="text" class="form-control" placeholder="Login" id="login" name="login" required="required" value="{{#if result.one}}{{result.one.login}}{{/if}}">
     </div>
     <div class="col-sm-3">
-      <input type="text" class="form-control" placeholder="Password" id="login" name="password" required="required" value="{{#if result.user}}{{result.user.password}}{{/if}}">
+      <input type="text" class="form-control" placeholder="Password" id="login" name="password" required="required" value="{{#if result.one}}{{result.one.password}}{{/if}}">
     </div>
     <div class="col-sm-3">
-      <input type="text" class="form-control" placeholder="Retape Password" id="password2" name="password2" required="required" value="{{#if result.user}}{{result.user.password}}{{/if}}">
+      <input type="text" class="form-control" placeholder="Retape Password" id="password2" name="password2" required="required" value="{{#if result.one}}{{result.one.password}}{{/if}}">
     </div>
   </div>
 <!--
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Mot de passe</label>
     <div class="col-sm-5">
-          {{#if result.user}}
+          {{#if result.one}}
           <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password"
                  pattern=".{5,}" onchange="form.password2.pattern = this.value;" title="Minimum de 5 lettres ou chiffres" required="required">
           {{else}}
@@ -46,7 +46,7 @@
           {{/if}}
     </div>
     <div class="col-sm-5">
-          {{#if result.user}}
+          {{#if result.one}}
           <input type="password" class="form-control" placeholder="Mot de passe à nouveau" id="password2" name="password2"
                  pattern=".{5,}" title="Les mots de passe ne correspondent pas" required="required">
           {{else}}
@@ -60,8 +60,8 @@
     <label for="inputName" class="col-sm-2 control-label">Role</label>
     <div class="col-sm-10">
       <select class="form-control" id="role" name="role" required="required">
-          {{#each result}}
-              <option value="{{this._id}}">{{this.code}} - {{this.libelle}}</option>
+          {{#each result.Role}}
+              <option value="{{this._id}}" {{#compare this._id.id ../result.one.role.id operator='==='}}selected{{/compare}}>{{this.code}} - {{this.libelle}}</option>
           {{/each}}
       </select>
     </div>
@@ -69,73 +69,71 @@
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Adress</label>
     <div class="col-sm-10">
-      <input class="form-control" placeholder="Adress" type="text" name="adresse1" title="This field is required" value="{{#if result.user}}{{result.user.adresse1}}{{/if}}" required="required"/>
+      <input class="form-control" placeholder="Adress" type="text" name="adresse1" title="This field is required" value="{{#if result.one}}{{result.one.adresse1}}{{/if}}" required="required"/>
     </div>
   </div>
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Additional address</label>
     <div class="col-sm-10">
-      <input class="form-control" placeholder="Additional address" value="{{#if result.user}}{{result.user.adresse2}}{{/if}}" type="text" name="adresse2"/>
+      <input class="form-control" placeholder="Additional address" value="{{#if result.one}}{{result.one.adresse2}}{{/if}}" type="text" name="adresse2"/>
     </div>
   </div>
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Zip code</label>
     <div class="col-sm-2">
-      <input class="form-control" placeholder="Zip code" type="text" name="code_postal" title="This field is required" value="{{#if result.user}}{{result.user.code_postal}}{{/if}}" required="required"/>
+      <input class="form-control" placeholder="Zip code" type="text" name="code_postal" title="This field is required" value="{{#if result.one}}{{result.one.code_postal}}{{/if}}" required="required"/>
     </div>
     <label for="inputName" class="col-sm-2 control-label">City</label>
     <div class="col-sm-6">
-      <input class="form-control" placeholder="City" type="text" name="ville" title="This field is required" value="{{#if result.user}}{{result.user.ville}}{{/if}}" required="required"/>
+      <input class="form-control" placeholder="City" type="text" name="ville" title="This field is required" value="{{#if result.one}}{{result.one.ville}}{{/if}}" required="required"/>
     </div>
   </div>
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Phone</label>
     <div class="col-sm-10">
-      <input class="form-control" type="text" data-inputmask="'mask': '99-99-99-99-99'" data-mask="data-mask" placeholder="Phone" name="telephone" value="{{#if result.user}}{{result.user.telephone}}{{/if}}" title="Ce champs est requis" required="required"/>
+      <input class="form-control" type="text" data-inputmask="'mask': '99-99-99-99-99'" data-mask="data-mask" placeholder="Phone" name="telephone" value="{{#if result.one}}{{result.one.telephone}}{{/if}}" title="Ce champs est requis" required="required"/>
     </div>
   </div>
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-5">
       <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-        <input class="form-control" type="email" placeholder="Email" name="email" value="{{#if result.user}}{{result.user.email}}{{/if}}" title="'Ce champs est requis et doit être de la forme 'example@domain.com'" onchange="form.email2.pattern = this.value;" required="required"/>
+        <input class="form-control" type="email" placeholder="Email" name="email" value="{{#if result.one}}{{result.one.email}}{{/if}}" title="'Ce champs est requis et doit être de la forme 'example@domain.com'" onchange="form.email2.pattern = this.value;" required="required"/>
       </div>
     </div>
     <div class="col-sm-5">
       <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-        <input class="form-control" type="email" placeholder="confirm email" name="email2" value="{{#if result.user}}{{result.user.email}}{{/if}}" title="Les emails ne correspondent pas" required="required"/>
+        <input class="form-control" type="email" placeholder="confirm email" name="email2" value="{{#if result.one}}{{result.one.email}}{{/if}}" title="Les emails ne correspondent pas" required="required"/>
       </div>
     </div>
   </div>
   <div class="form-group">
     <label for="inputName" class="col-sm-2 control-label">Notes</label>
     <div class="col-sm-10">
-      <textarea class="form-control" id="notes" name="notes" title="Notes" rows="3" placeholder="Bon à savoir ...">{{notnull result.user 'notes'}}</textarea>
+      <textarea class="form-control" id="notes" name="notes" title="Notes" rows="3" placeholder="Bon à savoir ...">{{notnull result.one 'notes'}}</textarea>
     </div>
   </div>
 
-  {{#if result.user}}
+  {{#if result.one}}
     <div class="form-group"><!-- Btn radio -->
       <label for="inputName" class="col-sm-2 control-label">Active ?</label>
       <div class="col-sm-2 text-center">
         <div class="radio">
           Yes
-        </div><input type="radio" name="actif" id="actifeoui" value="true" {{#if result.user.actif}}checked{{/if}}>
+        </div><input type="radio" name="actif" id="actifeoui" value="true" {{#if result.one.actif}}checked{{/if}}>
       </div>
       <div class="col-sm-2 text-center">
         <div class="radio">
           No
-        </div><input type="radio" name="actif" id="actifnon" value="false" {{#if result.user.actif}}{{else}}checked{{/if}}>
+        </div><input type="radio" name="actif" id="actifnon" value="false" {{#if result.one.actif}}{{else}}checked{{/if}}>
       </div>
     </div>
   {{/if}}
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-          {{#if result.user}}
-          <input type="hidden" name="id_extrauser" value="{{result.user._id}}"/>
-          <input type="hidden" name="user_id" value="{{user._id}}"/>
-          <input type="hidden" name="role_user_id" value="{{user.role._id}}"/>
+          {{#if result.one}}
+          <input type="hidden" name="_id" value="{{result.one._id}}"/>
           {{/if}}
         <button type="submit" name="button" id="button" class="btn btn-primary">Validate</button>
     </div>

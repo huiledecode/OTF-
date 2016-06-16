@@ -5,21 +5,44 @@
     {{> nav}}
 {{/content}}
 {{#content "page"}}
-	<!-- Page Content -->
-    <div id="containerform" class="container-fluid">
-        <div class="row-fluid">
-            <div class="col-xs-12 col-sm-12">
-                <h3>UpdateUser</h3>
-            </div>
-        </div>
-        <script>
-            //<![CDATA[
-            $(document).ready(function() {
-                setFormUpdate({{{json result}}}, "/setuser");
-            });
-            //]]>
-        </script>
-    </div>
+    <script>
+        //<![CDATA[
+        $(document).ready(function(){
+            $("[data-mask]").inputmask();
+        });
+    </script>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Modify User's data
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#">Update user</a></li>
+                <li class="active">Create</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- About Me Box -->
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            {{> formsignin}}
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+
 {{/content}}
 {{#content "footer"}}
     {{> footer}}
