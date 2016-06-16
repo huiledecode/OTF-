@@ -179,17 +179,17 @@ Now you can fire up your browser and access your OTF app with the following url 
 
 You can see authenticaton page of otf_demo application :
 
-<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-2_login_OTF.png" />
+<img src="http://www.huile-de-code.fr/otf/img/Capture-login.png" />
 
 You can access backend by giving the login "admin" and the password "otf" into the authentication page of the demo application. You can now see a menu bar at the top of the index page.
 
-<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-22_index_OTF.png" />
+<img src="http://www.huile-de-code.fr/otf/img/Capture-back_office.png" />
 
 # How to ?
 
 You can see in demo application the menu "users" which displays the list of users authorized to connect to the backend. 
 
-<img src="http://www.huile-de-code.fr/otf/img/capture_2015-02-23_users_OTF.png" />
+<img src="http://www.huile-de-code.fr/otf/img/Capture-list_user.png" />
 
 What happens when you click on "users" link in the top menu :
 
