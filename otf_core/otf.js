@@ -223,6 +223,7 @@ function otfAction(req, res, next) {// attention il ne
     //logger.debug(" Test Context Applicatif  by app.locals %s", appContext.locals.test);
     // --
     getControler(req, function (err, controler) {
+        //console.log('controler : ', controler);
         if (err)
             if (err.title == 'OTF ERROR Action not implemented') res.redirect('/login?');
             else next(err);
