@@ -70,5 +70,15 @@
         "params_names": ["_id"],
         "data_model": "Accounts",
         "data_ref": ["Role"]
+    },
+    "GET/json/logsjson": {
+        "module": "finder",
+        "methode": "populate",
+        "screen": "log_list",
+        "auth": false,
+        "params_names": [],
+        "data_model": "Logs",
+        "data_ref": "user_id",
+        "return_type": "application/json"
     }
 }
