@@ -1,0 +1,198 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "nav"}}
+    {{> nav}}
+{{/content}}
+{{#content "page"}}
+    <script>
+        //<![CDATA[
+        $(document).ready(function(){
+            $("[data-mask]").inputmask();
+        });
+    </script>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                My profil
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">My profil</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-3">
+
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" src="/extratheme/dist/img/boxed-bg.jpg" alt="User profile picture">
+                            <h3 class="profile-username text-center">{{user.prenom}} {{user.nom}}</h3>
+                            <p class="text-muted text-center">{{user.role.libelle}}</p>
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>Group(s)</b> <a class="pull-right">{{length user.groupes}}</a>
+                                </li>
+                            </ul>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+
+                    <!-- About Me Box -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"About me...</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            <strong><i class="fa fa-unlock-alt margin-r-5"></i> Identifiant de connexion</strong>
+                            <p class="text-muted">{{user.login}}</p>
+                            <hr>
+                            <strong><i class="fa fa-envelope margin-r-5"></i> Email</strong>
+                            <p class="text-muted">{{user.email}}</p>
+                            <hr>
+                            <strong><i class="fa fa-phone margin-r-5"></i> Phone</strong>
+                            <p class="text-muted">{{user.telephone}}</p>
+                        </div><!-- /.box-body -->
+                    </div><!-- /.box -->
+                </div><!-- /.col -->
+
+                <div class="col-md-9">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#infos" data-toggle="tab">Infos</a></li>
+                            {{#compare user.role.code 'SADMIN,ADMIN,' operator='in'}}
+                                <li class=""><a href="#settings" data-toggle="tab">Options</a></li>
+                            {{/compare}}
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="infos">
+                                <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/modifierMonProfil">
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Name/Firstname</label>
+                                        <div class="col-sm-2">
+                                            <select class="form-control" id="titre" name="titre" required="required">
+                                                <option value="Mr" {{#compare user.titre 'Mr' operator='=='}}selected{{/compare}}>Mr</option>
+                                                <option value="Mme" {{#compare user.titre 'Mme' operator='=='}}selected{{/compare}}>Mrs</option>
+                                                <option value="Dr" {{#compare user.titre 'Dr' operator='=='}}selected{{/compare}}>Dr</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input class="form-control" placeholder="Name" type="text" name="nom" title="This field is required" value="{{user.nom}}" required="required" autofocus/>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input class="form-control" placeholder="Firstname" type="text" name="prenom" title="This field is required" value="{{user.prenom}}" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Password</label>
+                                        <div class="col-sm-5">
+                                            <input type="password" class="form-control" placeholder="Password" id="password" name="password"
+                                                   pattern=".{5,}" onchange="form.password2.pattern = this.value;" title="Minimum de 5 lettres ou chiffres" required="required">
+
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="password" class="form-control" placeholder="Confirm password" id="password2" name="password2"
+                                                   pattern=".{5,}" title="password doesn't equals" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Adress</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" placeholder="Adresse" type="text" name="adresse1" title="Ce champs est requis" value="{{user.adresse1}}" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Additional Adress</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" placeholder="Additional Adress" value="{{user.adresse2}}" type="text" name="adresse2"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Zip Code</label>
+                                        <div class="col-sm-2">
+                                            <input class="form-control" placeholder="Zip Code" type="text" name="code_postal" title="Ce champs est requis" value="{{user.code_postal}}" required="required"/>
+                                        </div>
+                                        <label for="inputName" class="col-sm-2 control-label">City</label>
+                                        <div class="col-sm-6">
+                                            <input class="form-control" placeholder="City" type="text" name="ville" title="Ce champs est requis" value="{{user.ville}}" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Phone</label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" type="text" data-inputmask="'mask': '99-99-99-99-99'" data-mask="data-mask" placeholder="Phone" name="telephone" value="{{user.telephone}}" title="Ce champs est requis" required="required"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Email</label>
+                                        <div class="col-sm-5">
+                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                <input class="form-control" type="email" placeholder="Email" name="email" value="{{user.email}}" title="'Ce champs est requis et doit être de la forme 'example@domain.com'" onchange="form.email2.pattern = this.value;" required="required"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                <input class="form-control" type="email" placeholder="Confirm email" name="email2" value="{{user.email}}" title="Emails are not equals" required="required"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <input type="hidden" name="id_extrauser" value="{{user._id}}"/>
+                                            <input type="hidden" name="login" value="{{user.login}}"/>
+                                            <button type="submit" name="button" id="button" class="btn btn-primary">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!-- /.tab-pane -->
+
+                            {{#compare user.role.code 'SADMIN,ADMIN,' operator='in'}}
+                                <div class="tab-pane" id="settings">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="{{#if user.option}}modifier_extrauser_option{{else}}create_extrauser_option{{/if}}">
+                                                <div class="form-group"><!-- Btn radio -->
+                                                    <label for="inputName" class="col-sm-5 control-label">Revenir à un écran de création après une création ?</label>
+                                                    <div class="col-sm-1 text-center">
+                                                        <div class="radio">
+                                                            Oui
+                                                        </div><input type="radio" name="scree_create_after_create" id="scree_create_after_createo" value="true" {{#if user.option.scree_create_after_create}}checked{{/if}}>
+                                                    </div>
+                                                    <div class="col-sm-1 text-center">
+                                                        <div class="radio">
+                                                            Non
+                                                        </div><input type="radio" name="scree_create_after_create" id="scree_create_after_createn" value="false" {{#if user.option.scree_create_after_create}}{{else}}checked{{/if}}>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-2 col-sm-10">
+                                                        <input type="hidden" name="id_extrauser" value="{{user._id}}"/>
+                                                        <input type="hidden" name="_id" value="{{user.option._id}}"/>
+                                                        <button type="submit" name="button" id="button" class="btn btn-primary">Enregistrer</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div><!-- /.tab-pane -->
+                            {{/compare}}
+                        </div><!-- /.tab-content -->
+                    </div><!-- /.nav-tabs-custom -->
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}
