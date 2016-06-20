@@ -31,7 +31,7 @@ require('./otf_core/lib/otf_viewer')(app);
 app.use(favicon(__dirname + '/public/favicon/favicon.ico'));
 //--
 // Dev Logger
-if (GLOBAL.config["ENV"].mode === 'DEBUG') {
+if (GLOBAL.config["ENV"].mode === 'DEV') {
     var logger = require('morgan');
     app.use(logger('dev'));
 }

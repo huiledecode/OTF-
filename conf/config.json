@@ -1,6 +1,6 @@
 {
     "ENV": {
-        "mode": "TEST"
+        "mode": "DEV"
     },
     "WWW": {
         "port": "3000",

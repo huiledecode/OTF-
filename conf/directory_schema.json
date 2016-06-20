@@ -89,6 +89,14 @@
         "nom": "String",
         "system": "String"
       }
+    },
+    "Countries": {
+      "collection": "countries",
+      "schema": {
+        "_id": "ObjectId",
+        "name": "String",
+        "code": "String"
+      }
     }
 
 }

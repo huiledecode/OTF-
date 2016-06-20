@@ -61,5 +61,12 @@
         "return_type" : "application/json",
         "params_names": [],
         "data_model": "Logs"
+    },
+    "GET/countries": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "countries_list",
+        "auth": false,
+        "data_model":"Countries"
     }
 }

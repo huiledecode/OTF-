@@ -7,6 +7,14 @@
             "type": "file",
             "filename": "log/otf_core.log",
             "maxLogSize": 524288,
+            "category": "otf_core",
+            "numBackups": 3
+        },
+        {
+            "type": "file",
+            "filename": "log/otf_passport.log",
+            "maxLogSize": 524288,
+            "category": "otf_passport",
             "numBackups": 3
         },
         {
