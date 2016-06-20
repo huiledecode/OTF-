@@ -33,6 +33,7 @@
     "mongoose": "~3.8.13",
     "mongoose-pages": "0.0.3",
     "morgan": "~1.0.0",
+    "node-uuid": "~1.4.7",
     "multiparty": "~4.0.0",
     "passport": "*",
     "passport-local": "*",
