@@ -1,0 +1,53 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "nav"}}
+    {{> nav}}
+{{/content}}
+{{#content "page"}}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>My Countries 's list
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active">My Countries's List</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#listcountries" data-toggle="tab">List of countries</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="listcountries">
+                                <form class="form-horizontal" role="form" method="GET" accept-charset="utf-8" action="/countries">
+                                    <div class="form-group">
+                                        <label for="inputName" class="col-sm-2 control-label">Country :</label>
+                                        <div class="col-sm-5">
+                                            <select class="form-control" id="role" name="role" required="required">
+                                                {{#each result}}
+                                                    <option value="{{this._id}}" >{{this.name}} - {{this.code}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!-- /.tab-pane -->
+                        </div><!-- /.tab-content -->
+                    </div><!-- /.nav-tabs-custom -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}
