@@ -105,7 +105,7 @@ Go back to the OTF's root directory.
 
 Open a terminal, Go back to the OTF's root directory. :
 
-<pre><code>$ cd otf_core</code></pre>
+<pre><code>$ cd otf</code></pre>
 
 Get all the dependancies by npm :
 
