@@ -97,6 +97,17 @@
         "name": "String",
         "code": "String"
       }
+    },
+    "Users": {
+        "collection": "users",
+        "schema": {
+          "_id": "ObjectId",
+          "name": "String",
+          "firstname": "String",
+          "visited_countries": [{
+            "type": "ObjectId",
+            "ref": "Countries"
+          }]
+        }
     }
-
 }
