@@ -33,7 +33,7 @@ exports.finder = {
         try {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocuments({}, function (err, list_users) {
-                logger.debug('liste des utilisateurs :', JSON.stringify(list_users));
+                logger.debug('data list  :', JSON.stringify(list_users));
                 var t2 = new Date().getMilliseconds();
                 logger.info('into Finder.list before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
                 return cb(null, {result: list_users, "state": state || "TEST", room: _controler.room});
@@ -158,7 +158,7 @@ exports.finder = {
             state = req.session.login_info.state
         //
         //
-        logger.debug(" Finder.list call");
+        logger.debug(" Finder.populate call");
         sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
         try {
             var model = GLOBAL.schemas[_controler.data_model];
@@ -166,7 +166,7 @@ exports.finder = {
             model.popDocuments(_params, function (err, list) {
                 logger.debug('Populate Result  :', list);
                 logger.debug('req.session : ' , req.session );
-                return cb(null, {result: list, user:req.session.login_info.user, "state": state, room: _controler.room});
+                return cb(null, {result: list}); //, user:req.session.login_info.user, "state": state, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
