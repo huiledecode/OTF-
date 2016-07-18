@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Date : 11/06/2014
  * OBJET: Réalisation d'un Framework de routage générique sur Express 4.X avec
- * gestion des exections, de l'authentification et template Jade.
+ * gestion des exeptions, de l'authentification et template Handlebars.
  *
  * author : Stéphane Mascaron && Eric Papet
  *
@@ -76,6 +76,9 @@ require('./otf_core/otf')(app, sessionStore);
 //WebSocket Managment
 require('./otf_core/lib/otf_websocket')(sessionStore, secret, cookie_name);
 
+//--
+// Sequelize configuration like GLOBAL actualy, but not in the future.
+dbSeq = require('./otf_core/lib/otf_sequelize');
 
 //--
 //-- TEST PASSAGE CONTEXT APPLICATIF

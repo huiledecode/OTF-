@@ -20,6 +20,9 @@
             }
         }
     },
+    "SQLITE3": {
+        "db_file": "otf_demo.sqlite3"
+    },
     "WEBSOCK": {
         "log": false
 

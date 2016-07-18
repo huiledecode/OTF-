@@ -33,13 +33,16 @@
     "mongoose": "~3.8.13",
     "mongoose-pages": "0.0.3",
     "morgan": "~1.0.0",
-    "node-uuid": "~1.4.7",
     "multiparty": "~4.0.0",
+    "mysql": "^2.11.1",
+    "node-uuid": "~1.4.7",
     "passport": "*",
     "passport-local": "*",
     "redis": "~0.12.1",
+    "sequelize": "^3.23.4",
     "serve-favicon": "*",
     "socket.io": "*",
+    "sqlite3": "^3.1.4",
     "underscore": "^1.8.3",
     "util": "~0.10.3"
   }

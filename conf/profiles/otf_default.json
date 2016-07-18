@@ -68,5 +68,12 @@
         "screen": "countries_list",
         "auth": false,
         "data_model":"Countries"
+    },
+    "GET/countriesSQL": {
+        "module": "finderSQL",
+        "methode": "list",
+        "screen": "countries_list",
+        "auth": false,
+        "sql_request": "SELECT * FROM countries"
     }
 }

@@ -63,6 +63,7 @@ function getControler(req, cb) {
     var ref;
     var content_type = req.headers['content-type'];
     var return_type;
+    var sql_request;
     //--
     //-- USER PROFILE
     if (req.session.profile) {
@@ -93,6 +94,10 @@ function getControler(req, cb) {
     redirect = annuaire[type + path].redirect;
     if (typeof redirect == 'undefined')
         redirect = false;
+
+    // -- sql_request for SQL beans
+    sql_request = annuaire[type + path].sql_request;
+
 
     // -- check Authentificate flag
     //@TODO GERER ÇA PAR L'ANNUAIRE
@@ -162,7 +167,8 @@ function getControler(req, cb) {
         'content_type' : return_type,
         //'schema': schema,
         'isRedirect': redirect,
-        'redirect_action': redirect_action
+        'redirect_action': redirect_action,
+        'sql_request': sql_request
     };
     /****** Traitement des paramètres pour les requête mongoDB *********/
     filter_acceptableFields = annuaire[type + path].params_names;
@@ -231,7 +237,6 @@ function otfAction(req, res, next) {// attention il ne
             /* Appel de la méthode du bean via une callback pour permettre
              * au bean d'exécuter des actions asynchrones et donc ne pas bloquer
              * l'application aux autres utilisateurs */
-            // On ajoute la room
             req.session.controler = controler;
             //beans.params, beans.path, beans.data_model, beans.schema, beans.room
             controler.action(req, function (errBean, result) {
