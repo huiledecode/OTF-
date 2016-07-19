@@ -8,14 +8,14 @@ var Sequelize = require('sequelize');
 var logger = require('log4js').getLogger('otf_mongooseGeneric');
 var db = {};
 
-   /* sequelize = new Sequelize('otf_demo', 'root', 'Vna2Pms4!',
+   sequelize = new Sequelize('otf_demo', 'root', 'Vna2Pms4!',
         { host: 'localhost', dialect: 'mysql', pool: { max: 5, min: 0, idle: 10000 }}
     );
     db.sequelize = sequelize;
-    db.Sequelize = Sequelize;*/
+    db.Sequelize = Sequelize;
 
    /** TODO Add Models to have the generic access to datas whatever the SQL database used **/
-
+   /* you can see file dump/sqldb/models/index.js which charging models dynamically */
 
 module.exports.db = db;
 
