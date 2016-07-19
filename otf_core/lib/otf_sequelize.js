@@ -16,5 +16,6 @@ var db = {};
 
    /** TODO Add Models to have the generic access to datas whatever the SQL database used **/
 
+
 module.exports.db = db;
 

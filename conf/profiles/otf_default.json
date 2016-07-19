@@ -75,5 +75,11 @@
         "screen": "countries_list",
         "auth": false,
         "sql_request": "SELECT * FROM countries"
+    },
+    "GET/countriesByModels": {
+        "module": "finderSQL",
+        "methode": "listByModels",
+        "screen":"countries_list",
+        "auth": false
     }
 }

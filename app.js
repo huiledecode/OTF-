@@ -70,15 +70,17 @@ app.use(function(req, res, next){
 });
 
 //--
+// Sequelize configuration like GLOBAL actualy, but not in the future.
+//dbSeq = require('./otf_core/lib/otf_sequelize');
+app.set('models', require('./conf/models'));
+
+//--
 // Routes Managment by Otf Framework
 require('./otf_core/otf')(app, sessionStore);
 //--
 //WebSocket Managment
 require('./otf_core/lib/otf_websocket')(sessionStore, secret, cookie_name);
 
-//--
-// Sequelize configuration like GLOBAL actualy, but not in the future.
-dbSeq = require('./otf_core/lib/otf_sequelize');
 
 //--
 //-- TEST PASSAGE CONTEXT APPLICATIF

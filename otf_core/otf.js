@@ -50,7 +50,8 @@ function getControler(req, cb) {
     var filteredQuery = {}; // clause where de la requête MongoDB
     //var sessionData = {}; // info à passer au bean contenu dans la session
     var path;
-    var modele;
+    var modele; // Mongoose Schema modele
+    var models; //SQL Sequelize models
     var schema;
     var type;
     var auth;
@@ -152,6 +153,11 @@ function getControler(req, cb) {
         return_type = "text/html";
     } else return_type = annuaire[type + path].return_type;
     // --
+    // -- Add SQL moels to controler, it is necessary to use SQL Models into Beans.
+    if (typeof appContext.get('models') != 'undefined') {
+        models = appContext.get('models');
+    }
+    // --
     // -- beans data structure with HTTP parameters
     controler = {
         'auth': auth,
@@ -168,7 +174,8 @@ function getControler(req, cb) {
         //'schema': schema,
         'isRedirect': redirect,
         'redirect_action': redirect_action,
-        'sql_request': sql_request
+        'sql_request': sql_request,
+        'models': models
     };
     /****** Traitement des paramètres pour les requête mongoDB *********/
     filter_acceptableFields = annuaire[type + path].params_names;

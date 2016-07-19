@@ -52,6 +52,18 @@ exports.finderSQL = {
         }
     },
 
+    listByModels: function(req, cb) {
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state;
+        
+        _controler.models.countries.findAll().then(function(countries) {
+           return cb(null, {result: countries, "state": state || "TEST", room: _controler.room});
+        });
+    },
 
 
     one: function (req, cb) {

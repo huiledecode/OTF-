@@ -1,0 +1,20 @@
+{
+    "development": {
+        "dialect": "sqlite",
+        "storage": "./otf_demo.sqlite3"
+    },
+    "test": {
+        "username": "root",
+        "password": "Vna2Pms4!",
+        "database": "otf_demo",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "root",
+        "password": "Vna2Pms4!",
+        "database": "otf_demo",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+}
