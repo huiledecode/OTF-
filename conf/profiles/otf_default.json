@@ -82,5 +82,13 @@
         "screen":"countries_list",
         "auth": false,
         "data_model":"countries"
+    },
+    "GET/json/countriesByModels": {
+        "module": "finderSQL",
+        "methode": "listByModels",
+        "screen":"countries_list",
+        "auth": false,
+        "data_model":"countries",
+        "return_type": "application/json"
     }
 }
