@@ -15,7 +15,7 @@
     "cookie": "*",
     "cookie-parser": "*",
     "debug": "~0.7.4",
-    "express": "*",
+    "express": "4.14.0",
     "express-flash": "0.0.2",
     "express-handlebars": "~1.1.0",
     "express-session": "*",

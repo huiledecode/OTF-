@@ -80,6 +80,7 @@
         "module": "finderSQL",
         "methode": "listByModels",
         "screen":"countries_list",
-        "auth": false
+        "auth": false,
+        "data_model":"countries"
     }
 }

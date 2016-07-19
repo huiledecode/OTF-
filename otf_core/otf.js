@@ -110,7 +110,7 @@ function getControler(req, cb) {
         redirect = true;
         redirect_action = 'login';
     } else if (!auth) {
-        logger.debug("OTF² Page non sécurisée  [session id : [%s] ]", req.sessionID);// redirect to loggin
+        logger.debug("OTF² Page non sécurisée  [session id : [%s] ]", req.sessionID);// redirect to redirect_action
         module = annuaire[type + path].module;
         methode = annuaire[type + path].methode;
         screen = annuaire[type + path].screen;
@@ -153,9 +153,9 @@ function getControler(req, cb) {
         return_type = "text/html";
     } else return_type = annuaire[type + path].return_type;
     // --
-    // -- Add SQL moels to controler, it is necessary to use SQL Models into Beans.
+    // -- Add SQL models to controler, it is necessary to use SQL Models into Beans.
     if (typeof appContext.get('models') != 'undefined') {
-        models = appContext.get('models');
+        models = appContext.get('models')[modele];
     }
     // --
     // -- beans data structure with HTTP parameters

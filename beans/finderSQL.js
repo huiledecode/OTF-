@@ -60,8 +60,9 @@ exports.finderSQL = {
         else
             state = req.session.login_info.state;
         
-        _controler.models.countries.findAll().then(function(countries) {
-           return cb(null, {result: countries, "state": state || "TEST", room: _controler.room});
+        _controler.models.findAll().then(function(countries) {
+            delete _controler.models;
+            return cb(null, {result: countries, room: _controler.room});
         });
     },
 
