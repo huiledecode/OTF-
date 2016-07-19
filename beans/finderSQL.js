@@ -62,10 +62,24 @@ exports.finderSQL = {
         
         _controler.models.findAll().then(function(countries) {
             delete _controler.models;
-            return cb(null, {result: countries, room: _controler.room});
+            return cb(null, {result: countries, "state": state || "TEST", room: _controler.room});
         });
     },
 
+    oneByModels: function(req, cb) {
+        var _controler = req.session.controler;
+        logger.debug('FinderSQL.oneByModels params  : ', _controler.params);
+        var id = _controler.params.id;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state;
+        _controler.models.findById(id).then(function(record) {
+            delete _controler.models;
+            return cb(null, {result: record, "state": state || "TEST", room: _controler.room});
+        });
+    },
 
     one: function (req, cb) {
         // Input security Controle

@@ -90,5 +90,22 @@
         "auth": false,
         "data_model":"countries",
         "return_type": "application/json"
+    },
+    "GET/json/oneByModels" : {
+        "module": "finderSQL",
+        "methode": "oneByModels",
+        "screen": "country",
+        "auth": false,
+        "params_names": ["id"],
+        "data_model": "countries",
+        "return_type": "application/json"
+    },
+    "GET/oneByModels" : {
+        "module": "finderSQL",
+        "methode": "oneByModels",
+        "screen": "country",
+        "auth": false,
+        "params_names": ["id"],
+        "data_model": "countries"
     }
 }
