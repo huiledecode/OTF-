@@ -71,7 +71,7 @@ app.use(function(req, res, next){
 
 //--
 // Sequelize configuration like GLOBAL actualy, but not in the future.
-//dbSeq = require('./otf_core/lib/otf_sequelize');
+dbSeq = require('./otf_core/lib/otf_sequelize');
 app.set('models', require('./conf/models'));
 
 //--
