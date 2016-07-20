@@ -18,7 +18,7 @@ exports.finderSQL = {
     /** ************************************************* */
     /** Function list for prototyping on sqlite3 database */
     /** ************************************************* */
-    list: function (req, cb) {
+    listSqlite: function (req, cb) {
         var t1 = new Date().getMilliseconds();
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
@@ -58,7 +58,7 @@ exports.finderSQL = {
     /** ************************************************* */
     /** Function one for prototyping on sqlite3 database  */
     /** ************************************************* */
-    one: function (req, cb) {
+    oneSqlite: function (req, cb) {
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
             error = new Error('req.session undefined');
@@ -88,6 +88,36 @@ exports.finderSQL = {
                     return cb(null, {result: rows, "state": state || "TEST", room: _controler.room});
                 });
             });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+
+    /** ************************************************************************ */
+    /** Function list for connecting database with ORM Sequelize                */
+    /** and direct SQL (sql_resquest attribute in flight plan)                   */
+    /** ************************************************************************ */
+    list: function (req, cb) {
+        var t1 = new Date().getMilliseconds();
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        //
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state;
+        logger.debug(" FinderSQL.list call");
+        try {
+            dbSeq.db.sequelize
+                .query(_controler.sql_request, {type: dbSeq.db.sequelize.QueryTypes.SELECT})
+                .then(function(countries) {
+                    return cb(null, {result: countries, "state": state || "TEST", room: _controler.room});
+                });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
         }
