@@ -107,5 +107,13 @@
         "auth": false,
         "params_names": ["id"],
         "data_model": "countries"
+    },
+    "GET/listWithParams": {
+        "module": "finderSQL",
+        "methode": "listParams",
+        "screen": "countries_list",
+        "auth": false,
+        "params_names": ["code"],
+        "sql_request": "SELECT * FROM countries where code = :code"
     }
 }
