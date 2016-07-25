@@ -123,7 +123,8 @@ exports.finderSQL = {
     /** Function list for connecting database with ORM Sequelize                 */
     /** and direct SQL (sql_resquest attribute in flight plan)                   */
     /** sql_request : "SELECT * FROM projects WHERE status = :status"            */
-    /** ************************************************************************ */
+    /** return an Array even if just one record is selecting
+     /** ************************************************************************ */
     listParams: function (req, cb) {
         var t1 = new Date().getMilliseconds();
         // Input security Controle
