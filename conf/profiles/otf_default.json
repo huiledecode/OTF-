@@ -111,9 +111,17 @@
     "GET/listWithParams": {
         "module": "finderSQL",
         "methode": "listParams",
-        "screen": "countries_list",
+        "screen": "country",
         "auth": false,
         "params_names": ["code"],
         "sql_request": "SELECT * FROM countries where code = :code"
+    },
+    "GET/listWithParamsLike": {
+        "module": "finderSQL",
+        "methode": "listParams",
+        "screen": "countries_list",
+        "auth": false,
+        "params_names": ["code"],
+        "sql_request": "SELECT * FROM countries where code like :code"
     }
 }
