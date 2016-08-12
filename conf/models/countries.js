@@ -6,7 +6,7 @@
 module.exports = function(sequelize, DataTypes) {
 
     var Countries = sequelize.define('countries', {
-        id: {
+        _id: {
             type: DataTypes.INTEGER,
             field: '_id', // Will result in an attribute that is firstName when user facing but first_name in the database
             primaryKey: true
