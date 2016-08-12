@@ -145,7 +145,11 @@ exports.finderSQL = {
                 .query(_controler.sql_request, {replacements: _controler.params, type: dbSeq.db.sequelize.QueryTypes.SELECT})
                 .then(function(datas) {
                     delete _controler.models;
-                    return cb(null, {result: datas, "state": state || "TEST", room: _controler.room});
+                    if (datas.length>1) // if more than one response an Array is send
+                        return cb(null, {result: datas, "state": state || "TEST", room: _controler.room});
+                    else // if just one response an Object is send
+                        return cb(null, {result: datas[0], "state": state || "TEST", room: _controler.room});
+
                 });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
             logger.error(err);
