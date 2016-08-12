@@ -169,9 +169,9 @@ exports.finderSQL = {
         });
     },
 
-    /** *************************************************************** */
-    /** Function oneByModels for connectiong database with ORM Sequlize */
-    /** *************************************************************** */
+    /** **************************************************************** */
+    /** Function oneByModels for connecting database with ORM Sequelize  */
+    /** **************************************************************** */
     oneByModels: function(req, cb) {
         var _controler = req.session.controler;
         logger.debug('FinderSQL.oneByModels params  : ', _controler.params);
