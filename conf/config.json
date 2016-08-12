@@ -23,6 +23,18 @@
     "SQLITE3": {
         "db_file": "otf_demo.sqlite3"
     },
+    "SEQUELIZE": {
+        "db_name": "otf_demo",
+        "db_login": "root",
+        "db_password": "Vna2Pms4!",
+        "db_host": "localhost",
+        "db_dialect" : "mysql",
+        "pool": {
+            "max": 5,
+            "min": 0,
+            "idle": 10000
+        }
+    },
     "WEBSOCK": {
         "log": false
 

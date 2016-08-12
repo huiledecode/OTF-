@@ -8,8 +8,9 @@ var Sequelize = require('sequelize');
 var logger = require('log4js').getLogger('otf_mongooseGeneric');
 var db = {};
 
-   sequelize = new Sequelize('otf_demo', 'root', 'Vna2Pms4!',
-        { host: 'localhost', dialect: 'mysql', pool: { max: 5, min: 0, idle: 10000 }}
+   var globals = GLOBAL.config["SEQUELIZE"];
+   sequelize = new Sequelize(globals.db_name, globals.db_login, globals.db_password,
+        { host: globals.db_host, dialect: globals.db_dialect, pool: globals.pool[0]}
     );
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
