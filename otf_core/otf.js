@@ -293,6 +293,8 @@ function otfAction(req, res, next) {// attention il ne
                         result = addFlashToResult(req.flash(), result);
 //logger.debug('###### Controleur retour vue getview avec result : ', result);
 //logger.debug('###### Controleur req.flash error ? : ', req.flash());
+                        if (typeof result.result != 'undefined') result.result.params = controler.params;
+                        else result.params = controler.params;
                         res.render(req.session.controler.screen, result);
                     } else {
                         res.setHeader('Content-Type', controler.content_type);
