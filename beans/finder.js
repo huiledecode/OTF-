@@ -34,6 +34,8 @@ exports.finder = {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocuments({}, function (err, list_users) {
                 logger.debug('data list  :', JSON.stringify(list_users));
+                // On ajoute une propriété 'js' à notre litse_users qui contiendra les données sous forme de chaîne pour l'exploitation dans du JavaScript
+                list_users.str = JSON.stringify(list_users);
                 var t2 = new Date().getMilliseconds();
                 logger.info('into Finder.list before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
                 return cb(null, {result: list_users, "state": state || "TEST", room: _controler.room});
@@ -69,6 +71,7 @@ exports.finder = {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocument(_controler.params, function (err, one_user) {
                 logger.debug('Utilisateurs :', one_user);
+                one_user.str =  JSON.stringify(one_user);
                 return cb(null, {result: one_user, "state": state, room: _controler.room});
             });
 
@@ -105,7 +108,8 @@ exports.finder = {
             var model = GLOBAL.schemas[_controler.data_model];
             model.getDocument(_controler.params, function (err, one_user) {
                 logger.debug('Utilisateurs :', one_user);
-                result.one = one_user;
+                result.one= one_user;
+                result.one.str = JSON.stringify(one_user);
                 try {
                     var listSchemas = _controler.data_ref;
                         
@@ -119,6 +123,7 @@ exports.finder = {
                                 else {
                                     logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
                                     result[listSchemas[i]] = list_datas;
+                                    (result[listSchemas[i]]).str = JSON.stringify(list_datas);
                                     logger.debug('affiche result pour i=' + i + '   : ', result);
                                     // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
                                     getDocsMultiSchemas(i + 1, cbk);
@@ -128,7 +133,7 @@ exports.finder = {
                             cbk();
                         }
                     }
-
+                    
                     getDocsMultiSchemas(0, function () {
                         var t2 = new Date().getMilliseconds();
                         logger.info('into Finder.listMultiSchema before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
@@ -166,6 +171,7 @@ exports.finder = {
             model.popDocuments(_params, function (err, list) {
                 logger.debug('Populate Result  :', list);
                 logger.debug('req.session : ' , req.session );
+                list.str = JSON.stringify(list);
                 return cb(null, {result: list}); //, user:req.session.login_info.user, "state": state, room: _controler.room});
             });
         } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
@@ -182,6 +188,8 @@ exports.finder = {
         }
         var _controler = req.session.controler;
         var state;
+        logger.debug('REQUEST REQUEST REQUEST');
+        
         if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
             state = "TEST";
         else
@@ -204,6 +212,7 @@ exports.finder = {
                         else {
                             logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
                             result[listSchemas[i]] = list_datas;
+                            (result[listSchemas[i]]).str = JSON.stringify(list_datas);
                             logger.debug('affiche result pour i=' + i + '   : ', result);
                             // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
                             getDocsMultiSchemas(i + 1, cbk);
@@ -256,6 +265,7 @@ exports.finder = {
                         else {
                             logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
                             result[schema] = list_datas;
+                            result[schema].js = JSON.stringify(list_datas);
                             logger.debug('affiche result pour schema =' + schema + '   : ', result);
                             callback();
                         }
