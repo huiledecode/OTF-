@@ -2,7 +2,8 @@
  * GET / POST finding
  * Il s'agit ici d'un Bean générique qui en fonction des données dans
  * l'annuaire otf json est capable de faire un find et de retourner
- * un objet json contenant le resultat de la requête sur une base de données sqlite3.
+ * un objet json contenant le resultat de la requête sur une base de données sqlite3
+ * ou une base de données compatible avec Sequelize.
  */
 var logger = require('log4js').getLogger('finder');
 logger.setLevel(GLOBAL.config["LOGS"].level);
@@ -84,7 +85,7 @@ exports.finderSQL = {
                     return cb(null, {result: rows, "state": state || "TEST", room: _controler.room});
                 });
             });
-        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+        } catch (err) {
             logger.error(err);
         }
     },
@@ -114,7 +115,7 @@ exports.finderSQL = {
                 .then(function(datas) {
                     return cb(null, {result: datas, "state": state || "TEST", room: _controler.room});
                 });
-        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+        } catch (err) {
             logger.error(err);
         }
     },
@@ -123,7 +124,7 @@ exports.finderSQL = {
     /** Function list for connecting database with ORM Sequelize                 */
     /** and direct SQL (sql_resquest attribute in flight plan)                   */
     /** sql_request : "SELECT * FROM projects WHERE status = :status"            */
-    /** return an Array even if just one record is selecting
+    /** return an Array or an Object if just one record is selecting
      /** ************************************************************************ */
     listParams: function (req, cb) {
         var t1 = new Date().getMilliseconds();
@@ -151,7 +152,7 @@ exports.finderSQL = {
                         return cb(null, {result: datas[0], "state": state || "TEST", room: _controler.room});
 
                 });
-        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+        } catch (err) {
             logger.error(err);
         }
     },
