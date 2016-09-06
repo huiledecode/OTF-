@@ -12,6 +12,10 @@ You need to install Node.js, npm, mongoDB and Redis to use OTF². For example, o
 
 <pre><code>$ sudo apt-get install nodejs npm redis-server build-essential python2.7 nodejs-legacy</code></pre>
 
+You need to install graphicsmagic library for images work :
+ 
+<pre><code>$ sudo apt-get install graphicsmagick</code></pre>
+
 And you to install mongoDB v2.6.10 :
 
 <pre><code>$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10</code></pre>
