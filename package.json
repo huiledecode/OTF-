@@ -41,7 +41,7 @@
     "redis": "~0.12.1",
     "sequelize": "^3.23.4",
     "serve-favicon": "*",
-    "socket.io": "*",
+    "socket.io": "^1.4.5",
     "sqlite3": "^3.1.4",
     "underscore": "^1.8.3",
     "util": "~0.10.3"
