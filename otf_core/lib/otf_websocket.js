@@ -80,7 +80,6 @@ module.exports = function (sessionStore, secret, cookieName) {
     sio.on('connection', function (socket) {
         //socket.broadcast.to(id).emit('my message', msg);
         log.debug("OTF² WS connection socket.id :" + socket.id);
-        log.info(socket.nsp._events.toString());
         //log.debug(" WS connection cookie    : " + socket.request.headers.cookie);
         log.debug("OTF² WS connection sessionId : " + socket.handshake.sessionid);
         //log.debug(" WS connection user : " + socket.client.request.session.passport.user);
