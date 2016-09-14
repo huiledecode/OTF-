@@ -13,7 +13,7 @@
         "level": "DEBUG"
     },
     "MONGO": {
-        "url": "mongodb://@127.0.0.1:27017/otf_demo",
+        "url": "mongodb://127.0.0.1:27017/otf_demo",
         "options": {
             "server": {
                 "poolSize": 5

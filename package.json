@@ -30,7 +30,7 @@
     "log4js-node-mongodb": "*",
     "moment": "^2.13.0",
     "mongo-oplog": "0.1.5",
-    "mongoose": "~3.8.13",
+    "mongoose": "~4.6.0",
     "mongoose-pages": "0.0.3",
     "morgan": "~1.0.0",
     "multiparty": "~4.0.0",

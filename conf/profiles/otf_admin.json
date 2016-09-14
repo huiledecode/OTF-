@@ -151,7 +151,8 @@
         "auth": true,
         "params_names": ["_id"],
         "data_model": "AccountId",
-        "redirect": true
+        "redirect": true,
+        "redirect_action": "users"
     },
     "GET/updatelogs": {
         "module": "finder",

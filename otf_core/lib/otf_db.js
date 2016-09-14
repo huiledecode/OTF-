@@ -12,6 +12,7 @@ function getPoolConnection(dbUrl, options) {
     if (mongoose.connection)
         mongoose.connection.close();
     //
+    mongoose.Promise = global.Promise; // compatibility mongoose 4.6.0
     con = mongoose.connect(dbUrl, options);
     // Global DB
     if (GLOBAL.db)

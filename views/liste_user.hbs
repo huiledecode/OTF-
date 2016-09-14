@@ -8,7 +8,7 @@
     <script>
         //<![CDATA[
         $(document).ready(function() {
-            populateGenericDatatable("/usersjson", "table_usagers", "_id", 10, [], {buttons: [{edit_btn:true, name:"/fiche_user", id_name:"_id"},{remove_btn:true, name:"/supprimer_user?id_extrauser={{result.user._id}}", id_name:"_id"}]});
+            populateGenericDatatable("/usersjson", "table_usagers", "_id", 10, [], {buttons: [{edit_btn:true, name:"/fiche_user", id_name:"_id"},{remove_btn:true, name:"/deleteuser", id_name:"_id"}]});
         });
         //]]>
     </script>
