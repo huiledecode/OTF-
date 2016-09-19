@@ -101,16 +101,14 @@
                                                    pattern=".{5,}" title="password doesn't equals" required="required">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!--div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">Role</label>
                                         <div class="col-sm-5">
                                             <select class="form-control" id="role" name="role" required="required">
-                                                {{#each result.Role}}
-                                                    <option value="{{this._id}}" {{#compare this._id.id ../result.one.role.id operator='==='}}selected{{/compare}}>{{this.code}} - {{this.libelle}}</option>
-                                                {{/each}}
                                             </select>
                                         </div>
-                                    </div>
+                                    </div-->
+                                    {{renderComponent 'comboBox' name='role' idCompare=../result.one.role.id values=../result.Role}}
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">Adress</label>
                                         <div class="col-sm-10">

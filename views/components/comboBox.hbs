@@ -1,0 +1,11 @@
+<div class="form-group">
+    <label for="{{this.name}}" class="col-sm-2 control-label">{{this.name}} : </label>
+    <div class="col-sm-5">
+        <select class="form-control" id="{{this.name}}" name="{{this.name}}" required="required">
+            {{#each values}}
+                id role user  : {{../this.idCompare}}<br/>
+                <option value="{{this._id}}" {{#compare this._id.id ../this.idCompare operator='equals'}}selected{{/compare}}>{{this.code}}</option>
+            {{/each}}
+        </select>
+    </div>
+</div>

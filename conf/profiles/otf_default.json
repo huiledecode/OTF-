@@ -123,5 +123,14 @@
         "auth": false,
         "params_names": ["code"],
         "sql_request": "SELECT * FROM countries where code like :code"
+    },
+    "GET/fiche_profil": {
+        "module": "finder",
+        "methode": "oneAndListMultiSchemas",
+        "screen": "fiche_profil",
+        "auth": false,
+        "params_names": ["_id"],
+        "data_model": "AccountId",
+        "data_ref": ["Role"]
     }
 }

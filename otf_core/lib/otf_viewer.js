@@ -8,6 +8,7 @@ module.exports = function (app) {
     var assemble = require('assemble');
 //var layout_helpers = require("handlebars-helpers/lib/helpers/helpers-layouts");
     var helpers = require("handlebars-helpers");
+    var helperPartials = require('handlebars-helper-partial')(handlebars);
     var fs = require("fs");
     var _ = require('underscore');
 
@@ -39,6 +40,9 @@ console.log("####### COMPARE lvalue :", lvalue, " et rvalue: ", rvalue);
                     },
                     '===': function (l, r) {
                         return l === r;
+                    },
+                    'equals': function (l, r) {
+                        return l.equals(r);  
                     },
                     '!=': function (l, r) {
                         return l != r;
@@ -403,6 +407,37 @@ console.log("#### l.indexOf(r) : ",l.indexOf(r));
                 return buffer.replace(new RegExp(' ', 'g'), '+');
               else
                 return buffer;
+            },
+            renderPartial : function(partialName, options) {
+                if (!partialName) {
+                    console.error('No partial name given.');
+                    return '';
+                }
+                var partial = handlebars.compile(fs.readFileSync(hbs.partialsDir[1]+partialName+".hbs", 'utf8'));
+                console.log('******************>  partialName : ' + partial);
+                if (!partial) {
+                    console.error('Couldnt find the compiled partial: ' + partialName);
+                    return '';
+                }
+                options.hash.str = "";
+                options.hash.str = JSON.stringify(options.hash);
+                return new handlebars.SafeString(partial(options.hash));
+            },
+            renderComponent : function(componentName, options) {
+                if (!componentName) {
+                    console.error('No partial name given.');
+                    return '';
+                }
+                handlebars.registerHelper('helpers', helpers);
+                var partial = handlebars.compile(fs.readFileSync(hbs.partialsDir[1]+'/components/'+componentName+".hbs", 'utf8'));
+                console.log('******************>  partialName : ' + partial);
+                if (!partial) {
+                    console.error('Couldn\'t find the compiled partial: ' + componentName);
+                    return '';
+                }
+                options.hash.str = "";
+                options.hash.str = JSON.stringify(options.hash);
+                return new handlebars.SafeString(partial(options.hash));
             }
 
         }
