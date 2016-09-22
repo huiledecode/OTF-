@@ -3,8 +3,7 @@
     <div class="col-sm-5">
         <select class="form-control" id="{{this.name}}" name="{{this.name}}" required="required">
             {{#each values}}
-                id role user  : {{../this.idCompare}}<br/>
-                <option value="{{this._id}}" {{#compare this._id.id ../this.idCompare operator='equals'}}selected{{/compare}}>{{this.code}}</option>
+                <option value="{{this._id}}" {{#compare this._id.id ../this.idCompare.id operator='equals'}}selected{{/compare}}>{{this.code}}</option>
             {{/each}}
         </select>
     </div>

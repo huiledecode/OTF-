@@ -428,7 +428,62 @@ console.log("#### l.indexOf(r) : ",l.indexOf(r));
                     console.error('No partial name given.');
                     return '';
                 }
-                handlebars.registerHelper('helpers', helpers);
+                handlebars.registerHelper('compare', function (lvalue, rvalue, options) {
+                    console.log("####### COMPARE lvalue :", lvalue, " et rvalue: ", rvalue);
+                    if (arguments.length < 3)
+                        throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+                    var operator = options.hash.operator || "==";
+
+                    var operators = {
+                        'equals': function (l, r) {
+                            console.log('l.equals(r) : ' + (l.equals(r)));
+                            return l.equals(r);
+                        },
+                        '==': function (l, r) {
+                            console.log('l == r : ' + (l == r));
+                            return l == r;
+                        },
+                        '===': function (l, r) {
+                            return l === r;
+                        },
+                        '!=': function (l, r) {
+                            return l != r;
+                        },
+                        '<': function (l, r) {
+                            return l < r;
+                        },
+                        '>': function (l, r) {
+                            return l > r;
+                        },
+                        '<=': function (l, r) {
+                            return l <= r;
+                        },
+                        '>=': function (l, r) {
+                            return l >= r;
+                        },
+                        'typeof': function (l, r) {
+                            return typeof l == r;
+                        },
+                        'indexof': function (l, r) {
+                            console.log("#### OTF VIEWER indexof : ", l, " et ", r);
+                            if (!l)
+                                return false;
+                            console.log("#### l.indexOf(r) : ", l.indexOf(r));
+                            return l.indexOf(r) != -1;
+                        }
+                    }
+                    if (!operators[operator])
+                        throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+
+                    var result = operators[operator](lvalue, rvalue);
+
+                    if (result) {
+                        return options.fn(this);
+                    } else {
+                        return options.inverse(this);
+                    }
+                });
                 var partial = handlebars.compile(fs.readFileSync(hbs.partialsDir[1]+'/components/'+componentName+".hbs", 'utf8'));
                 console.log('******************>  partialName : ' + partial);
                 if (!partial) {
