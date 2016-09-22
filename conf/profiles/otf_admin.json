@@ -131,7 +131,7 @@
         "screen": "formupdateuser",
         "auth": true,
         "params_names": ["_id"],
-        "data_model": "Accounts",
+        "data_model": "AccountId",
         "data_ref": ["Role"]
     },
     "POST/updateuser": {
