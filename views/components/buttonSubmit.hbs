@@ -1,0 +1,9 @@
+{{#if this.formgroup}}
+    <div class="form-group">
+{{/if}}
+    <div class="col-sm-offset-{{this.nb-col-offset}} col-sm-{{this.nb-col}}">
+        <button type="submit" name="{{this.name}}" id="{{this.name}}" class="btn {{this.btn-class}}" style="border-color: #ff0055">{{this.value}}</button>
+    </div>
+{{#if this.formgroup}}
+    </div>
+{{/if}}

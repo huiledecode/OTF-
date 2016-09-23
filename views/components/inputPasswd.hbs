@@ -1,0 +1,20 @@
+{{#if this.formgroup}}
+    <div class="form-group">
+{{/if}}
+    {{#if this.label}}
+        <label for="{{this.name}}" class="col-sm-2 control-label">{{this.label}}</label>
+    {{/if}}
+    <div class="col-sm-{{nb-col}}">
+        <input type="password" class="form-control" placeholder="{{this.placeholder}}" id="{{this.name}}" name="{{this.name}}"
+               pattern=".{5,}" onchange="form.password2.pattern = this.value;" title="Minimum de 5 lettres ou chiffres" required="required" style="border-color: #ff0055">
+
+    </div>
+{{#if this.confirmPwd}}
+    <div class="col-sm-{{nb-col}}">
+        <input type="password" class="form-control" placeholder="Confirm {{this.placeholder}}" id="{{this.name}}2" name="{{this.name}}2"
+               pattern=".{5,}" title="password doesn't equals" required="required" style="border-color: #ff0055">
+    </div>
+{{/if}}
+{{#if this.formgroup}}
+    </div>
+{{/if}}
