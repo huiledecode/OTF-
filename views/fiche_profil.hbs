@@ -82,12 +82,11 @@
                                                 <option value="Dr" {{#compare user.titre 'Dr' operator='=='}}selected{{/compare}}>Dr</option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" placeholder="Name" type="text" name="nom" title="This field is required" value="{{user.nom}}" required="required" autofocus/>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" placeholder="Firstname" type="text" name="prenom" title="This field is required" value="{{user.prenom}}" required="required"/>
-                                        </div>
+
+                                        {{renderComponent 'inputText' name="nom" placeholder="Name" value=user.nom nb-col="4"}}
+
+                                        {{renderComponent 'inputText' name="prenom" placeholder="Firstname" value=user.prenom nb-col="4"}}
+
                                     </div>
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">Password</label>
@@ -101,20 +100,12 @@
                                                    pattern=".{5,}" title="password doesn't equals" required="required">
                                         </div>
                                     </div>
-                                   <!-- Exemple of components from Helper and compiling partial into an helper -->
+                                   <!-- Examples of components from Helper and compiling partial into an helper -->
                                     {{renderComponent 'comboBox' name='role' idCompare=result.one.role values=result.Role}}
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Adress</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" placeholder="Adresse" type="text" name="adresse1" title="Ce champs est requis" value="{{user.adresse1}}" required="required"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Additional Adress</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" placeholder="Additional Adress" value="{{user.adresse2}}" type="text" name="adresse2"/>
-                                        </div>
-                                    </div>
+
+                                    {{renderComponent 'inputText' name="adresse1" label="Adress 1" placeholder="Primary adress" value=user.adresse1 nb-col="10"}}
+
+                                    {{renderComponent 'inputText' name="adresse2" label="Adress 2" placeholder="Additionnal adress" value=user.adresse2 nb-col="10"}}
                                     <div class="form-group">
                                         <label for="inputName" class="col-sm-2 control-label">Zip Code</label>
                                         <div class="col-sm-2">
