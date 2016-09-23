@@ -103,38 +103,19 @@
                                    <!-- Examples of components from Helper and compiling partial into an helper -->
                                     {{renderComponent 'comboBox' name='role' idCompare=result.one.role values=result.Role}}
 
-                                    {{renderComponent 'inputText' name="adresse1" label="Adress 1" placeholder="Primary adress" value=user.adresse1 nb-col="10"}}
+                                    {{renderComponent 'inputText' name="adresse1" label="Adress 1" placeholder="Primary adress" value=user.adresse1 nb-col="10" formgroup="true"}}
 
-                                    {{renderComponent 'inputText' name="adresse2" label="Adress 2" placeholder="Additionnal adress" value=user.adresse2 nb-col="10"}}
+                                    {{renderComponent 'inputText' name="adresse2" label="Adress 2" placeholder="Additionnal adress" value=user.adresse2 nb-col="10" formgroup="true"}}
+
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Zip Code</label>
-                                        <div class="col-sm-2">
-                                            <input class="form-control" placeholder="Zip Code" type="text" name="code_postal" title="Ce champs est requis" value="{{user.code_postal}}" required="required"/>
-                                        </div>
-                                        <label for="inputName" class="col-sm-2 control-label">City</label>
-                                        <div class="col-sm-6">
-                                            <input class="form-control" placeholder="City" type="text" name="ville" title="Ce champs est requis" value="{{user.ville}}" required="required"/>
-                                        </div>
+                                        {{renderComponent 'inputText' name="code_postal" label="Zip Code" placeholder="Zip Code" value=user.code_postal nb-col="2"}}
+
+                                        {{renderComponent 'inputText' name="ville" label="City" placeholder="City" value=user.ville nb-col="6"}}
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Phone</label>
-                                        <div class="col-sm-10">
-                                            <input class="form-control" type="text" data-inputmask="'mask': '99-99-99-99-99'" data-mask="data-mask" placeholder="Phone" name="telephone" value="{{user.telephone}}" title="Ce champs est requis" required="required"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Email</label>
-                                        <div class="col-sm-5">
-                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                                <input class="form-control" type="email" placeholder="Email" name="email" value="{{user.email}}" title="'Ce champs est requis et doit être de la forme 'example@domain.com'" onchange="form.email2.pattern = this.value;" required="required"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                                <input class="form-control" type="email" placeholder="Confirm email" name="email2" value="{{user.email}}" title="Emails are not equals" required="required"/>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                    {{renderComponent 'inputPhone' name="telephone" label="Phone" inputmask="99-99-99-99-99" formgroup="true" value=user.telephone}}
+
+                                    {{renderComponent 'inputEmail' name="email" formgroup="true" label="Email" placeholder="Email" confirmEmail="true" value=user.email }}
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <input type="hidden" name="id_extrauser" value="{{user._id}}"/>
