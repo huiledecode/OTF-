@@ -124,7 +124,7 @@ function getControler(req, cb) {
     }
     // --
     // --
-    if (module && methode && screen) {
+    if (module && methode) {
         // -- Load module in otf_module
         try {
 
@@ -268,7 +268,7 @@ function otfAction(req, res, next) {// attention il ne
 
                     req.session.params = addFlashToResult(req.flash(), req.session.params);
 
-                    /** Todo Ici ajouter les params du controler pour l'action de redirect */
+                    /** Todo add controler params for redirect action */
                     var propertiesNames = Object.keys(controler.params);
                     logger.debug('PropertiesNames redirect :' , propertiesNames);
                     var params ="?";
@@ -304,7 +304,11 @@ function otfAction(req, res, next) {// attention il ne
                         res.render(req.session.controler.screen, result);
                     } else {
                         res.setHeader('Content-Type', controler.content_type);
-                        res.send(result.result);
+                        if (controler.content_type !='application/vnd.openxmlformats')
+                           res.send(result.result);
+                        else
+                           res.setHeader("Content-Disposition", "attachment; filename=" + 'Export_'+ new Date().getMilliseconds() +'.xlsx');
+                           res.end(result, 'binary');
                     }
                 }
             });
