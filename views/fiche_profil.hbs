@@ -102,6 +102,8 @@
 
                                     {{renderComponent 'inputHidden' name="login" value=user.login}}
 
+                                    {{renderComponent 'comboBoxEditable' formgroup="true" label="Role" name='role2' idCompare=result.one.role values=result.Role nb-col="3" }}
+
                                     {{renderComponent 'buttonSubmit' name="button" nb-col="10" nb-col-offset="2" btn-class="btn-primary" value="Enregistrer" formgroup="true"}}
                                 </form>
                             </div><!-- /.tab-pane -->
