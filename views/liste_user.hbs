@@ -7,9 +7,9 @@
 {{#content "page"}}
     <script>
         //<![CDATA[
-        $(document).ready(function() {
+       /* $(document).ready(function() {
             populateGenericDatatable("/usersjson", "table_usagers", "_id", 10, [], {buttons: [{edit_btn:true, name:"/fiche_user", id_name:"_id"},{remove_btn:true, name:"/deleteuser", id_name:"_id"}]});
-        });
+        });*/
         //]]>
     </script>
 
@@ -44,26 +44,17 @@
                             </div> -->
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <table class="table table-hover" id="table_usagers">
-                                <thead>
-                                <tr>
-                                    <th mData="nom">Name</th>
-                                    <th mData="prenom">Firstname</th>
-                                    <th mData="login">Login</th>
-                                    <th mData="password">Password</th>
-                                    <th mData="role.code">Code</th>
-                                    <th mData="role.libelle">Libellé</th>
-                                    <th mData="telephone">Phone</th>
-                                    <th mData="email">Email</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="dataTables_empty" colspan="10"></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            {{renderComponent 'dataTable'
+                                              urlJson="/usersjson"
+                                              nbLines="10"
+                                              isEditBtn=true
+                                              urlEditBtn="/fiche_user"
+                                              idEditBtn="_id"
+                                              isDelBtn=true
+                                              urlDelBtn="/deleteuser"
+                                              idDelBtn="_id"
+                                              values='["nom", "prenom", "login", "password", "role.code", "role.libelle", "telephone", "email"]'
+                            }}
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
                 </div>
