@@ -5,14 +5,6 @@
     {{> nav}}
 {{/content}}
 {{#content "page"}}
-    <script>
-        //<![CDATA[
-        $(document).ready(function() {
-            populateGenericDatatable("/logsjson", "table_logs", "_id", 10, []);
-        });
-        //]]>
-    </script>
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -34,40 +26,25 @@
                     <div class="box box-warning">
                         <div class="box-header">
                             <h3 class="box-title">Liste des logs OTF Démo</h3>
-                            <!-- <div class="box-tools">
-                              <div class="input-group" style="width: 150px;">
-                                <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
-                                <div class="input-group-btn">
-                                  <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                                </div>
-                              </div>
-                            </div> -->
                         </div><!-- /.box-header -->
                         <div class="box-body">
-                            <table class="table table-hover" id="table_logs">
-                                <thead>
-                                <tr>
-                                    <th mData="date">Date</th>
-                                    <th mData="event">Event</th>
-                                    <th mData="message">Message</th>
-                                    <th mData="ip">Ip</th>
-                                    <th mData="session">Session Id</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="dataTables_empty" colspan="10"></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            {{renderComponent 'dataTable'
+                                              urlJson="/logsjson"
+                                              nbLines="10"
+                                              isEditBtn=false
+                                              urlEditBtn="/"
+                                              idEditBtn="_id"
+                                              isDelBtn=false
+                                              urlDelBtn="/"
+                                              idDelBtn="_id"
+                                              values='["date", "event", "message", "ip", "session"]'
+                            }}
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
                 </div>
             </div>
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-
 {{/content}}
 {{#content "footer"}}
     {{> footer}}
