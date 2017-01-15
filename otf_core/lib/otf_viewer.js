@@ -361,6 +361,7 @@ module.exports = function (app) {
                     console.error('Couldn\'t find the compiled partial: ' + componentName);
                     return '';
                 }
+                options.hash.result = options.data.root.result;
                 if (typeof options.hash.values == 'string') options.hash.values = JSON.parse(options.hash.values);
                 options.hash.str = "";
                 options.hash.str = JSON.stringify(options.hash);
