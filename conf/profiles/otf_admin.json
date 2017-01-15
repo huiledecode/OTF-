@@ -195,5 +195,12 @@
         "auth": true,
         "params_names": [],
         "data_model": ["Accounts", "Logs"]
+    },
+    "GET/countries": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "countries_list",
+        "auth": true,
+        "data_model":"Countries"
     }
 }
