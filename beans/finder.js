@@ -180,7 +180,7 @@ exports.finder = {
             function getDocsFromId(j, cbk) {
                 if (j < _controler.data_model.length) {
                     var model = GLOBAL.schemas[listModels[j]];
-                    model.getDocument(_controler.params[j], function (err, data) {
+                    model.getDocument({ "_id": _controler.params._id[j]}, function (err, data) {
                         logger.debug('datas :', data);
                         result[listModels[j]+'_one'] = data;
                         result[listModels[j]+'_one'].str = JSON.stringify(data);
