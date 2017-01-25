@@ -210,5 +210,14 @@
         "auth": true,
         "data_model":"Countries",
         "return_type": "application/json"
+    },
+    "GET/listparamslogs": {
+        "module": "finder",
+        "methode": "listWithParams",
+        "screen": "countries_list",
+        "auth": true,
+        "params_names": ["event"],
+        "data_model":"Logs",
+        "return_type": "application/json"
     }
 }
