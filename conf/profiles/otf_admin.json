@@ -202,5 +202,13 @@
         "screen": "countries_list",
         "auth": true,
         "data_model":"Countries"
+    },
+    "GET/jsoncountries": {
+        "module": "finder",
+        "methode": "list",
+        "screen": "countries_list",
+        "auth": true,
+        "data_model":"Countries",
+        "return_type": "application/json"
     }
 }
