@@ -45,6 +45,37 @@ exports.finder = {
         }
     },
 
+    listWithParams: function (req, cb) {
+        var t1 = new Date().getMilliseconds();
+        // Input security Controle
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        //
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state;
+        logger.debug(" Finder.list call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        try {
+            var model = GLOBAL.schemas[_controler.data_model];
+            model.getDocuments(_controler.params, function (err, list_users) {
+                logger.debug('data list  :', JSON.stringify(list_users));
+                // On ajoute une propriété 'js' à notre litse_users qui contiendra les données sous forme de chaîne pour l'exploitation dans du JavaScript
+                list_users.str = JSON.stringify(list_users);
+                var t2 = new Date().getMilliseconds();
+                logger.info('into Finder.list before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
+                return cb(null, {result: list_users, "state": state || "TEST", room: _controler.room});
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+
     one: function (req, cb) {
         // Input security Controle
         if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
