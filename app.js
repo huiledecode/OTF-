@@ -81,6 +81,10 @@ require('./otf_core/otf')(app, sessionStore);
 //WebSocket Managment
 require('./otf_core/lib/otf_websocket')(sessionStore, secret, cookie_name);
 
+//--
+//start cronJobs here
+//var scheduler = require("./beans/scheduler");
+//scheduler.startCron();
 
 //--
 //-- TEST PASSAGE CONTEXT APPLICATIF
