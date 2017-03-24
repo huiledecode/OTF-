@@ -39,10 +39,43 @@ exports.inserter = {
 
     },
 
+    /** TODO écrire l'insertion générique d'une liste d'objets avec mongoDB, via mongoose. */
     list: function (req, cb) {
         var _controler = req.session.controler;
-        // ici params est un tableau d'objet à insérer
-        /* TODO écrire l'insertion générique d'une liste d'objets avec mongoDB, via mongoose. */
+        var model = GLOBAL.schemas[_controler.data_model];
+        logger.debug('path    : ', _controler.path);
+        logger.debug('room    : ', _controler.room);
+        logger.debug('model   : ', _controler.data_model);
+        logger.debug('params  : ', _controler.params);
+        logger.debug('schema  : ', _controler.schema);
+        //-- Accounts Model
+        //var modele = mongoose.model(model);
+        // Test Emit WebSocket Event
+        var dataArray = _controler.params;
+        var nbInserted =null;
+        function insertArray(i, cbk) {
+            logger.debug(" List inserter call");
+            //sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' One User\n\t Your Filter is :'});
+            try {
+                if (i < dataArray.length) {
+                    model.createDocument(dataArray[i], function (err, nb_inserted) {
+                        nbInserted = nb_inserted;
+                        logger.debug("objet inséré via inserter.list : ", dataArray[i]);
+                        insertArray(i+1, cbk);
+                    });
+                } else {
+                    cbk();
+                }
+            } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+                return cb(err);
+            }
+
+        }
+
+        insertArray(0, function () {
+            logger.debug('nombre documents insérés :', nbInserted);
+            return cb(null, {data: nbInserted, room: _controler.room});
+        });
 
     }
 };
