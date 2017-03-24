@@ -294,6 +294,108 @@ exports.finder = {
         }
     },
 
+    populateAndListMultiSchemas: function (req, cb) {
+        // Input security Controle
+        var t1 = new Date().getMilliseconds();
+        if (typeof req.session === 'undefined' || typeof req.session.controler === 'undefined') {
+            error = new Error('req.session undefined');
+            return cb(error);
+        }
+        var _controler = req.session.controler;
+        var state;
+        if (typeof req.session == 'undefined' || typeof req.session.login_info === 'undefined' || typeof req.session.login_info.state === 'undefined')
+            state = "TEST";
+        else
+            state = req.session.login_info.state
+        //
+        //
+        logger.debug(" Finder.populate call");
+        sio.sockets.in(_controler.room).emit('user', {room: _controler.room, comment: ' List of Users\n\t Your Filter is : *'});
+        try {
+            var isMultiModels = false;
+            var popModelName = "";
+            var model = {};
+            if (Array.isArray(_controler.data_model)) {
+                isMultiModels = true;
+                popModelName = _controler.data_model[0];
+                model = GLOBAL.schemas[popModelName];
+            } else {
+                popModelName = _controler.data_model;
+                model = GLOBAL.schemas[popModelName];
+            }
+            var _params = { query: _controler.params, ref: _controler.data_ref};
+            model.popDocuments(_params, function (err, list) {
+                //logger.debug('Populate Result  :', list);
+                logger.debug('req.session : ' , req.session );
+                list.str = JSON.stringify(list);
+                try {
+                    var listSchemas = _controler.data_resources;
+                    var result = {};
+                    result[popModelName] = list;
+                    function getDocsMultiSchemas(i, cbk) {
+                        if (i < listSchemas.length) {
+                            var model = GLOBAL.schemas[listSchemas[i]];
+                            model.getDocuments({}, function (err, list_datas) {
+                                if (err) {
+                                    console.log('error: ' + err)
+                                }
+                                else {
+                                    //logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
+                                    result[listSchemas[i]] = list_datas;
+                                    (result[listSchemas[i]]).str = JSON.stringify(list_datas);
+                                    //logger.debug('affiche result pour i=' + i + '   : ', result);
+                                    // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
+                                    getDocsMultiSchemas(i + 1, cbk);
+                                }
+                            });
+                        } else {
+                            cbk();
+                        }
+                    }
+                    getDocsMultiSchemas(0, function () {
+                        function getOneDataModelSchemasWithParams(i, cbk) {
+                            if (i < _controler.data_model.length) {
+                                var model = GLOBAL.schemas[_controler.data_model[i]];
+                                var _paramsNames = Object.getOwnPropertyNames(_controler.params);
+                                //var newId = new ObjectId(_controler.params[_paramsNames[i-1]]);
+
+                                model.getDocument({_id: _controler.params[_paramsNames[i]]}, function (err, list_datas) {
+                                    if (err) {
+                                        console.log('error: ' + err)
+                                    }
+                                    else {
+                                        //logger.debug('listes des données des schemas passés en data_model  :', JSON.stringify(list_datas));
+                                        result[_controler.data_model[i]+"_one"] = list_datas;
+                                        (result[_controler.data_model[i]+"_one"]).str = JSON.stringify(list_datas);
+                                        //logger.debug('affiche result pour i=' + i + '   : ', result);
+                                        // L'asynchronicité peut être géré d'une autre façon soit promise soit async, ici récursivité
+                                        getOneDataModelSchemasWithParams(i + 1, cbk);
+                                    }
+                                });
+                            } else {
+                                cbk(); // on remonte la pile d'appel récursif
+                            }
+                        }
+                        if (isMultiModels) getOneDataModelSchemasWithParams(1, function() {
+                            var t2 = new Date().getMilliseconds();
+                            logger.info('into Finder.populateAndListMultiSchemas before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
+                            return cb(null, {result: result, "state": state || "TEST", room: _controler.room});
+                        });
+                        else {
+                            var t2 = new Date().getMilliseconds();
+                            logger.info('into Finder.populateAndListMultiSchemas before return cb TIME (ms) : ' + (t2 - t1) + 'ms');
+                            return cb(null, {result: result, "state": state || "TEST", room: _controler.room});
+                        }
+                    });
+                } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+                    logger.error(err);
+                }
+            });
+        } catch (err) { // si existe pas alors exception et on l'intègre via mongooseGeneric
+            logger.error(err);
+        }
+    },
+
     listMultiSchemas: function (req, cb) {
         var t1 = new Date().getMilliseconds();
         // Input security Controle
