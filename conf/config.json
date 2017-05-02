@@ -28,7 +28,7 @@
         "db_login": "root",
         "db_password": "azerty",
         "db_host": "localhost",
-        "db_dialect" : "mysql",
+        "db_dialect": "mysql",
         "pool": {
             "max": 5,
             "min": 0,
