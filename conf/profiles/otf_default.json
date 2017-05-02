@@ -25,7 +25,7 @@
         "auth": false,
         "data_model": "Accounts",
         "redirect": true,
-        "redirect_action" : "index"
+        "redirect_action": "index"
     },
     "GET/logout": {
         "module": "signupAccount",
@@ -34,7 +34,7 @@
         "params_names": [],
         "auth": false,
         "redirect": true,
-        "redirect_action" : "login"
+        "redirect_action": "login"
     },
     "GET/logs": {
         "module": "finder",
@@ -44,21 +44,21 @@
         "params_names": [],
         "data_model": "Logs"
     },
-    "GET/testcontenttype" : {
+    "GET/testcontenttype": {
         "module": "finder",
         "methode": "list",
         "screen": "log_list",
         "auth": false,
-        "return_type" : "text/plain",
+        "return_type": "text/plain",
         "params_names": [],
         "data_model": "Logs"
     },
-    "GET/jsoncontenttype" : {
+    "GET/jsoncontenttype": {
         "module": "finder",
         "methode": "list",
         "screen": "log_list",
         "auth": false,
-        "return_type" : "application/json",
+        "return_type": "application/json",
         "params_names": [],
         "data_model": "Logs"
     },
@@ -67,7 +67,8 @@
         "methode": "list",
         "screen": "countries_list",
         "auth": false,
-        "data_model":"Countries"
+        "data_model": "Countries",
+        "return_type": "application/json"
     },
     "GET/countriesSQL": {
         "module": "finderSQL",
@@ -79,19 +80,19 @@
     "GET/countriesByModels": {
         "module": "finderSQL",
         "methode": "listByModels",
-        "screen":"countries_list",
+        "screen": "countries_list",
         "auth": false,
-        "data_model":"countries"
+        "data_model": "countries"
     },
     "GET/json/countriesByModels": {
         "module": "finderSQL",
         "methode": "listByModels",
-        "screen":"countries_list",
+        "screen": "countries_list",
         "auth": false,
-        "data_model":"countries",
+        "data_model": "countries",
         "return_type": "application/json"
     },
-    "GET/json/oneByModels" : {
+    "GET/json/oneByModels": {
         "module": "finderSQL",
         "methode": "oneByModels",
         "screen": "country",
@@ -100,7 +101,7 @@
         "data_model": "countries",
         "return_type": "application/json"
     },
-    "GET/oneByModels" : {
+    "GET/oneByModels": {
         "module": "finderSQL",
         "methode": "oneByModels",
         "screen": "country",

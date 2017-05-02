@@ -1,29 +1,40 @@
 // create connection
 var socket = io.connect('http://localhost:3000');
 // Attente Ack after connection
-socket.on('ack', function (data) {
+socket.on('ack', function(data) {
     console.log('WebSocket Client is connected \n Room is :' + data.sessionid + '\n User is :' + data.user);
 });
 // Opolog event
-socket.on('insertOk', function (data) {
+socket.on('insertOk', function(data) {
     console.log('données insérées en provenance du serveur : ', data);
     delete data.o.__proto;
     delete data.o.__v;
-    var objectStruct = Object.getOwnPropertyNames(data.o).sort();
+    var objectStruct = Object.getOwnPropertyNames(data.o); //.sort(); test sans le sort()
     console.log('objectStruct : ', objectStruct);
     var tabDataToAdd = [];
     for (var k = 0; k < objectStruct.length; k++) {
         tabDataToAdd.push(data.o[objectStruct[k]]);
     }
-    $('#listereponses').dataTable().fnAddData(tabDataToAdd);
+    $('#table_datas').dataTable().fnAddData(tabDataToAdd);
 });
 
-socket.on('deleteOk', function (data) {
+socket.on('deleteOk', function(data) {
     console.log('données supprimées en provenance du serveur : ', data);
-    var table = $('#listereponses').dataTable();
+    var table = $('#table_datas').dataTable();
     table.fnDeleteRow($('#' + data.o._id));
     table.draw(false);
 });
 /**
  * Created by epa on 12/09/14.
  */
+
+/** STRUCTURE DE LA DATATABLE JQUERY DES USERS
+    <th mData="nom">nom</th>
+    <th mData="prenom">prenom</th>
+    <th mData="login">login</th>
+    <th mData="password">password</th>
+    <th mData="role.code">role.code</th>
+    <th mData="role.libelle">role.libelle</th>
+    <th mData="telephone">telephone</th>
+    <th mData="email">email</th>
+**/
