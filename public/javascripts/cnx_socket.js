@@ -38,3 +38,33 @@ socket.on('deleteOk', function(data) {
     <th mData="telephone">telephone</th>
     <th mData="email">email</th>
 **/
+
+/**
+  adresse1: "Rue des serveurs glances"
+adresse2: "apt 42"
+code_postal: "40000"
+email: "jf@admin.fr"
+login : "jf"
+nom: "BROCA"
+notes: ""
+password: "otf"
+prenom: "JF"
+role
+:
+"57601801cbb47caf29000001"
+telephone
+:
+"__-__-__-__-__"
+titre
+:
+"Mr"
+ville
+:
+"MONT-DE-MARSAN"
+__v
+:
+0
+_id
+:
+"590859b7be611ea02b000003"
+**/
