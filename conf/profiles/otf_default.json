@@ -133,5 +133,12 @@
         "params_names": ["_id"],
         "data_model": "AccountId",
         "data_ref": ["Role"]
+    },
+    "GET/date": {
+        "module": "timer",
+        "methode": "today",
+        "screen": "date",
+        "auth": false,
+        "params_names": []
     }
 }
