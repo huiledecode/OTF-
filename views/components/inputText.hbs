@@ -1,0 +1,12 @@
+{{#if this.formgroup}}
+    <div class="form-group">
+{{/if}}
+{{#if this.label}}
+        <label for="{{this.name}}" class="col-sm-2 control-label">{{this.label}} : </label>
+{{/if}}
+        <div class="col-sm-{{this.nb-col}}">
+            <input class="form-control" id="{{this.name}}" placeholder="{{this.placeholder}}" value="{{this.value}}" type="text" name="{{this.name}}" style="border-color: #ff0055"/>
+        </div>
+{{#if this.formgroup}}
+    </div>
+{{/if}}

@@ -168,9 +168,9 @@ exports.finderSQL = {
         else
             state = req.session.login_info.state;
         
-        _controler.models.findAll().then(function(countries) {
+        _controler.models.findAll().then(function(datas) {
             delete _controler.models;
-            return cb(null, {result: countries, "state": state || "TEST", room: _controler.room});
+            return cb(null, {result: datas, "state": state || "TEST", room: _controler.room});
         });
     },
 

@@ -1,0 +1,23 @@
+<script>
+    //<![CDATA[
+    $(document).ready(function() {
+        populateGenericDatatable("{{this.urlJson}}", "table_datas", "_id", {{this.nbLines}}, [], {buttons: [{edit_btn:{{this.isEditBtn}}, name:"{{this.urlEditBtn}}", id_name:"{{this.idEditBtn}}"},{remove_btn:{{this.isDelBtn}}, name:"{{this.urlDelBtn}}", id_name:"{{this.idDelBtn}}"}]});
+    });
+    //]]>
+</script>
+
+<table class="table table-hover" id="table_datas">
+    <thead>
+    <tr>
+        {{#each values}}
+            <th mData="{{this}}">{{this}}</th>
+        {{/each}}
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="dataTables_empty" colspan="10"></td>
+    </tr>
+    </tbody>
+</table>

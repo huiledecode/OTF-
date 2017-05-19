@@ -99,6 +99,32 @@ module.exports = function (app) {
                 });
             });// ~ nextTick
         }));
+    /* function (req, login, password, done) {
+        logger.debug('OTF² Passport  login [%s], password: [%s], body [%s]', login, password, req.body);
+        var ExtraUser = GLOBAL.schemas['ExtraUser'];
+        // asynchronous
+        process.nextTick(function () {*/
+            /** todo : Faire un test sur le type de base de données pour l'authentification au back office */
+    /*        if (GLOBAL.config['AUTH'].db === 'NoSQL') {
+                ExtraUser.popDocument({
+                        query: {login: login},
+                        ref: ["role", "groupes", "usagers", "option"]
+                    }, function (err, _account) {
+                        manageAuthentif(null, req, _account, done);
+                    }
+                );
+            } else {  // if not NoSQL so is SQL*/
+                /** todo : ici faire la connexion avec la base de données SQL login / passwd */
+    /*            dbSeq.db.sequelize
+                    .query(GLOBAL.config['AUTH'].request, {replacements: { login: login, password: password}, type: dbSeq.db.sequelize.QueryTypes.SELECT})
+                    .then(function(_account) {
+                        _account[0].role = { _id : _account[0].ROLE_ID, code: _account[0].CODE, libelle: _account[0].LIBELLE};
+                        manageAuthentif(null, req, _account[0], done);
+                    });
+            }
+
+        });// ~ nextTick
+    }));*/
     //
     app.use(passport.initialize());
     app.use(passport.session());

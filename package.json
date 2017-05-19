@@ -24,6 +24,7 @@
     "gm": "~1.17.0",
     "grunt": "^0.4.5",
     "handlebars": "^2.0.0",
+    "handlebars-helper-partial": "^0.2.0",
     "handlebars-helpers": "^0.5.8",
     "hiredis": "0.4.1",
     "log4js": "*",

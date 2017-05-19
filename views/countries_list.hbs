@@ -28,16 +28,7 @@
                         <div class="tab-content">
                             <div class="active tab-pane" id="listcountries">
                                 <form class="form-horizontal" role="form" method="GET" accept-charset="utf-8" action="/countries">
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Country :</label>
-                                        <div class="col-sm-5">
-                                            <select class="form-control" id="role" name="role" required="required">
-                                                {{#each result}}
-                                                    <option value="{{this._id}}" >{{this.name}} - {{this.code}}</option>
-                                                {{/each}}
-                                            </select>
-                                        </div>
-                                    </div>
+                                    {{renderComponent 'comboBox' name='countries' values=../result}}
                                 </form>
                             </div><!-- /.tab-pane -->
                         </div><!-- /.tab-content -->

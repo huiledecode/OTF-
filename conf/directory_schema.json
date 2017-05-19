@@ -16,7 +16,6 @@
             "ville": "String",
             "actif": "Boolean",
             "notes": "String",
-            "actif": "Boolean",
             "role": {
               "type": "ObjectId",
               "ref": "Role"
@@ -42,7 +41,6 @@
             "ville": "String",
             "actif": "Boolean",
             "notes": "String",
-            "actif": "Boolean",
             "role": {
               "type": "ObjectId",
               "ref": "Role"

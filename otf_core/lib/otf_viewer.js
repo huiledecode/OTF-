@@ -8,6 +8,7 @@ module.exports = function (app) {
     var assemble = require('assemble');
 //var layout_helpers = require("handlebars-helpers/lib/helpers/helpers-layouts");
     var helpers = require("handlebars-helpers");
+    var helperPartials = require('handlebars-helper-partial')(handlebars);
     var fs = require("fs");
     var _ = require('underscore');
 
@@ -25,79 +26,7 @@ module.exports = function (app) {
             'views/'
         ],
         helpers: {
-            compare: function (lvalue, rvalue, options) {
-console.log("####### COMPARE lvalue :", lvalue, " et rvalue: ", rvalue);
-                if (arguments.length < 3)
-                    throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
-
-                var operator = options.hash.operator || "==";
-
-                var operators = {
-                    '==': function (l, r) {
-                        console.log('l == r : ' + (l == r));
-                        return l == r;
-                    },
-                    '===': function (l, r) {
-                        return l === r;
-                    },
-                    '!=': function (l, r) {
-                        return l != r;
-                    },
-                    '<': function (l, r) {
-                        return l < r;
-                    },
-                    '>': function (l, r) {
-                        return l > r;
-                    },
-                    '<=': function (l, r) {
-                        return l <= r;
-                    },
-                    '>=': function (l, r) {
-                        return l >= r;
-                    },
-                    'typeof': function (l, r) {
-                        return typeof l == r;
-                    },
-                    'indexof': function (l, r) {
-console.log("#### OTF VIEWER indexof : ",l , " et " ,r);
-                        if(!l)
-                          return false;
-console.log("#### l.indexOf(r) : ",l.indexOf(r));
-                        return l.indexOf(r) != -1;
-                    },
-                    'in': function (l, r) {
-                        if(!l)
-                          return false;
-                        return r.split(',').indexOf(l) != -1;
-                    },
-                    'exist': function (obj) {
-                        if(!obj)
-                          return false;
-                        return true;
-                    },
-                    'notexist': function (obj) {
-                        if(!obj)
-                          return true;
-                        return false;
-                    },
-                    'tabempty': function (obj) {
-                        if(!obj || obj.length==0)
-                          return true;
-                        return false;
-                    }
-                }
-
-                if (!operators[operator])
-                    throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
-
-                var result = operators[operator](lvalue, rvalue);
-
-                if (result) {
-                    return options.fn(this);
-                } else {
-                    return options.inverse(this);
-                }
-            },
+            compare: compare,
             exist2Cond: function (cond_1, cond_2, options) {
                 if (arguments.length < 3)
                     throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
@@ -403,10 +332,121 @@ console.log("#### l.indexOf(r) : ",l.indexOf(r));
                 return buffer.replace(new RegExp(' ', 'g'), '+');
               else
                 return buffer;
+            },
+            renderPartial : function(partialName, options) {
+                if (!partialName) {
+                    console.error('No partial name given.');
+                    return '';
+                }
+                var partial = handlebars.compile(fs.readFileSync(hbs.partialsDir[1]+partialName+".hbs", 'utf8'));
+                console.log('******************>  partialName : ' + partial);
+                if (!partial) {
+                    console.error('Couldnt find the compiled partial: ' + partialName);
+                    return '';
+                }
+                options.hash.str = "";
+                options.hash.str = JSON.stringify(options.hash);
+                return new handlebars.SafeString(partial(options.hash));
+            },
+            renderComponent : function(componentName, options) {
+                if (!componentName) {
+                    console.error('No partial name given.');
+                    return '';
+                }
+                // registering helper compare before to compile the partial, because the partial used #compare to put "selected" attribute
+                handlebars.registerHelper('compare', compare);
+                var partial = handlebars.compile(fs.readFileSync(hbs.partialsDir[1]+'/components/'+componentName+".hbs", 'utf8'));
+                console.log('******************>  partialName : ' + partial);
+                if (!partial) {
+                    console.error('Couldn\'t find the compiled partial: ' + componentName);
+                    return '';
+                }
+                options.hash.result = options.data.root.result;
+                if (typeof options.hash.values == 'string') options.hash.values = JSON.parse(options.hash.values);
+                options.hash.str = "";
+                options.hash.str = JSON.stringify(options.hash);
+                return new handlebars.SafeString(partial(options.hash));
             }
 
         }
     });
+
+    function compare (lvalue, rvalue, options) {
+        console.log("####### COMPARE lvalue :", lvalue, " et rvalue: ", rvalue);
+        if (arguments.length < 3)
+            throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
+
+        var operator = options.hash.operator || "==";
+
+        var operators = {
+            '==': function (l, r) {
+                console.log('l == r : ' + (l == r));
+                return l == r;
+            },
+            '===': function (l, r) {
+                return l === r;
+            },
+            'equals': function (l, r) {
+                return l.equals(r);
+            },
+            '!=': function (l, r) {
+                return l != r;
+            },
+            '<': function (l, r) {
+                return l < r;
+            },
+            '>': function (l, r) {
+                return l > r;
+            },
+            '<=': function (l, r) {
+                return l <= r;
+            },
+            '>=': function (l, r) {
+                return l >= r;
+            },
+            'typeof': function (l, r) {
+                return typeof l == r;
+            },
+            'indexof': function (l, r) {
+                console.log("#### OTF VIEWER indexof : ",l , " et " ,r);
+                if(!l)
+                    return false;
+                console.log("#### l.indexOf(r) : ",l.indexOf(r));
+                return l.indexOf(r) != -1;
+            },
+            'in': function (l, r) {
+                if(!l)
+                    return false;
+                return r.split(',').indexOf(l) != -1;
+            },
+            'exist': function (obj) {
+                if(!obj)
+                    return false;
+                return true;
+            },
+            'notexist': function (obj) {
+                if(!obj)
+                    return true;
+                return false;
+            },
+            'tabempty': function (obj) {
+                if(!obj || obj.length==0)
+                    return true;
+                return false;
+            }
+        }
+
+        if (!operators[operator])
+            throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+
+        var result = operators[operator](lvalue, rvalue);
+
+        if (result) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
+    }
 
     app.engine('.hbs', hbs.engine);
     app.set('view engine', '.hbs');

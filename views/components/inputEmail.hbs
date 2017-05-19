@@ -1,0 +1,21 @@
+{{#if this.formgroup}}
+    <div class="form-group">
+{{/if}}
+    {{#if this.label}}
+    <label for="{{this.name}}" class="col-sm-2 control-label">{{this.label}}</label>
+    {{/if}}
+    <div class="col-sm-{{this.nb-col}}">
+        <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <input class="form-control" type="email" placeholder="{{this.placeholder}}" name="{{this.name}}" id="{{this.name}}" value="{{this.value}}" title="'Ce champs est requis et doit être de la forme 'example@domain.com'" onchange="form.email2.pattern = this.value;" required="required" style="border-color: #ff0055"/>
+        </div>
+    </div>
+    {{#if this.confirmEmail}}
+    <div class="col-sm-{{this.nb-col}}">
+        <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <input class="form-control" type="email" placeholder="Confirm {{this.placeholder}}" name="{{this.name}}2" id="{{this.name}}2" value="{{this.value}}" title="Emails are not equals" required="required" style="border-color: #ff0055"/>
+        </div>
+    </div>
+    {{/if}}
+{{#if formgroup}}
+    </div>
+{{/if}}

@@ -1,0 +1,48 @@
+{{#if this.formgroup}}
+    <div class="form-group">
+{{/if}}
+{{#if this.label}}
+        <label for="{{this.name}}" class="col-sm-2 control-label">{{this.label}} : </label>
+{{/if}}
+    <div class="col-sm-{{this.nb-col}}">
+        <div id="liste_{{this.name}}" class="dropdown">
+            <input type="text" id="{{this.name}}" class="dropdown-toggle form-control" data-toggle="dropdown">
+            <input type="hidden"  id="{{this.name}}1" name="{{this.name}}" value="">
+            <ul compotype="comboBoxEditable" id="liste-{{this.name}}" class="dropdown-menu" style="height: 173px;width: 250%;overflow-y: scroll">
+                {{#each values}}
+                    <li value="{{this._id}}" ><a href="#">{{this.code}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+{{#if this.formgroup}}
+    </div>
+{{/if}}
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', function (evt) {
+            if (evt.target.parentElement.parentElement.attributes[0].value.indexOf('comboBoxEditable') > -1) { // si le click a lieu sur une liste dropdown
+                var ul = evt.target.parentElement.parentElement; //on récupère l'objet ul
+                $('#' + ul.previousElementSibling.previousElementSibling.id).val(evt.target.childNodes["0"].data);
+                $('#' + ul.previousElementSibling.id).val(evt.target.childNodes["0"].parentNode.parentNode.attributes["0"].nodeValue);
+            }
+        });
+
+        ///////////// search / filter /////////////
+        $(document).keyup(function (evt) {
+            console.log('evt keyup : ', evt.target);
+            var filter = $('#' + evt.target.id).val().toLowerCase();
+            var ul = evt.target.nextElementSibling.nextElementSibling; // positionneemnt sur ul
+            var li = ul.getElementsByTagName('li');
+            for (var i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                if (a.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        });
+    });
+</script>

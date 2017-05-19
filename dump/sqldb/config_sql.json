@@ -5,14 +5,14 @@
     },
     "test": {
         "username": "root",
-        "password": "azerty!",
+        "password": "azerty",
         "database": "otf_demo",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },
     "production": {
         "username": "root",
-        "password": "azerty!",
+        "password": "azerty",
         "database": "otf_demo",
         "host": "127.0.0.1",
         "dialect": "mysql"
