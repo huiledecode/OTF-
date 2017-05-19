@@ -19,7 +19,7 @@
         "auth": false,
         "data_model": "Accounts",
         "redirect": true,
-        "redirect_action" : "index"
+        "redirect_action": "index"
     },
     "GET/logout": {
         "module": "signupAccount",
@@ -28,7 +28,7 @@
         "params_names": [],
         "auth": true,
         "redirect": true,
-        "redirect_action" : "login"
+        "redirect_action": "login"
     },
     "GET/multipart": {
         "module": "index",
@@ -112,7 +112,7 @@
         "methode": "list",
         "screen": "formadduser",
         "auth": true,
-        "data_model":"Role"
+        "data_model": "Role"
 
     },
     "POST/adduser": {
@@ -120,10 +120,10 @@
         "methode": "one",
         "screen": "users",
         "auth": true,
-        "params_names": ["login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville",  "actif", "notes", "role"],
+        "params_names": ["login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville", "actif", "notes", "role"],
         "data_model": "Accounts",
         "redirect": true,
-        "redirect_action" : "users"
+        "redirect_action": "users"
     },
     "GET/fiche_user": {
         "module": "finder",
@@ -139,7 +139,7 @@
         "methode": "one",
         "screen": "users",
         "auth": true,
-        "params_names": ["_id", "login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville",  "actif", "notes", "role"],
+        "params_names": ["_id", "login", "password", "nom", "prenom", "titre", "sexe", "password", "email", "telephone", "adresse1", "adresse2", "code_postal", "ville", "actif", "notes", "role"],
         "data_model": "AccountId",
         "redirect": true,
         "redirect_action": "users"
@@ -174,13 +174,13 @@
         "screen": "glancesviewtab",
         "auth": true
     },
-    "GET/json/getdatanetwork" : {
+    "GET/json/getdatanetwork": {
         "module": "glances",
         "methode": "getDatanetwork",
         "auth": false,
         "return_type": "application/json"
     },
-    "GET/listmulti" : {
+    "GET/listmulti": {
         "module": "finder",
         "methode": "listMultiSchemas",
         "screen": "resultmultischema",
@@ -188,7 +188,7 @@
         "params_names": [],
         "data_model": ["Accounts", "Logs"]
     },
-    "GET/listmultiasync" : {
+    "GET/listmultiasync": {
         "module": "finder",
         "methode": "listMultiSchemasAsync",
         "screen": "resultmultischema",
@@ -201,14 +201,14 @@
         "methode": "list",
         "screen": "countries_list",
         "auth": true,
-        "data_model":"Countries"
+        "data_model": "Countries"
     },
     "GET/jsoncountries": {
         "module": "finder",
         "methode": "list",
         "screen": "countries_list",
         "auth": true,
-        "data_model":"Countries",
+        "data_model": "Countries",
         "return_type": "application/json"
     },
     "GET/listparamslogs": {
@@ -217,7 +217,31 @@
         "screen": "countries_list",
         "auth": true,
         "params_names": ["event"],
-        "data_model":"Logs",
+        "data_model": "Logs",
         "return_type": "application/json"
+    },
+    "GET/list_annuaires": {
+        "module": "getview",
+        "methode": "view",
+        "screen": "annuaires",
+        "auth": true,
+        "params_names": []
+    },
+    "GET/json/annuaires": {
+        "module": "files",
+        "methode": "list",
+        "screen": "annuaires",
+        "auth": true,
+        "params_names": [],
+        "data_model": "conf/profiles/",
+        "return_type": "application/json"
+    },
+    "GET/readFile": {
+        "module": "files",
+        "methode": "read",
+        "screen": "code_editor",
+        "auth": true,
+        "params_names": ["name"],
+        "data_model": "conf/profiles"
     }
 }

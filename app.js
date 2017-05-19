@@ -16,7 +16,7 @@ var path = require('path');
 
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
-var flash    = require('express-flash');
+var flash = require('express-flash');
 var secret = GLOBAL.config["SESSION"].secret || '7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"';
 var cookie_name = GLOBAL.config["SESSION"].cookie_name || 'connect.sid';
 //--
@@ -60,12 +60,12 @@ require('./otf_core/lib/otf_oplog')(sessionStore);
 // Authentification Managment by Passport
 require('./otf_core/lib/otf_passport')(app);
 
-app.use(function(req, res, next){
+app.use(function(req, res, next) {
     app.locals.query = req.query;
-//  console.log('???????????????????? req.user : ', req.user);
-    app.locals.url   = req.url;
-    app.locals.user  = req.user;//permet de garder les infos du user connecté
-//    app.locals.url_public = properties.url_public;
+    //  console.log('???????????????????? req.user : ', req.user);
+    app.locals.url = req.url;
+    app.locals.user = req.user; //permet de garder les infos du user connecté
+    //    app.locals.url_public = properties.url_public;
     next();
 });
 
@@ -83,8 +83,8 @@ require('./otf_core/lib/otf_websocket')(sessionStore, secret, cookie_name);
 
 //--
 //start cronJobs here
-//var scheduler = require("./beans/scheduler");
-//scheduler.startCron();
+var scheduler = require("./beans/scheduler");
+scheduler.startCron();
 
 //--
 //-- TEST PASSAGE CONTEXT APPLICATIF
