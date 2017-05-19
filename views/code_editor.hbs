@@ -1,0 +1,65 @@
+{{#content "head"}}
+    {{> head}}
+{{/content}}
+{{#content "nav"}}
+    {{> nav}}
+{{/content}}
+{{#content "page"}}
+<style type="text/css" media="screen">
+    body {
+        overflow: hidden;
+    }
+    #editor {
+        margin: 0.2em;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height:700px;
+    }
+  </style>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Code Editor : {{fileName}}
+                <br/>{{renderComponent 'buttonSubmit' name="button" nb-col="10" nb-col-offset="2" btn-class="btn-primary" value="Enregistrer" formgroup="true"}}
+
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="/list_annuaires">Directories Management</a></li>
+                <li class="active">List</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="editor">
+                      {{{fileContent}}}
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.content -->
+    </div><!-- /.content-wrapper -->
+    <script src="javascripts/js/plugins/ace_editor/ace.js"></script>
+<script>
+  $(document).ready(function() {
+    var editor = ace.edit("editor");
+    var session = editor.session;
+    session.setNewLineMode("unix");
+    JSON.stringify(session.doc.getNewLineCharacter());
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/json");
+
+  });
+
+</script>
+{{/content}}
+{{#content "footer"}}
+    {{> footer}}
+{{/content}}
