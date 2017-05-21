@@ -1,4 +1,6 @@
-{
+
+                      
+                      {
     "GET/": {
         "module": "index",
         "methode": "titre",
@@ -267,5 +269,16 @@
         "auth": true,
         "params_names": ["name"],
         "data_model": "conf"
+    },
+    "POST/writeProfile": {
+        "module": "files",
+        "methode": "write",
+        "screen": "code_editor",
+        "auth": true,
+        "params_names": ["name", "content"],
+        "data_model": "conf/profiles"
     }
 }
+
+                    
+                    

@@ -47,7 +47,7 @@ exports.files = {
     read: function(req, cb) {
         var _controler = req.session.controler;
         var fileName = _controler.params.name;
-        var path = _controler.data_model; // chemin relatif contenant le nom du fichier
+        var path = _controler.data_model;
         fs.readFile(path + "/" + fileName, 'utf8', function(err, data) {
             if (err) {
                 return console.log(err);
@@ -64,15 +64,16 @@ exports.files = {
     //-- -----------------------------------------------------------------------------------
     write: function(req, cb) {
         var _controler = req.session.controler;
-        var path = _controler.data_model; // chemin relatif contenant le nom du fichier
-        var content = _controler.params[0]; // uniquement le param d'indice 0 pour le content texte.
-        fs.writeFile(path, content, function(err) {
+        var path = _controler.data_model;
+        var content = _controler.params["content"];
+        var fileName = _controler.params["name"];
+        fs.writeFile(path + '/' + fileName, content, function(err) {
             if (err) {
                 return console.log(err);
             }
-            console.log("The file : " + path + " : was saved!");
+            console.log("The file : " + path + "/" + fileName + " : was saved!");
             return cb(null, {
-                file: JSON.stringify(items),
+                file: fileName,
                 message: "The file was saved !"
             });
         });

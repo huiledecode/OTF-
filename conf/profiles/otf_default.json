@@ -1,4 +1,5 @@
-{
+
+                      {
     "GET/": {
         "module": "index",
         "methode": "titre",
@@ -140,5 +141,15 @@
         "screen": "date",
         "auth": false,
         "params_names": []
+    },
+    "POST/writeConfig": {
+        "module": "files",
+        "methode": "write",
+        "screen": "code_editor",
+        "auth": true,
+        "params_names": ["name", "content"],
+        "data_model": "conf"
     }
 }
+
+                    

@@ -25,7 +25,7 @@
         <section class="content-header">
             <h1>
                 Code Editor : {{fileName}}
-                <br/>{{renderComponent 'buttonSubmit' name="button" nb-col="10" nb-col-offset="2" btn-class="btn-primary" value="Enregistrer" formgroup="true"}}
+                <br/>{{renderComponent 'buttonSubmit' name="btn_valider" nb-col="10" nb-col-offset="2" btn-class="btn-primary" value="Enregistrer" formgroup="true"}}
 
             </h1>
             <ol class="breadcrumb">
@@ -52,10 +52,15 @@
     var editor = ace.edit("editor");
     var session = editor.session;
     session.setNewLineMode("unix");
-    JSON.stringify(session.doc.getNewLineCharacter());
+    //JSON.stringify(session.doc.getNewLineCharacter());
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setMode("ace/mode/json");
-
+    $('#btn_valider').on('click', function(evt) {
+      console.log('envoyer la modification au serveur');
+      $.post('/writeProfile', {name: "{{fileName}}", content: editor.getValue()}, function (result) {
+        console.log('fichier envoyé au serveur : ', result);
+      });
+    });
   });
 
 </script>
