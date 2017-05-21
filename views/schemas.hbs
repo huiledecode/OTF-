@@ -10,11 +10,11 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Gestion des annuaires d'actions
+                Gestion des schémas de la base MongoDB
             </h1>
             <ol class="breadcrumb">
                 <li><a href="/index"><i class="fa fa-home"></i> Home</a></li>
-                <li><a href="#">Directories Management</a></li>
+                <li><a href="#">Directories Schemas</a></li>
                 <li class="active">List</li>
             </ol>
         </section>
@@ -25,14 +25,14 @@
                 <div class="col-xs-12">
                     <div class="box box-warning">
                         <div class="box-header">
-                            <h3 class="box-title">Liste des annuaires d'OTF² Démo</h3>
+                            <h3 class="box-title">Liste du schémas d'OTF² Démo</h3>
                         </div><!-- /.box-header -->
                         <div class="box-body">
                             {{renderComponent 'dataTable'
-                                              urlJson="/annuaires"
+                                              urlJson="/schemas"
                                               nbLines="5"
                                               isEditBtn=true
-                                              urlEditBtn="/readFlightPlan"
+                                              urlEditBtn="/readDirSchema"
                                               idEditBtn="name"
                                               isDelBtn=false
                                               urlDelBtn="/#"

@@ -236,12 +236,36 @@
         "data_model": "conf/profiles/",
         "return_type": "application/json"
     },
-    "GET/readFile": {
+    "GET/readFlightPlan": {
         "module": "files",
         "methode": "read",
         "screen": "code_editor",
         "auth": true,
         "params_names": ["name"],
         "data_model": "conf/profiles"
+    },
+    "GET/directory_schemas": {
+        "module": "getview",
+        "methode": "view",
+        "screen": "schemas",
+        "auth": true,
+        "params_names": []
+    },
+    "GET/json/schemas": {
+        "module": "files",
+        "methode": "list",
+        "screen": "schemas",
+        "auth": true,
+        "params_names": [],
+        "data_model": "conf/",
+        "return_type": "application/json"
+    },
+    "GET/readDirSchema": {
+        "module": "files",
+        "methode": "read",
+        "screen": "code_editor",
+        "auth": true,
+        "params_names": ["name"],
+        "data_model": "conf"
     }
 }

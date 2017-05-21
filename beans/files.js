@@ -30,9 +30,11 @@ exports.files = {
             }
             console.log(items);
             for (var i = 0; i < items.length; i++) {
-                fileNames.push({
-                    name: items[i]
-                });
+                if (fs.statSync(path + '/' + items[i]).isFile()) {
+                    fileNames.push({
+                        name: items[i]
+                    });
+                }
             }
             return cb(null, {
                 result: JSON.stringify(fileNames)
