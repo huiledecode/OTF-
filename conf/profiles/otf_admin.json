@@ -61,6 +61,7 @@
         "auth": true,
         "params_names": [],
         "data_model": "Accounts",
+        "no_cache":true,
         "data_ref": "role"
     },
     "GET/json/usersjson": {
@@ -71,6 +72,7 @@
         "params_names": [],
         "data_model": "Accounts",
         "data_ref": "role",
+        "no_cache":true,
         "return_type": "application/json"
     },
     "GET/fiche_profil": {

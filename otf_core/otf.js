@@ -65,6 +65,7 @@ function getControler(req, cb) {
     var content_type = req.headers['content-type'];
     var return_type;
     var sql_request;
+    var no_cache;
     //--
     //-- USER PROFILE
     if (req.session.profile) {
@@ -85,6 +86,9 @@ function getControler(req, cb) {
     if (typeof annuaire[type + path] == 'undefined')
         return cb(handleError('OTF ERROR Action not implemented', '501', "Action not implemented for URL [" + type + path + "]"));
 
+	// -- cache behavior
+	no_cache=annuaire[type + path].no_cache;
+	if (typeof no_cache == 'undefined'){no_cache=false};
     // -- Authentificate flag
 
     auth = annuaire[type + path].auth;
@@ -175,7 +179,8 @@ function getControler(req, cb) {
         'isRedirect': redirect,
         'redirect_action': redirect_action,
         'sql_request': sql_request,
-        'models': models
+        'models': models,
+        'no_cache':no_cache
     };
     /****** Traitement des paramètres pour les requête mongoDB *********/
     filter_acceptableFields = annuaire[type + path].params_names;
@@ -247,6 +252,15 @@ function otfAction(req, res, next) {// attention il ne
             req.session.controler = controler;
             //beans.params, beans.path, beans.data_model, beans.schema, beans.room
             controler.action(req, function (errBean, result) {
+				//manage cache behavior
+				if (req.session.controler.no_cache){
+					//Disable cache to prevent back button showing previous pages after logout
+					logger.info("OTF² is configured to disable cache browser for this request");
+					res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+					res.header('Expires', '-1');
+					res.header('Pragma', 'no-cache');
+				};
+								
                 result.url = controler.path;  // pour corriger un bug ? pas d'url en variable globale dans handlebars pour menu-treeview
                 var t1 = new Date().getMilliseconds();
                 // handling exception
