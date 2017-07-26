@@ -27,7 +27,7 @@
     "handlebars-helper-partial": "^0.2.0",
     "handlebars-helpers": "^0.5.8",
     "hiredis": "0.4.1",
-    "log4js": "*",
+    "log4js": "0.6.38",
     "log4js-node-mongodb": "*",
     "moment": "^2.13.0",
     "mongo-oplog": "0.1.5",
