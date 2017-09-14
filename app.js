@@ -16,6 +16,10 @@ var path = require('path');
 
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+// --
+// i18n implementation for Express
+var i18n = require("i18n-express");
+
 var flash = require('express-flash');
 var secret = GLOBAL.config["SESSION"].secret || '7m62cnP9rgVh7hH9NyUAdRNwTSHWDsfWFLeMMD7n4vUEuREJtyWbfzsTMFSeqzmYnng6CRd4yBYTCesJdDkNX4SjDmYWqZLcSscHw5Nh256b4wWjdjSdxr7rrsAU7RWZ"';
 var cookie_name = GLOBAL.config["SESSION"].cookie_name || 'connect.sid';
@@ -52,6 +56,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Managment Session Store
 var sessionStore = require('./otf_core/lib/otf_session')(app, secret, cookie_name);
 
+//--
+// i18n middleware configuration
+app.use(i18n({
+    translationsPath: path.join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
+    siteLangs: ["en", "fr"],
+    textsVarName: 'translation'
+}));
 
 //--
 // OPOLOG PLUBISH/SUBCRIBE WEBSOCKET FRAMEWORK

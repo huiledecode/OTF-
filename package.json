@@ -27,6 +27,7 @@
     "handlebars-helper-partial": "^0.2.0",
     "handlebars-helpers": "^0.5.8",
     "hiredis": "0.4.1",
+    "i18n-express": "^1.1.3",
     "log4js": "0.6.38",
     "log4js-node-mongodb": "*",
     "moment": "^2.13.0",
