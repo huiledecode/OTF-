@@ -60,7 +60,7 @@ var sessionStore = require('./otf_core/lib/otf_session')(app, secret, cookie_nam
 // i18n middleware configuration
 app.use(i18n({
     translationsPath: path.join(__dirname, 'i18n'), // <--- use here. Specify translations files path.
-    siteLangs: ["en", "fr"],
+    siteLangs: GLOBAL.config["LANGUAGE"].locale,
     textsVarName: 'translation'
 }));
 

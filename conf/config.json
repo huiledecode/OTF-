@@ -53,5 +53,8 @@
     "CLUSTER": {
         "mode": "OFF",
         "nb_cpu": "3"
+    },
+    "LANGUAGE": {
+        "locale": ["en", "fr"]
     }
 }
