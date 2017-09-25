@@ -1,0 +1,10 @@
+{
+    "WELCOME_MSG": "Bonjour Bienvenue !",
+    "TITLE_MSG": "Administration de l'application",
+    "PROFILE_TITLE_NAME_FIRSTNAME": "Titre/Nom/Prénom",
+    "PASSWORD_LABEL": "Mot de Passe",
+    "ROLE": "Rôle",
+    "ADDRESS_1": "Adresse 1",
+    "ADDRESS_2": "Adresse 2",
+
+}
