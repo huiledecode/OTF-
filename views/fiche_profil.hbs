@@ -84,9 +84,9 @@
 
                                     {{renderComponent 'comboBoxDB' formgroup="true" label="Role" name='role' idCompare=result.one.role values=result.Role nb-col="5" }}
 
-                                    {{renderComponent 'inputText' name="adresse1" label="Adress 1" placeholder="Primary adress" value=user.adresse1 nb-col="10" formgroup="true"}}
+                                    {{renderComponent 'inputText' name="adresse1" label=translation.ADDRESS_1 placeholder="Primary adress" value=user.adresse1 nb-col="10" formgroup="true"}}
 
-                                    {{renderComponent 'inputText' name="adresse2" label="Adress 2" placeholder="Additionnal adress" value=user.adresse2 nb-col="10" formgroup="true"}}
+                                    {{renderComponent 'inputText' name="adresse2" label=translation.ADDRESS_2 placeholder="Additionnal adress" value=user.adresse2 nb-col="10" formgroup="true"}}
 
                                     <div class="form-group">
                                         {{renderComponent 'inputText' name="code_postal" label="Zip Code" placeholder="Zip Code" value=user.code_postal nb-col="2"}}
