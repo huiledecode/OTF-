@@ -1,4 +1,5 @@
 {
     "WELCOME_MSG": "hi Welcome !",
-    "TITLE_MSG": "Admin back office"
+    "TITLE_MSG": "Admin back office",
+    "PROFILE_TITLE_NAME_FIRSTNAME": "Title/Name/Firstname"
 }

@@ -72,7 +72,7 @@
                                 <form class="form-horizontal" role="form" method="POST" accept-charset="utf-8" action="/modifierMonProfil">
                                     <div class="form-group">
 
-                                        {{renderComponent 'comboBox' name="titre" nb-col="2" label="Titre/Name/Firstname" idCompare=user.titre values='[{"_id": "Mr", "code": "Mr"}, {"_id": "Mrs", "code": "Mrs"}, {"_id": "Dr", "code": "Dr"}]'}}
+                                        {{renderComponent 'comboBox' name="titre" nb-col="2" label=translation.PROFILE_TITLE_NAME_FIRSTNAME idCompare=user.titre values='[{"_id": "Mr", "code": "Mr"}, {"_id": "Mrs", "code": "Mrs"}, {"_id": "Dr", "code": "Dr"}]'}}
 
                                         {{renderComponent 'inputText' name="nom" placeholder="Name" value=user.nom nb-col="4"}}
 
@@ -80,7 +80,7 @@
 
                                     </div>
 
-                                    {{renderComponent 'inputPasswd' name="password" formgroup="true" label="Password" placeholder="New Password" confirmPwd="true" nb-col="5"}}
+                                    {{renderComponent 'inputPasswd' name="password" formgroup="true" label=translation.PASSWORD_LABEL placeholder="New Password" confirmPwd="true" nb-col="5"}}
 
                                     {{renderComponent 'comboBoxDB' formgroup="true" label="Role" name='role' idCompare=result.one.role values=result.Role nb-col="5" }}
 
