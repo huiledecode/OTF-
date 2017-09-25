@@ -82,27 +82,27 @@
 
                                     {{renderComponent 'inputPasswd' name="password" formgroup="true" label=translation.PASSWORD_LABEL placeholder="New Password" confirmPwd="true" nb-col="5"}}
 
-                                    {{renderComponent 'comboBoxDB' formgroup="true" label="Role" name='role' idCompare=result.one.role values=result.Role nb-col="5" }}
+                                    {{renderComponent 'comboBoxDB' formgroup="true" label=translation.ROLE name='role' idCompare=result.one.role values=result.Role nb-col="5" }}
 
                                     {{renderComponent 'inputText' name="adresse1" label=translation.ADDRESS_1 placeholder="Primary adress" value=user.adresse1 nb-col="10" formgroup="true"}}
 
                                     {{renderComponent 'inputText' name="adresse2" label=translation.ADDRESS_2 placeholder="Additionnal adress" value=user.adresse2 nb-col="10" formgroup="true"}}
 
                                     <div class="form-group">
-                                        {{renderComponent 'inputText' name="code_postal" label="Zip Code" placeholder="Zip Code" value=user.code_postal nb-col="2"}}
+                                        {{renderComponent 'inputText' name="code_postal" label=translation.ZIP_CODE placeholder="Zip Code" value=user.code_postal nb-col="2"}}
 
-                                        {{renderComponent 'inputText' name="ville" label="City" placeholder="City" value=user.ville nb-col="6"}}
+                                        {{renderComponent 'inputText' name="ville" label=translation.CITY placeholder="City" value=user.ville nb-col="6"}}
                                     </div>
 
-                                    {{renderComponent 'inputPhone' name="telephone" label="Phone" inputmask="99-99-99-99-99" formgroup="true" value=user.telephone}}
+                                    {{renderComponent 'inputPhone' name="telephone" label=translation.PHONE inputmask="99-99-99-99-99" formgroup="true" value=user.telephone}}
 
-                                    {{renderComponent 'inputEmail' name="email" formgroup="true" label="Email" placeholder="Email" confirmEmail="true" value=user.email nb-col="5" }}
+                                    {{renderComponent 'inputEmail' name="email" formgroup="true" label=translation.EMAIL placeholder="Email" confirmEmail="true" value=user.email nb-col="5" }}
 
                                     {{renderComponent 'inputHidden' name="id_extrauser" value=user._id}}
 
                                     {{renderComponent 'inputHidden' name="login" value=user.login}}
 
-                                    {{renderComponent 'comboBoxEditable' formgroup="true" label="Role" name='role2' idCompare=result.one.role values=result.Role nb-col="3" }}
+                                    {{renderComponent 'comboBoxEditable' formgroup="true" label=translation.ROLE name='role2' idCompare=result.one.role values=result.Role nb-col="3" }}
 
                                     {{renderComponent 'buttonSubmit' name="button" nb-col="10" nb-col-offset="2" btn-class="btn-primary" value="Enregistrer" formgroup="true"}}
                                 </form>
