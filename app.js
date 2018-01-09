@@ -66,7 +66,7 @@ app.use(i18n({
 
 //--
 // OPOLOG PLUBISH/SUBCRIBE WEBSOCKET FRAMEWORK
-require('./otf_core/lib/otf_oplog')(sessionStore);
+// require('./otf_core/lib/otf_oplog')(sessionStore);
 //--
 // Authentification Managment by Passport
 require('./otf_core/lib/otf_passport')(app);
